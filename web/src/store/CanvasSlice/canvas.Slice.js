@@ -26,6 +26,21 @@ const CanvasSlice = createSlice({
       state.elements = mass;
     },
 
+    setDraggable(state, action) {
+      const { id } = action.payload;
+      console.log("id", id);
+
+      state.elements = state.elements.map((elem) => {
+        if (elem.id === id) {
+          return {
+            ...elem,
+            draggable: !elem.draggable,
+          };
+        }
+        return elem;
+      });
+    },
+
     setSelectedElement(state, action) {
       const { id } = action.payload;
       state.selectedElement = id;
@@ -37,7 +52,12 @@ const CanvasSlice = createSlice({
     },
   },
 });
-export const { addElem, setElem, deleteElem, setSelectedElement } =
-  CanvasSlice.actions;
+export const {
+  addElem,
+  setElem,
+  deleteElem,
+  setSelectedElement,
+  setDraggable,
+} = CanvasSlice.actions;
 
 export default CanvasSlice.reducer;

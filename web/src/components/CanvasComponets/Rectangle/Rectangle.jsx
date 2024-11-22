@@ -10,6 +10,7 @@ const Rectangle = ({
   onChange,
   text,
   zIndex,
+  draggable,
 }) => {
   const shapeRef = React.useRef();
   const trRef = React.useRef();
@@ -38,7 +39,7 @@ const Rectangle = ({
         onTap={onSelect}
         ref={shapeRef}
         {...shapeProps}
-        draggable
+        draggable={draggable}
         onDragEnd={(e) => {
           onChange({
             ...shapeProps,

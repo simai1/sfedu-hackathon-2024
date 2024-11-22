@@ -11,6 +11,7 @@ export const components = [
     zIndex: 50,
     stroke: "black", // Цвет бордера
     strokeWidth: 2, // Ширина бордера
+    draggable: true,
   },
   {
     x: 100,
@@ -22,6 +23,7 @@ export const components = [
     name: "Стул",
     opacity: 0.5,
     zIndex: 51,
+    draggable: true,
   },
   {
     x: 100,
@@ -33,5 +35,6 @@ export const components = [
     name: "ПК",
     opacity: 0.5,
     zIndex: 100,
+    draggable: true,
   },
 ];

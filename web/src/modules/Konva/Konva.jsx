@@ -35,6 +35,7 @@ const Konva = () => {
             <Rectangle
               text={rect.name}
               zIndex={rect.zIndex}
+              draggable={rect.draggable}
               key={i}
               shapeProps={rect}
               isSelected={rect.id === selectedId}

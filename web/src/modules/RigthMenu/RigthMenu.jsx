@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./RigthMenu.module.scss";
 import { useEffect, useState } from "react";
-import { deleteElem } from "../../store/CanvasSlice/canvas.Slice";
+import { deleteElem, setDraggable } from "../../store/CanvasSlice/canvas.Slice";
 
 function RigthMenu() {
   const canvasSlice = useSelector((state) => state.CanvasSlice);
@@ -26,8 +26,14 @@ function RigthMenu() {
   return (
     <div className={styles.RigthMenu}>
       {element?.id && (
-        <button onClick={() => deleteElement(element?.id)}>Удалить</button>
+        <>
+          <button onClick={() => deleteElement(element.id)}>Удалить</button>
+          <button onClick={() => setDraggable({ id: element.id })}>
+            Заблокировать
+          </button>
+        </>
       )}
+
       <div>
         <p>Name: {element?.name}</p>
         <p>X: {element?.x?.toFixed(2)}</p>
