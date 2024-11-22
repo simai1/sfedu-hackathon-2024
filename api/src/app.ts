@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import cookieSession from 'cookie-session';
 // import * as fs from 'fs';
 import expressWs from 'express-ws';
+import { errorHandler } from './middlewares/error-handler';
 
 // import authRoute from './routes/auth.route';
 
@@ -53,6 +54,9 @@ app.ws('/', () => {
 //         }
 //     });
 // };
+
+// error handler
+app.use(errorHandler);
 
 export const aWss = getWss();
 export default app;
