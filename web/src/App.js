@@ -2,7 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React from "react";
 import HomePage from "./pages/HomePage/HomePage";
 import DataContext from "./context";
-import CanvasPage from "./store/CanvasPage/CanvasPage";
+import CanvasPage from "./pages/CanvasPage/CanvasPage";
+import Konva from "./modules/Konva/Konva";
 
 function App() {
   const context = {
@@ -16,6 +17,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />}></Route>
             <Route path="/canvas" element={<CanvasPage />}></Route>
+            <Route path="/konva" element={<Konva />}></Route>
           </Routes>
         </main>
       </BrowserRouter>

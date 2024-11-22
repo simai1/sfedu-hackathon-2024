@@ -1,0 +1,23 @@
+.Poligon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+
+  .setka {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .cell {
+    display: flex;
+    border: 1px solid #a4a4a4;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #cecece;
+    }
+  }
+}
