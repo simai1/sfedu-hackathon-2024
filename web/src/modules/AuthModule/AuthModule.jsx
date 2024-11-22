@@ -4,14 +4,17 @@ import InputField from "../../ui/Input/Input";
 import styles from "./AuthModule.module.scss";
 import { useContext, useState } from "react";
 import DataContext from "../../context";
+import { LoginFunc } from "../../API/ApiRequest";
 
 function AuthModule() {
     const navigate = useNavigate()
     const context = useContext(DataContext);
     const [formData, setFormData] = useState({
-        email: '',
+        login: '',
         password: ''
     });
+
+    const [error, setError] = useState('');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -19,11 +22,25 @@ function AuthModule() {
             ...formData,
             [name]: value
         });
+        if (error) {
+            setError('');
+        }
     };
 
     const handleSubmit = () => {
-        console.log("formData", formData); // Выводим данные в консоль
-        navigate("/helloPage")
+        const { login, password} = formData;
+        if (!login || !password) {
+            setError('Пожалуйста, заполните все поля');
+            return;
+        }
+        LoginFunc(formData).then((res) => {
+            if (res.status === 200) {
+                navigate("/helloPage")
+            }else{
+                setError('Неверный логин или пароль!');
+                return;
+            }
+        })
     };
 
     return ( 
@@ -41,8 +58,8 @@ function AuthModule() {
                    <InputField 
                        typelabel="Email" 
                        type="text" 
-                       name="email" 
-                       value={formData.email} 
+                       name="login" 
+                       value={formData.login} 
                        handleChange={handleChange} 
                    />
                    <InputField 
@@ -52,6 +69,7 @@ function AuthModule() {
                        value={formData.password} 
                        handleChange={handleChange} 
                    />
+                    {error && <p className={styles.errorMessage}>{error}</p>}
                    <Button text="Войти" onClick={handleSubmit} />
                    <div className={styles.NotAccount}>
                         <p>Нет аккаунта? <span onClick={() => context.setUnauthorized(!context.unauthorized)}>Зарегистрироваться</span></p>

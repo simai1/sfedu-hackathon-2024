@@ -3,15 +3,19 @@ import styles from "./RegisterModule.module.scss";
 import InputField from "../../ui/Input/Input";
 import Button from "../../ui/Button/Button";
 import DataContext from "../../context";
+import { Register } from "../../API/ApiRequest";
+import { useNavigate } from "react-router-dom";
 
 function RegisterModule() {
     const context = useContext(DataContext);
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         password: '',
         confirmPassword: ''
     });
+    const [error, setError] = useState('');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -19,10 +23,39 @@ function RegisterModule() {
             ...formData,
             [name]: value
         });
+        // Clear error message when user starts typing
+        if (error) {
+            setError('');
+        }
     };
 
     const handleSubmit = () => {
-        console.log('formData', formData); // Выводим данные в консоль
+        const { name, email, password, confirmPassword } = formData;
+
+        // Check if any fields are empty
+        if (!name || !email || !password || !confirmPassword) {
+            setError('Пожалуйста, заполните все поля');
+            return;
+        }
+
+        // Check if passwords match
+        if (password !== confirmPassword) {
+            setError('Пароли не совпадают');
+            return;
+        }
+
+        const data = {
+            "name": name,
+            "login": email,
+            "password": password,
+        };
+
+        Register(data).then((res) => {
+            if (res.status === 200) {
+                context.setUnauthorized(true);
+                navigate('/some-path'); // Redirect after successful registration
+            }
+        });
     };
 
     return ( 
@@ -41,7 +74,7 @@ function RegisterModule() {
                         type="text" 
                         name="name" 
                         value={formData.name} 
-                       handleChange={handleChange} 
+                        handleChange={handleChange} 
                     />
                     <InputField 
                         typelabel="Email" 
@@ -64,6 +97,7 @@ function RegisterModule() {
                         value={formData.confirmPassword} 
                         handleChange={handleChange} 
                     />
+                    {error && <p className={styles.errorMessage}>{error}</p>}
                     <Button text="Зарегистрироваться" onClick={handleSubmit} />
                     <div className={styles.NotAccount}>
                         <p>Уже есть аккаунт? <span onClick={() => context.setUnauthorized(!context.unauthorized)}>Войти</span></p>

@@ -8,10 +8,13 @@ import "./styles/app.css";
 import HelloPage from "./pages/HelloPage/HelloPage";
 
 function App() {
-  const [unauthorized, setUnauthorized] = useState(false);
+  const [unauthorized, setUnauthorized] = useState(true);
+  const [activeTable, setActiveTable] = useState("office");
   const context = {
     unauthorized,
-    setUnauthorized
+    setUnauthorized,
+    setActiveTable,
+    activeTable
   };
 
   return (
@@ -19,9 +22,9 @@ function App() {
       <BrowserRouter>
         <main>
           <Routes>
-            <Route path="/" element={<HomePage />}></Route>
+            <Route path="/" element={<Authorization />}></Route>
             <Route path="/canvas" element={<CanvasPage />}></Route>
-            <Route path="/authorization" element={<Authorization />}></Route>
+            <Route path="/homePage" element={<HomePage />}></Route>
             <Route path="/helloPage" element={<HelloPage />}></Route>
           </Routes>
         </main>

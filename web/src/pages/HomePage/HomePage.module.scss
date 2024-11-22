@@ -1,0 +1,32 @@
+@import "./../../styles/colors.scss";
+
+.HomePageContainer{
+    width: 100%;
+    padding-top: 80px;
+    header{
+        position: absolute;
+        top: 0;
+        height: 60px;
+        padding: 20px 30px;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        left: 0;
+        .EditLink{
+            display: flex;
+            align-items: center;
+            color: var(--GrenColor);
+            padding-top: 30px;
+            img{
+                margin-left: 5px;
+                width: 14px;
+            }
+        }
+    }
+    main{
+        margin-top: 82px;
+        width: 100vw;
+        // padding: 0px 40px;
+    }
+}
