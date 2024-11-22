@@ -17,8 +17,13 @@ const getUserByEmail = async (login: string): Promise<User | null> => {
     return User.findOne({ where: { login } });
 };
 
+const switchRole = async (user: User): Promise<void> => {
+    await user.update({ role: user.role === 1 ? 2 : 1 });
+};
+
 export default {
     getUserById,
     getUserByRefreshToken,
     getUserByEmail,
+    switchRole,
 };

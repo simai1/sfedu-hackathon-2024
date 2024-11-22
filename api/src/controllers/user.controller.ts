@@ -18,6 +18,21 @@ const getProfile = catchAsync(async (req, res) => {
     } as httpResponse);
 });
 
+const switchRole = catchAsync(async (req, res) => {
+    const userData = req.user;
+    const user = await userService.getUserById(userData.id);
+    if (!user) throw new ApiError(httpStatus.BAD_REQUEST, 'User not found');
+    await userService.switchRole(user);
+    res.json({
+        status: 'ok',
+        exception: null,
+        message: null,
+        tag: null,
+        data: null,
+    } as httpResponse);
+});
+
 export default {
     getProfile,
+    switchRole,
 };
