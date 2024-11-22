@@ -11,6 +11,9 @@ function Navigate() {
         <li>
           <Link to="/canvas">Конструктор</Link>
         </li>
+        <li>
+          <Link to="/authorization">Авторизация</Link>
+        </li>
       </ul>
     </div>
   );
