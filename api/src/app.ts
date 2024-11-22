@@ -6,7 +6,8 @@ import cookieSession from 'cookie-session';
 import expressWs from 'express-ws';
 import { errorHandler } from './middlewares/error-handler';
 
-// import authRoute from './routes/auth.route';
+import authRoute from './routes/auth.route';
+import userRoute from './routes/user.route';
 
 const { app, getWss } = expressWs(express());
 
@@ -31,7 +32,8 @@ app.use(
 // cronService.setDays.start();
 
 // routes section
-// app.use('/auth', authRoute);
+app.use('/auth', authRoute);
+app.use('/users', userRoute);
 
 // websocket section
 app.ws('/', () => {
