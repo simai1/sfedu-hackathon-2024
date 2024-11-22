@@ -7,7 +7,13 @@ import authService from '../services/auth.service';
 const register = catchAsync(async (req, res) => {
     const { login, name, password } = req.body;
     const userDto = await authService.register(login, name, password);
-    res.json(userDto);
+    res.json({
+        status: 'ok',
+        exception: null,
+        message: null,
+        tag: null,
+        data: userDto,
+    } as httpResponse);
 });
 
 const login = catchAsync(async (req, res) => {
