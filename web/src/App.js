@@ -6,6 +6,7 @@ import CanvasPage from "./pages/CanvasPage/CanvasPage";
 import Authorization from "./pages/Auth/Authorization";
 import "./styles/app.css";
 import HelloPage from "./pages/HelloPage/HelloPage";
+import Konva from "./modules/Konva/Konva";
 
 function App() {
   const [unauthorized, setUnauthorized] = useState(true);
@@ -26,6 +27,7 @@ function App() {
             <Route path="/canvas" element={<CanvasPage />}></Route>
             <Route path="/homePage" element={<HomePage />}></Route>
             <Route path="/helloPage" element={<HelloPage />}></Route>
+            <Route path="/konva" element={<Konva />}></Route>
           </Routes>
         </main>
       </BrowserRouter>
