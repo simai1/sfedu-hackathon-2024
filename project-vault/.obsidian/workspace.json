@@ -1,0 +1,173 @@
+{
+  "main": {
+    "id": "bf08275da76fd862",
+    "type": "split",
+    "children": [
+      {
+        "id": "6571f83bb1ea0ef8",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d83f4390fafd75f3",
+            "type": "leaf",
+            "state": {
+              "type": "canvas",
+              "state": {
+                "file": "План.canvas",
+                "viewState": {
+                  "x": -461.58908779545015,
+                  "y": -295.1235137840341,
+                  "zoom": -1.3680660197635492
+                }
+              },
+              "icon": "lucide-layout-dashboard",
+              "title": "План"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "6069896266facf11",
+    "type": "split",
+    "children": [
+      {
+        "id": "711fbea4cfc12417",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1b3ffbcf2c1ecbf5",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "d6a5fe5165bc1de1",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "94c6ea916bf7ff09",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "d370ff532788fa45",
+    "type": "split",
+    "children": [
+      {
+        "id": "ba89f74140709bd1",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d1c1778f279b6446",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "План.canvas",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for План"
+            }
+          },
+          {
+            "id": "0f40777adc4e4285",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "План.canvas",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from План"
+            }
+          },
+          {
+            "id": "33182d0db43d6686",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "7b4910b08993c413",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "План.canvas"
+              },
+              "icon": "lucide-list",
+              "title": "Outline of План"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "d83f4390fafd75f3",
+  "lastOpenFiles": [
+    "План.canvas",
+    "Welcome.md"
+  ]
+}
