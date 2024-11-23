@@ -1,12 +1,11 @@
 import { DataTypes, Model, Sequelize } from 'sequelize';
 
-export default class Coords extends Model {
+export default class Element extends Model {
     id!: string;
-    x!: number;
-    y!: number;
+    data!: object;
 
     static initialize(sequelize: Sequelize) {
-        Coords.init(
+        Element.init(
             {
                 id: {
                     type: DataTypes.UUID,
@@ -14,20 +13,16 @@ export default class Coords extends Model {
                     allowNull: false,
                     primaryKey: true,
                 },
-                x: {
-                    type: DataTypes.DECIMAL(5, 2).UNSIGNED.ZEROFILL,
-                    allowNull: false,
-                },
-                y: {
-                    type: DataTypes.DECIMAL(5, 2).UNSIGNED.ZEROFILL,
+                data: {
+                    type: DataTypes.JSONB,
                     allowNull: false,
                 },
             },
             {
                 sequelize,
                 schema: 'public',
-                modelName: 'Coords',
-                tableName: 'coords',
+                modelName: 'Element',
+                tableName: 'elements',
                 paranoid: true,
             }
         );

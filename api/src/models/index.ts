@@ -4,17 +4,17 @@ import User from './user';
 import TokenModel from './token-model';
 import Employee from './employee';
 import Equipment from './equipment';
-import Coords from './coords';
-import Office from './office';
+import Element from './element';
+import Floor from './floor';
 import Building from './building';
 
 const { DB_USER, DB_PWD, DB_HOST, DB_PORT, DB_NAME } = process.env;
 export const models = {
-    Coords,
     User,
     TokenModel,
+    Element,
     Building,
-    Office,
+    Floor,
     Employee,
     Equipment,
 };

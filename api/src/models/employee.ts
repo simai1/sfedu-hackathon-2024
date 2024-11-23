@@ -4,7 +4,6 @@ import positions from '../config/positions';
 export default class Employee extends Model {
     id!: string;
     name!: string;
-    isWorking!: boolean;
     position!: number;
 
     static initialize(sequelize: Sequelize) {

@@ -1,12 +1,12 @@
 import { DataTypes, Model, Sequelize } from 'sequelize';
 
-export default class Office extends Model {
+export default class Floor extends Model {
     id!: string;
     name!: string;
     content!: string;
 
     static initialize(sequelize: Sequelize) {
-        Office.init(
+        Floor.init(
             {
                 id: {
                     type: DataTypes.UUID,
@@ -18,16 +18,12 @@ export default class Office extends Model {
                     type: DataTypes.STRING(50),
                     allowNull: false,
                 },
-                content: {
-                    type: DataTypes.STRING,
-                    allowNull: false,
-                },
             },
             {
                 sequelize,
                 schema: 'public',
-                modelName: 'Office',
-                tableName: 'offices',
+                modelName: 'Floor',
+                tableName: 'floors',
                 paranoid: true,
             }
         );

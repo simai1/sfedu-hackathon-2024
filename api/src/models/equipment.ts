@@ -1,14 +1,17 @@
 import { DataTypes, Model, Sequelize } from 'sequelize';
 import conditions from '../config/conditions';
+import types from '../config/type';
 
 export default class Equipment extends Model {
     id!: string;
     name!: string;
-    description!: string;
-    content!: string;
-    lifetime!: number;
+    description?: string;
     condition!: number;
-    layer!: number;
+    type!: number;
+    inventoryNumber!: string;
+    createdAt!: Date;
+    inspectionDate!: Date;
+    cost?: number;
 
     static initialize(sequelize: Sequelize) {
         Equipment.init(
@@ -25,7 +28,15 @@ export default class Equipment extends Model {
                 },
                 description: {
                     type: DataTypes.STRING,
+                    allowNull: true,
+                },
+                type: {
+                    type: DataTypes.SMALLINT,
                     allowNull: false,
+                    validate: {
+                        isIn: [Object.values(types)],
+                    },
+                    defaultValue: 1,
                 },
                 condition: {
                     type: DataTypes.SMALLINT,
@@ -35,18 +46,19 @@ export default class Equipment extends Model {
                     },
                     defaultValue: 1,
                 },
-                content: {
-                    type: DataTypes.STRING,
+                inventoryNumber: {
+                    type: DataTypes.STRING(50),
                     allowNull: false,
+                    unique: true,
                 },
-                lifetime: {
-                    type: DataTypes.SMALLINT,
+                inspectionDate: {
+                    type: DataTypes.DATE,
                     allowNull: false,
-                    defaultValue: 5,
+                    defaultValue: new Date(new Date().setMonth(new Date().getMonth() + 1)),
                 },
-                layer: {
-                    type: DataTypes.SMALLINT,
-                    allowNull: false,
+                cost: {
+                    type: DataTypes.INTEGER,
+                    allowNull: true,
                 },
             },
             {
@@ -57,5 +69,14 @@ export default class Equipment extends Model {
                 paranoid: true,
             }
         );
+
+        Equipment.beforeCreate(async (model: Equipment) => {
+            const maxNumber = await Equipment.max('inventoryNumber');
+            if (!maxNumber || maxNumber === 0) model.set('inventoryNumber', 1);
+            else {
+                // @ts-expect-error maxNumber is always number after checks
+                model.set('inventoryNumber', maxNumber + 1);
+            }
+        });
     }
 }
