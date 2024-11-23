@@ -28,10 +28,11 @@ const CanvasSlice = createSlice({
 
   reducers: {
     addElem(state, action) {
-      const { id } = action.payload;
+      const { id, idEquipment } = action.payload;
       const newElement = {
         ...components.find((component) => component.elemId === id),
         id: Date.now().toString(),
+        idEquipment: idEquipment,
       };
       // Добавляем новый элемент в массив
       state.elements = [...state.elements, newElement];

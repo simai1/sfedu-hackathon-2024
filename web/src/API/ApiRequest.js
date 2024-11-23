@@ -10,19 +10,19 @@ let refreshTokensTimeout;
 //! Рефреш токенов
 export const refreshTokens = async () => {
   const data = {
-    refreshToken: sessionStorage.getItem("refreshToken")
-  }
+    refreshToken: sessionStorage.getItem("refreshToken"),
+  };
   try {
     const response = await http.post(`${server}/auth/refresh`, data, {});
     // Remove old tokens
     sessionStorage.removeItem("accessToken");
     sessionStorage.removeItem("refreshToken");
-    
+
     // Destructure the required data from the response
-    const { accessToken, refreshToken } = response.data.data; 
+    const { accessToken, refreshToken } = response.data.data;
     sessionStorage.setItem("accessToken", accessToken);
     sessionStorage.setItem("refreshToken", refreshToken);
-    
+
     return response;
   } catch (error) {
     console.error("Tokens were not updated!", error);
@@ -105,7 +105,6 @@ export const Register = async (UserData) => {
   }
 };
 
-
 export const LogOut = async () => {
   try {
     const response = await http.post(
@@ -129,35 +128,36 @@ export const LogOut = async () => {
 };
 
 export const GetProfile = async () => {
-    try {
-      const response = await http.get(
-        `${server}/users`,
-        {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-          },
-          withCredentials: true,
-        }
-      );
-      return response;
-    } catch (error) {
-      if (error?.response?.status === 403) {
-        window.location.href = `${process.env.REACT_APP_WEB_URL}/Authorization`;
-      } else {
-        console.log("Возникла ошибка при выходе!");
-      }
+  try {
+    const response = await http.get(`${server}/users`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+      withCredentials: true,
+    });
+    return response;
+  } catch (error) {
+    if (error?.response?.status === 403) {
+      window.location.href = `${process.env.REACT_APP_WEB_URL}/Authorization`;
+    } else {
+      console.log("Возникла ошибка при выходе!");
     }
+  }
 };
 
 //! Смена роли
 export const SwitchRole = async () => {
   console.log("accessToken", sessionStorage.getItem("accessToken"));
   try {
-    const response = await http.patch(`${server}/users/switchRole`, {}, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-      },
-    });
+    const response = await http.patch(
+      `${server}/users/switchRole`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+        },
+      }
+    );
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -168,7 +168,6 @@ export const SwitchRole = async () => {
     }
   }
 };
-
 
 //! Создание оборудования
 export const CreateEquipment = async (UserData) => {
@@ -208,9 +207,8 @@ export const GetEquipment = async () => {
   }
 };
 
-
 //! Офисы
-//!Созданеи офиса 
+//!Созданеи офиса
 export const CreateOffice = async (UserData) => {
   try {
     const response = await http.post(`${server}/buildings`, UserData, {
@@ -249,7 +247,7 @@ export const GetOffice = async () => {
 };
 
 //! Сотрудники
-//!Создане Сотрудника 
+//!Создане Сотрудника
 export const CreateWorker = async (UserData) => {
   try {
     const response = await http.post(`${server}/employees`, UserData, {
@@ -287,3 +285,21 @@ export const GetWorker = async () => {
   }
 };
 
+//! сохранить конвас
+export const apiSaveConvas = async (data, id) => {
+  try {
+    const response = await http.post(`${server}/floors/canvas${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    if (error?.response?.status === 403) {
+      window.location.href = `${process.env.REACT_APP_WEB_URL}/Authorization`;
+    } else {
+      console.log("Такой пользователь уже существует!");
+      return false;
+    }
+  }
+};

@@ -1,22 +1,32 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const BasicSlice = createSlice({
-  name: "BasicSlice",
+const EquipmentSlice = createSlice({
+  name: "equipmentSlice",
   initialState: {
-    BasicSlice : 1,
+    equipment: [],
+    office: [],
+    selectedOffice: null,
   },
 
   reducers: {
     //! добавить в массив фильтрацию по заголовку
-    setNumber(state, action) {
-      const { number } = action.payload;
-      state.BasicSlice = number;
+    setEquipment(state, action) {
+      const { data } = action.payload;
+      state.equipment = data;
+    },
+    setOffice(state, action) {
+      const { data } = action.payload;
+      state.office = data;
     },
 
-   
+    setSelectedOffice(state, action) {
+      const { id } = action.payload;
+      state.selectedOffice = id;
+    },
   },
 });
 
-export const { setNumber } = BasicSlice.actions;
+export const { setEquipment, setOffice, setSelectedOffice } =
+  EquipmentSlice.actions;
 
-export default BasicSlice.reducer;
+export default EquipmentSlice.reducer;

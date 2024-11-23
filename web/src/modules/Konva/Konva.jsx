@@ -10,7 +10,6 @@ import {
 } from "../../store/CanvasSlice/canvas.Slice";
 import Rectangle from "../../components/CanvasComponets/Rectangle/Rectangle";
 import Setka from "../../components/CanvasComponets/Setka/Setka";
-import DrawingApp from "../../components/CanvasComponets/Drawing/Drawing";
 import MyPolygonWithImage from "../../components/CanvasComponets/MenuComponent/SvgComponent/SvgComponent";
 
 const Konva = () => {
