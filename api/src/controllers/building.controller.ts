@@ -3,9 +3,12 @@ import buildingService from '../services/building.service';
 import { httpResponse } from '../utils/response';
 import ApiError from '../utils/ApiError';
 import httpStatus from 'http-status';
+import prepare from '../utils/prepare';
+import pick from '../utils/pick';
 
 const getAll = catchAsync(async (req, res) => {
-    const buildings = await buildingService.getAllBuildings();
+    const filter = prepare(pick(req.query, ['search']));
+    const buildings = await buildingService.getAllBuildings(filter);
     res.json({
         status: 'ok',
         exception: null,

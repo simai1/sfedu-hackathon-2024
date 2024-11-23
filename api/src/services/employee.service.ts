@@ -6,6 +6,8 @@ import ApiError from '../utils/ApiError';
 import httpStatus from 'http-status';
 import floorService from './floor.service';
 import Element from '../models/element';
+import { Op } from 'sequelize';
+import { positionsRuLocale } from '../config/positions';
 
 const getEmployeeById = async (employeeId: string): Promise<Employee | null> => {
     return await Employee.findByPk(employeeId);
@@ -17,8 +19,35 @@ const getOneEmployee = async (employeeId: string): Promise<EmployeeDto> => {
     return new EmployeeDto(employee);
 };
 
-const getAllEmployees = async (): Promise<EmployeeDto[]> => {
-    const employees = await Employee.findAll({ include: [{ model: Floor }, { model: Equipment }] });
+const getAllEmployees = async (filter: any): Promise<EmployeeDto[]> => {
+    let employees;
+    if (Object.keys(filter).length !== 0 && typeof filter.search !== 'undefined') {
+        const searchParams = [
+            { name: { [Op.iLike]: `%${filter.search}%` } },
+            {
+                position: (() => {
+                    return Object.keys(positionsRuLocale)
+                        .filter(p =>
+                            // @ts-expect-error skip
+                            positionsRuLocale[p]
+                                .toLowerCase()
+                                .includes(Number.isInteger(filter.search) ? filter.search : filter.search.toLowerCase())
+                        )
+                        .map(p => p);
+                })(),
+            },
+        ];
+        employees = await Employee.findAll({
+            where: { [Op.or]: searchParams },
+            include: [{ model: Floor }, { model: Equipment }],
+            order: [['name', 'ASC']],
+        });
+    } else {
+        employees = await Employee.findAll({
+            include: [{ model: Floor }, { model: Equipment }],
+            order: [['name', 'ASC']],
+        });
+    }
     return employees.map(e => new EmployeeDto(e));
 };
 

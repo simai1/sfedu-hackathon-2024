@@ -5,9 +5,12 @@ import ApiError from '../utils/ApiError';
 import httpStatus from 'http-status';
 import conditions from '../config/conditions';
 import types from '../config/type';
+import prepare from '../utils/prepare';
+import pick from '../utils/pick';
 
 const getAll = catchAsync(async (req, res) => {
-    const equipments = await equipmentService.getAllEquipments();
+    const filter = prepare(pick(req.query, ['search']));
+    const equipments = await equipmentService.getAllEquipments(filter);
     res.json({
         status: 'ok',
         exception: null,

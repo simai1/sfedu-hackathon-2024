@@ -5,6 +5,9 @@ import Employee from '../models/employee';
 import Element from '../models/element';
 import ApiError from '../utils/ApiError';
 import httpStatus from 'http-status';
+import { Op } from 'sequelize';
+import { conditionsRuLocale } from '../config/conditions';
+import { typesRuLocale } from '../config/type';
 
 const getEquipmentById = async (equipmentId: string): Promise<Equipment | null> => {
     return await Equipment.findByPk(equipmentId);
@@ -18,10 +21,49 @@ const getOneEquipment = async (equipmentId: string): Promise<EquipmentDto> => {
     return new EquipmentDto(equipment);
 };
 
-const getAllEquipments = async (): Promise<EquipmentDto[]> => {
-    const equipments = await Equipment.findAll({
-        include: [{ model: Floor }, { model: Employee }, { model: Element }],
-    });
+const getAllEquipments = async (filter: any): Promise<EquipmentDto[]> => {
+    let equipments;
+    if (Object.keys(filter).length !== 0 && typeof filter.search !== 'undefined') {
+        const searchParams = [
+            { name: { [Op.iLike]: `%${filter.search}%` } },
+            { description: { [Op.iLike]: `%${filter.search}%` } },
+            {
+                condition: (() => {
+                    return Object.keys(conditionsRuLocale)
+                        .filter(s =>
+                            // @ts-expect-error skip
+                            conditionsRuLocale[s]
+                                .toLowerCase()
+                                .includes(Number.isInteger(filter.search) ? filter.search : filter.search.toLowerCase())
+                        )
+                        .map(s => s);
+                })(),
+            },
+            {
+                type: (() => {
+                    return Object.keys(typesRuLocale)
+                        .filter(t =>
+                            // @ts-expect-error skip
+                            typesRuLocale[t]
+                                .toLowerCase()
+                                .includes(Number.isInteger(filter.search) ? filter.search : filter.search.toLowerCase())
+                        )
+                        .map(t => t);
+                })(),
+            },
+            { inventory_number: { [Op.iLike]: `%${filter.search}%` } },
+        ];
+        equipments = await Equipment.findAll({
+            where: { [Op.or]: searchParams },
+            include: [{ model: Floor }, { model: Employee }, { model: Element }],
+            order: [['type', 'ASC']],
+        });
+    } else {
+        equipments = await Equipment.findAll({
+            include: [{ model: Floor }, { model: Employee }, { model: Element }],
+            order: [['type', 'ASC']],
+        });
+    }
     return equipments.map(e => new EquipmentDto(e));
 };
 

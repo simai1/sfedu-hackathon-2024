@@ -4,6 +4,7 @@ import ApiError from '../utils/ApiError';
 import httpStatus from 'http-status';
 import Floor from '../models/floor';
 import Employee from '../models/employee';
+import { Op } from 'sequelize';
 
 const getBuildingById = async (buildingId: string): Promise<Building | null> => {
     return await Building.findByPk(buildingId);
@@ -17,8 +18,25 @@ const getOneBuilding = async (buildingId: string): Promise<BuildingDto> => {
     return new BuildingDto(building);
 };
 
-const getAllBuildings = async (): Promise<BuildingDto[]> => {
-    const buildings = await Building.findAll({ include: [{ model: Floor, include: [{ model: Employee }] }] });
+const getAllBuildings = async (filter: any): Promise<BuildingDto[]> => {
+    let buildings;
+    if (Object.keys(filter).length !== 0 && typeof filter.search !== 'undefined') {
+        const searchParams = [
+            { name: { [Op.iLike]: `%${filter.search}%` } },
+            { addressCity: { [Op.iLike]: `%${filter.search}%` } },
+            { addressOther: { [Op.iLike]: `%${filter.search}%` } },
+        ];
+        buildings = await Building.findAll({
+            where: { [Op.or]: searchParams },
+            include: [{ model: Floor, include: [{ model: Employee }] }],
+            order: [['addressCity', 'ASC']],
+        });
+    } else {
+        buildings = await Building.findAll({
+            include: [{ model: Floor, include: [{ model: Employee }] }],
+            order: [['addressCity', 'ASC']],
+        });
+    }
     return buildings.map(b => new BuildingDto(b));
 };
 
