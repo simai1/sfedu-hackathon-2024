@@ -7,7 +7,11 @@ import roles from '../config/roles';
 const router = Router();
 
 router.route('/').post(verifyToken.auth, verifyRole(roles.ADMIN), floorController.create);
-router.route('/canvas/:floorId').post(floorController.saveCanvas);
+router
+    .route('/canvas/:floorId')
+    .post(floorController.saveCanvas)
+    .delete(floorController.clearFloor)
+    .get(floorController.getCanvas);
 router
     .route('/:floorId')
     .get(verifyToken.auth, floorController.getOne)

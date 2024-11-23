@@ -62,6 +62,10 @@ const destroy = catchAsync(async (req, res) => {
 const saveCanvas = catchAsync(async (req, res) => {
     const { floorId } = req.params;
     const { equipments, employees, background } = req.body;
+    if (!floorId) throw new ApiError(httpStatus.BAD_REQUEST, 'Missing floorId');
+    if (!equipments) throw new ApiError(httpStatus.BAD_REQUEST, 'Missing equipments');
+    if (!employees) throw new ApiError(httpStatus.BAD_REQUEST, 'Missing employees');
+    if (!background) throw new ApiError(httpStatus.BAD_REQUEST, 'Missing background');
     await floorService.saveCanvas(floorId, equipments, employees, background);
     res.json({
         status: 'ok',
@@ -72,10 +76,38 @@ const saveCanvas = catchAsync(async (req, res) => {
     } as httpResponse);
 });
 
+const clearFloor = catchAsync(async (req, res) => {
+    const { floorId } = req.params;
+    if (!floorId) throw new ApiError(httpStatus.BAD_REQUEST, 'Missing floorId');
+    await floorService.clearFloor(floorId);
+    res.json({
+        status: 'ok',
+        exception: null,
+        message: null,
+        tag: null,
+        data: null,
+    } as httpResponse);
+});
+
+const getCanvas = catchAsync(async (req, res) => {
+    const { floorId } = req.params;
+    if (!floorId) throw new ApiError(httpStatus.BAD_REQUEST, 'Missing floorId');
+    const canvas = await floorService.getCanvas(floorId);
+    res.json({
+        status: 'ok',
+        exception: null,
+        message: null,
+        tag: null,
+        data: canvas,
+    } as httpResponse);
+});
+
 export default {
     getOne,
     create,
     update,
     destroy,
     saveCanvas,
+    clearFloor,
+    getCanvas,
 };

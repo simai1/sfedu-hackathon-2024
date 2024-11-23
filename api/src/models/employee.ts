@@ -10,6 +10,8 @@ export default class Employee extends Model {
     Floor?: Floor;
     floorId?: string;
     Equipment?: Equipment[];
+    Element?: Element;
+    elementId?: string;
 
     static initialize(sequelize: Sequelize) {
         Employee.init(

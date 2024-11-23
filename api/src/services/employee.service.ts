@@ -5,6 +5,7 @@ import Equipment from '../models/equipment';
 import ApiError from '../utils/ApiError';
 import httpStatus from 'http-status';
 import floorService from './floor.service';
+import Element from '../models/element';
 
 const getEmployeeById = async (employeeId: string): Promise<Employee | null> => {
     return await Employee.findByPk(employeeId);
@@ -57,6 +58,13 @@ const deleteEmployee = async (employeeId: string): Promise<void> => {
     await employee.destroy({ force: true });
 };
 
+const removeFromCanvas = async (employeeId: string): Promise<void> => {
+    const employee = await getEmployeeById(employeeId);
+    if (!employee) throw new ApiError(httpStatus.BAD_REQUEST, 'No employee with id ' + employeeId);
+    await Element.destroy({ where: { id: employee.elementId } });
+    await employee.update({ elementId: null, floorId: null });
+};
+
 export default {
     getEmployeeById,
     getOneEmployee,
@@ -65,4 +73,5 @@ export default {
     createEmployee,
     updateEmployee,
     deleteEmployee,
+    removeFromCanvas,
 };

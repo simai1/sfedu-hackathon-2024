@@ -101,8 +101,21 @@ const update = catchAsync(async (req, res) => {
 
 const destroy = catchAsync(async (req, res) => {
     const { equipmentId } = req.params;
-    if (!equipmentId) throw new ApiError(httpStatus.BAD_REQUEST, 'Missing equipment');
+    if (!equipmentId) throw new ApiError(httpStatus.BAD_REQUEST, 'Missing equipmentId');
     await equipmentService.deleteEquipment(equipmentId);
+    res.json({
+        status: 'ok',
+        exception: null,
+        message: null,
+        tag: null,
+        data: null,
+    } as httpResponse);
+});
+
+const removeFromCanvas = catchAsync(async (req, res) => {
+    const { equipmentId } = req.params;
+    if (!equipmentId) throw new ApiError(httpStatus.BAD_REQUEST, 'Missing equipmentId');
+    await equipmentService.removeFromCanvas(equipmentId);
     res.json({
         status: 'ok',
         exception: null,
@@ -119,4 +132,5 @@ export default {
     create,
     update,
     destroy,
+    removeFromCanvas,
 };

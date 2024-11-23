@@ -77,6 +77,13 @@ const deleteEquipment = async (equipmentId: string): Promise<void> => {
     await equipment.destroy({ force: true });
 };
 
+const removeFromCanvas = async (equipmentId: string): Promise<void> => {
+    const equipment = await getEquipmentById(equipmentId);
+    if (!equipment) throw new ApiError(httpStatus.BAD_REQUEST, 'No equipment with id ' + equipmentId);
+    await Element.destroy({ where: { id: equipment.elementId } });
+    await equipment.update({ elementId: null, floorId: null });
+};
+
 export default {
     getEquipmentById,
     getOneEquipment,
@@ -85,4 +92,5 @@ export default {
     createEquipment,
     updateEquipment,
     deleteEquipment,
+    removeFromCanvas,
 };

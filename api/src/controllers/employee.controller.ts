@@ -87,6 +87,19 @@ const destroy = catchAsync(async (req, res) => {
     } as httpResponse);
 });
 
+const removeFromCanvas = catchAsync(async (req, res) => {
+    const { employeeId } = req.params;
+    if (!employeeId) throw new ApiError(httpStatus.BAD_REQUEST, 'Missing employeeId');
+    await employeeService.removeFromCanvas(employeeId);
+    res.json({
+        status: 'ok',
+        exception: null,
+        message: null,
+        tag: null,
+        data: null,
+    } as httpResponse);
+});
+
 export default {
     getAll,
     getOne,
@@ -94,4 +107,5 @@ export default {
     create,
     update,
     destroy,
+    removeFromCanvas,
 };
