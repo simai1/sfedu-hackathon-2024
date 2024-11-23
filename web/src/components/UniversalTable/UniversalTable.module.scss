@@ -1,47 +1,188 @@
-.UniversalTable{
-    margin-top: 18px;
-    max-height: 65vh;
-    overflow-y: scroll;
-    border-radius: 8px;  
-    table{ 
-        width: 100%;
-        min-height: auto;
-        border-radius: 8px;
-        min-height: 305px;
-        thead {
-          position: sticky;
-          top: 0;
-          z-index: 1;
-          background-color: var(rgb(213, 181, 122)); // Ensure this background color is set, otherwise it will be transparent.
-          th{
-            position: relative;
-            align-items: center;
-            padding: 10px;
-            text-align: center;
-            &:nth-child(1) {
-              border-radius: 8px 0 0 0;
-            }
-            &:last-child{
-              border-radius: 0 8px 0 0;
-            }
-          }          
-        }
-        tbody{
-            td{
-              padding: 10px;
-              align-items: center;
-              text-align: center;
-              background-color:#f7f7f7;
-            }
-        }
-        .imgTable{
-            width: 150px;
-            height: 150px;
-            transition: 0.1s all linear;
-            &:hover{
-              opacity: 0.4;
-            }
-          }
-        
+.UniversalTable {
+  margin-top: 18px;
+  max-height: 65vh;
+  overflow-y: scroll;
+  margin: 0 30px;
+  border-bottom: 1px solid #D2D2D2;
+ 
+  table {
+    width: 100%;
+    min-height: auto;
+    min-height: 305px;
+    border-collapse: collapse; /* Ensures that borders are collapsed */
+    border-spacing: 0; /* Removes spacing between cells */
+    th, td {
+      padding: 0; /* Removes padding from table headers and cells */
+      margin: 0; /* Ensures no margin is applied */
     }
+    thead {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      
+      th {
+        position: relative;
+        align-items: center;
+        padding: 10px;
+        text-align: center;
+        font-weight: 600;
+        background-color: #E9EAEB;
+        border-right: 1px solid #F5F6F7;
+        // &:nth-child(1) {
+        //   border-radius: 8px 0 0 0;
+        // }
+        // &:last-child {
+        //   border-radius: 0 8px 0 0;
+        // }
+        tr{
+          display: flex;
+        
+        }
+     
+      }
+    }
+
+    tbody {
+      td {
+        align-items: center;
+        text-align: center;
+        background-color: #f7f7f7;
+        border-right: 1px solid #D2D2D2;
+        border-bottom: 1px solid #D2D2D2;
+        min-height: 80px;
+        height: 80px;
+        padding: 5px 10px;
+        &:last-child {
+          border-right: none;
+          border-bottom: 1px solid #D2D2D2;
+        }
+        font-size: 14px;
+        font-weight: 400;
+       
+      }
+     
+     
+    }
+  }
+
+
+input[type="checkbox"] {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -o-appearance: none;
+  outline: none !important;
+  content: none;
+  position: relative;
+  left: -20px;
+
+}
+
+input[type="checkbox"]:before {
+  font-family: "FontAwesome";
+  content: "\f00c";
+  font-size: 13px;
+  border-radius: 4px;
+  color: transparent !important;
+  background: #fff;
+  display: block;
+  width: 16px;
+  height: 16px;
+  border: 1.7px solid #1A7D78;
+  cursor: pointer;
+}
+.mainTd{
+  position: relative;
+}
+.checkboxTd{
+  position: absolute!important;
+  left: 30px!important;
+  margin-top: 20px;
+}
+
+input[type="checkbox"]:checked:before {
+  border-radius: 4px;
+}
+.galochka{
+  position: absolute;
+  left: 34px;
+   padding-top: 24px;
+   width: 10px;
+   pointer-events: none;
+}
+.galochkaAll{
+  position: absolute;
+  left: 35px;
+  padding-top: 8px;
+  pointer-events: none;
+  width: 10px;
+}
+}
+th[name="name"]{
+  width: 220px;
+}
+th[name="description"]{
+  width: 350px;
+}
+
+tr{
+  &:hover td {
+    background-color: #1A7D780D!important;
+    cursor: pointer;
+  }
+}  
+.popup {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #989898;
+  border-radius: 4px;
+  color: #989898;
+  padding: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000; // Ensure it appears above other elements
+}
+.stateWrapper{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.state{
+  border-radius: 23px;
+  width: 115px;
+  padding: 5px 10px;
+}
+.checkboxGlobal{
+  position: relative;
+  top: 0px;
+  margin-right: 2px;
+}
+.namesTd{
+  padding-left: 50px;
+}
+.equipmentButton{
+  transition: 0.1s linear all;
+  .equipmentButtonInner{
+    border-radius: 5px;
+    margin: 0 auto; 
+    width: 40px;
+    padding: 5px;
+    box-sizing: border-box;
+    button{
+      background: none;
+      border: none;
+      cursor: pointer;
+      img{
+        position: relative;
+        top: 2px;
+        left: 1px;
+      }
+    }
+    &:hover{
+      cursor: pointer;
+      background-color: var(--GrayColorButtonHover);
+    }
+    &:active{
+      background-color: var(--GrayColorButtonActive);
+    }
+  }
+
 }

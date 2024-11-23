@@ -1,0 +1,13 @@
+.MenuComponent {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 20px;
+  margin-top: 40px;
+  background-color: #fff;
+  z-index: 100;
+  li {
+    cursor: pointer;
+    margin: 10px;
+  }
+}
