@@ -17,8 +17,8 @@ export const tableHeadOfise = [
 
 export const tableHeadPeople = [
     { key: "name", value: "ФИО", isActive: true  },
-    { key: "post", value: "Должность", isActive: true  },
-    { key: "office", value: "Офис", isActive: true  },
+    { key: "positionHuman", value: "Должность", isActive: true  },
+    { key: "building", value: "Офис", isActive: true  },
     { key: "floor", value: "Этаж", isActive: true  },
     { key: "equipment", value: "Оборудование", isActive: true  },
 ]

@@ -2,10 +2,10 @@ import React, { useContext, useState } from 'react';
 import styles from "./HomePageTableMenu.module.scss";
 import DataContext from '../../context';
 import UneversalList from '../UneversalList/UneversalList';
+import { generateAndDownloadExcel } from './function';
 
-function HomePageTableMenu() {
+function HomePageTableMenu(props) {
     const context  = useContext(DataContext);
-    
     const getToPathname = () => {
         switch (context?.activeTable) {
             case "office":
@@ -120,7 +120,7 @@ function HomePageTableMenu() {
     
       const dataListStaff = [
         { id: 1, name: "Инженерный офис" },
-        { id: 2, name: "Офис цифровых решений" },
+        { id: 2, name: "Главный офис" },
         { id: 3, name: "Дизайн центр" },
       ]; // Sample data list
       const [searchText, setSearchText] = useState('');
@@ -143,10 +143,6 @@ function HomePageTableMenu() {
                 </div>
             </div>
             <div className={styles.HomePageButtonNewEmployee}>
-                <button>
-                    <img src="/img/edit.svg" alt="Plus" />
-                    <span>Редактировать</span>
-                </button>
                 <button onClick={() => addNewItem()}>
                     <img src="/img/plus.svg" alt="Plus" />
                     <span>Добавить {getToPathname()}</span>
@@ -155,6 +151,18 @@ function HomePageTableMenu() {
                     <img className={styles.deleteIcon} src="/img/delete.svg" alt="Plus" />
                     <span>Удалить</span>
                 </button>
+                <button onClick={() => generateAndDownloadExcel(props?.tableData, context?.activeTable)}>
+                    <img src="/img/export.svg" alt="Plus" style={{transform: "rotate(180deg)" }}/>
+                    <span>Экспорт</span>
+                </button>
+                {
+                    context?.activeTable === "Equipment" &&
+                    <button>
+                    <img src="/img/export.svg" alt="Plus" />
+                        <span>Импорт</span>
+                    </button>
+                }
+               
                
             </div>
         </div>

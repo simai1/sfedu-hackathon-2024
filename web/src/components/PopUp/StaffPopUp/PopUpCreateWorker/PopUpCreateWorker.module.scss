@@ -6,6 +6,25 @@
         input{
             width: 370px!important;
         }
+        .input {
+            width: 370px;
+            border: none;
+            padding: 10px;
+            border: 1px solid #989898;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+            height: 50px;
+            color: var(--GrenColor);
+            cursor: pointer; // Change cursor to pointer to indicate it's clickable
+            &:focus {
+                border-color: #007bff;
+                outline: none;
+            }
+        }
+        .InputList{
+            position: relative;
+        }
     button{
         width: 177px;
         height: 50px;
@@ -48,4 +67,41 @@
         justify-content: center;
         position: relative;
     }
+    .dropdown {
+        margin-top: 0px;
+        position: absolute;
+        top: 50px;
+        left: 0px;
+        right: 0;
+        width: 100%;
+        background-color: white;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        max-height: 300px;
+        overflow-y: auto;
+        z-index: 1000;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+   .PopUpCreateEquipmentContainer{
+    position: relative;
+    margin-bottom: 25px;
+   }
+    .dropdownItem {
+        padding: 10px;
+        cursor: pointer;
+        &:hover {
+            background-color: var(--GrayColorButtonHover);
+        }
+        &:active {
+            background-color: var(--GrayColorButtonActive);
+        }
+    }
+    .imgArrow{
+        pointer-events: none;
+        position: absolute;
+        right: 15px;
+        top: 18px;
+    }
+   
 }
+

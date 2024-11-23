@@ -38,10 +38,10 @@ const getTableData = (value) => {
       break;
   }
 }
+
  const getEquuipmentData = () =>{
   GetEquipment().then((resp)=>{
     if(resp?.status === 200){
-    console.log("resp", resp.data.data)
     setTableBody(resp.data.data);
     setTableHeader(tableHeadAppoint);
     }
@@ -68,7 +68,6 @@ const getTableData = (value) => {
  
 
 const getLink = (name) => {
-  console.log("name", name)
   switch (name) {
       case "Ноутбук":
           return "/img/notebook.svg";
@@ -116,7 +115,8 @@ const getLink = (name) => {
     setValueNameEquipment,
     valueNameOffise,
     setValueNameOffise,
-    getOfficeData
+    getOfficeData,
+    getEmployeeData
   };
 
   useEffect(() => {
