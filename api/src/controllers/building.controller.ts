@@ -3,7 +3,6 @@ import buildingService from '../services/building.service';
 import { httpResponse } from '../utils/response';
 import ApiError from '../utils/ApiError';
 import httpStatus from 'http-status';
-import equipmentService from '../services/equipment.service';
 
 const getAll = catchAsync(async (req, res) => {
     const buildings = await buildingService.getAllBuildings();

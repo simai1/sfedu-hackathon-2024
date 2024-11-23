@@ -5,7 +5,6 @@ import ApiError from '../utils/ApiError';
 import httpStatus from 'http-status';
 import conditions from '../config/conditions';
 import types from '../config/type';
-import employeeService from '../services/employee.service';
 
 const getAll = catchAsync(async (req, res) => {
     const equipments = await equipmentService.getAllEquipments();

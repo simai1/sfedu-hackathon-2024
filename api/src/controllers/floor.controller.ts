@@ -59,7 +59,6 @@ const destroy = catchAsync(async (req, res) => {
     } as httpResponse);
 });
 
-
 const saveCanvas = catchAsync(async (req, res) => {
     const { floorId } = req.params;
     const { equipments, employees, background } = req.body;
@@ -71,7 +70,7 @@ const saveCanvas = catchAsync(async (req, res) => {
         tag: null,
         data: null,
     } as httpResponse);
-})
+});
 
 export default {
     getOne,
