@@ -43,11 +43,12 @@ const updateEmployee = async (
     name: string | undefined,
     position: number | undefined,
     floorId: string | undefined,
-    equipmentId: string | undefined
+    equipmentId: string | undefined,
+    elementId: string | undefined,
 ): Promise<void> => {
     const employee = await getEmployeeById(employeeId);
     if (!employee) throw new ApiError(httpStatus.BAD_REQUEST, 'No employee with id ' + employeeId);
-    await employee.update({ name, position, floorId, equipmentId });
+    await employee.update({ name, position, floorId, equipmentId, elementId });
 };
 
 const deleteEmployee = async (employeeId: string): Promise<void> => {

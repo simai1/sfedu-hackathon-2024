@@ -58,13 +58,13 @@ const create = catchAsync(async (req, res) => {
 
 const update = catchAsync(async (req, res) => {
     const { employeeId } = req.params;
-    const { name, position, floorId, equipmentId } = req.body;
+    const { name, position, floorId, equipmentId, elementId } = req.body;
     if (!employeeId) throw new ApiError(httpStatus.BAD_REQUEST, 'Missing employeeId');
-    if (!name && !position && !floorId && !equipmentId)
+    if (!name && !position && !floorId && !equipmentId && !elementId)
         throw new ApiError(httpStatus.BAD_REQUEST, 'Missing update data');
     if (position && !Object.values(positions).includes(position))
         throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid position');
-    await employeeService.updateEmployee(employeeId, name, position, floorId, equipmentId);
+    await employeeService.updateEmployee(employeeId, name, position, floorId, equipmentId, elementId);
     res.json({
         status: 'ok',
         exception: null,

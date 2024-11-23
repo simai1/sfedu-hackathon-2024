@@ -30,4 +30,8 @@ export default function () {
     // У строения несколько этажей
     Building.hasMany(Floor, { foreignKey: 'buildingId' });
     Floor.belongsTo(Building, { foreignKey: 'buildingId' });
+
+    // Прикрепление элементов к этажам
+    Floor.hasMany(Element, { foreignKey: 'floorId' });
+    Element.belongsTo(Floor, { foreignKey: 'floorId' });
 }
