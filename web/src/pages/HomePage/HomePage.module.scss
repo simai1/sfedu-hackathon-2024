@@ -1,53 +1,52 @@
 @import "./../../styles/colors.scss";
 
-.HomePageContainer{
+.HomePageContainer {
+  width: 100%;
+  padding-top: 80px;
+  header {
+    position: absolute;
+    top: 0;
+    height: 60px;
+    padding: 20px 30px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
     width: 100%;
-    padding-top: 80px;
-    header{
-        position: absolute;
-        top: 0;
-        height: 60px;
-        padding: 20px 30px;
-        box-sizing: border-box;
+
+    left: 0;
+    .EditLink {
+      display: flex;
+      align-items: center;
+      color: var(--GrenColor);
+      border-radius: 5px;
+      margin-top: 30px;
+      box-sizing: border-box;
+      .EditLinkInner {
         display: flex;
-        justify-content: space-between;
-        width: 100%;
-        left: 0;
-        .EditLink{
-            display: flex;
-            align-items: center;
-            color: var(--GrenColor);
-            border-radius: 5px;
-            margin-top: 30px;
-            box-sizing: border-box;
-            .EditLinkInner{
-                display: flex;
-                padding: 9px 7px!important;
-                border-radius: 5px;
-                cursor: pointer;
-                transition: 0.1s linear all;
-                &:hover{
-                    background-color: var(--GrayColorButtonHover);
-                }
-                &:active{
-                    background-color: var(--GrayColorButtonActive);
-                   
-                }
-            }
-           
-            img{
-                margin-left: 5px;
-                width: 14px;
-            }
-          
+        padding: 9px 7px !important;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.1s linear all;
+        &:hover {
+          background-color: var(--GrayColorButtonHover);
         }
-    }
-    main{
-        margin-top: 52px;
-        width: 100vw;
-        // padding: 0px 40px;
-        .HomePageTable{
-            margin-top: 30px;
+        &:active {
+          background-color: var(--GrayColorButtonActive);
         }
+      }
+
+      img {
+        margin-left: 5px;
+        width: 14px;
+      }
     }
+  }
+  main {
+    margin-top: 52px;
+    width: 100vw;
+    // padding: 0px 40px;
+    .HomePageTable {
+      margin-top: 30px;
+    }
+  }
 }
