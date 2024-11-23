@@ -12,7 +12,6 @@ function UniversalTable(props) {
   useEffect(() => {
     setTableHeaderData(props?.tableHeader);
     setTableBodyData(props?.tableBody);
-    console.log("props?.tableBody", props?.tableBody);
   }, [props?.tableHeader, props?.tableBody]);
 
   const getValue = (value, key) => {
