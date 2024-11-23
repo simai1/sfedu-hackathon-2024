@@ -6,6 +6,7 @@ const CanvasSlice = createSlice({
   initialState: {
     elements: [],
     selectedElement: "",
+    mode: 0,
   },
 
   reducers: {
@@ -19,6 +20,11 @@ const CanvasSlice = createSlice({
       state.elements = [...state.elements, newElement];
       // Сортируем элементы по zIndex
       state.elements.sort((a, b) => (a.zIndex || 0) - (b.zIndex || 0));
+    },
+
+    setMode(state, action) {
+      const { mode } = action.payload;
+      state.mode = mode;
     },
 
     setElem(state, action) {
@@ -35,6 +41,19 @@ const CanvasSlice = createSlice({
           return {
             ...elem,
             draggable: !elem.draggable,
+          };
+        }
+        return elem;
+      });
+    },
+
+    setPointsElem(state, action) {
+      const { id, points } = action.payload;
+      state.elements = state.elements.map((elem) => {
+        if (elem.id === id) {
+          return {
+            ...elem,
+            points: points,
           };
         }
         return elem;
@@ -58,6 +77,8 @@ export const {
   deleteElem,
   setSelectedElement,
   setDraggable,
+  setPointsElem,
+  setMode,
 } = CanvasSlice.actions;
 
 export default CanvasSlice.reducer;

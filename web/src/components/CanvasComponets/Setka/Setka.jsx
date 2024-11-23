@@ -7,8 +7,8 @@ function Setka() {
         <Line
           key={`v-${i}`}
           points={[i * 20, 0, i * 20, window.innerHeight]}
-          stroke="lightgray"
-          strokeWidth={2}
+          stroke="#E7E7E7"
+          strokeWidth={1}
           lineCap="round"
         />
       ))}
@@ -16,8 +16,8 @@ function Setka() {
         <Line
           key={`v-${i}`}
           points={[0, i * 20, window.innerWidth, i * 20]}
-          stroke="lightgray"
-          strokeWidth={2}
+          stroke="#E7E7E7"
+          strokeWidth={1}
           lineCap="round"
         />
       ))}

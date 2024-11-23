@@ -1,4 +1,4 @@
-import { addElem } from "../../../store/CanvasSlice/canvas.Slice";
+import { addElem, setMode } from "../../../store/CanvasSlice/canvas.Slice";
 import { components } from "../../../store/CanvasSlice/components";
 import styles from "./MenuComponent.module.scss";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,6 +9,10 @@ function MenuComponent() {
 
   const funClikElement = (id) => {
     dispatch(addElem({ id }));
+  };
+
+  const editSten = () => {
+    dispatch(setMode({ mode: 1 }));
   };
 
   return (
@@ -22,6 +26,7 @@ function MenuComponent() {
             {component.name}
           </li>
         ))}
+        <li onClick={() => editSten()}>Рисовать стены</li>
       </ul>
     </div>
   );

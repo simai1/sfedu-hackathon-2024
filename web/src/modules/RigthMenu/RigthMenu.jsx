@@ -22,14 +22,17 @@ function RigthMenu() {
     dispatch(deleteElem({ id }));
   };
 
-  console.log("element", element);
+  const onBloked = () => {
+    dispatch(setDraggable({ id: element.id }));
+  };
+
   return (
     <div className={styles.RigthMenu}>
       {element?.id && (
         <>
           <button onClick={() => deleteElement(element.id)}>Удалить</button>
-          <button onClick={() => setDraggable({ id: element.id })}>
-            Заблокировать
+          <button onClick={() => onBloked(element.id)}>
+            {!element.draggable ? "Разблокировать" : "Заблокировать"}
           </button>
         </>
       )}
