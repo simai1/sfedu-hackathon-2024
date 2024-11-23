@@ -8,6 +8,10 @@ import HomePageTableMenu from "../../components/HomePageTableMenu/HomePageTableM
 import UniversalTable from "../../components/UniversalTable/UniversalTable";
 import FooterHomePageComp from "../../components/FooterHomePage/FooterHomePage";
 import PopUpEquipmentPeople from "../../components/PopUp/PopUpEquipmentPeople/PopUpEquipmentPeople";
+import PopUpDelete from "../../components/PopUp/PopUpDelete/PopUpDeleteEqupment";
+import PopUpDeleteEqupment from "../../components/PopUp/PopUpDelete/PopUpDeleteEqupment";
+import PopUpDeleteStaff from "../../components/PopUp/PopUpDeleteStaff/PopUpDeleteStaff";
+import PopUpDeleteOffice from "../../components/PopUp/PopUpDeleteOffice/PopUpDeleteOffice";
 
 function HomePage() {
   const context = useContext(DataContext);
@@ -36,6 +40,8 @@ function HomePage() {
       </main>
       <FooterHomePageComp />
       {context.popUp === "PopUpEquipmentPeople" && <PopUpEquipmentPeople />}
+      {context.popUp === "PopUpDeleteStaff" && <PopUpDeleteStaff />}
+      {context.popUp === "PopUpDeleteOffice" && <PopUpDeleteOffice />}
     </div>
   );
 }

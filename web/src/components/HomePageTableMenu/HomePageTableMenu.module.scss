@@ -54,27 +54,63 @@
             position: absolute;
             left: -20px;
             transition: transform 0.3s ease;
+            top: 15px;
         }
     
         .SearchInput {
             padding-left: 40px; // Space for the icon
             transition: padding-left 0.3s ease;
             background-color: inherit;
-            height: 28px;
+            height: 38px;
             border: none;
             border-bottom: 1px solid #D2D2D2;
             width: 200px;
+            font-size: 16px;
+            position: relative;
+            top: 5px;
+            &::placeholder{
+                font-size: 14px;
+            }
             &:focus {
                 padding-left: 10px; // Adjust padding when focused
                 border: none;
+                padding-right: 30px;
+                box-sizing: border-box;
             }
     
             &:focus + .SearchIcon {
-                transform: translateX(170px); // Move the icon to the right
+                transform: translateX(165px); // Move the icon to the right
             }
         }
     
 }
-    
-   
+    .FilterContainer{
+        display: flex;
+        align-items: center;
+        position: relative;
+        top: 5px;
+        .Filter{
+            display: flex;
+            align-items: center;
+            background: none;
+            border: none;
+            color: #989898;
+            transition: 0.1s linear all;
+            padding: 7px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            &:hover{
+                background-color: var(--GrayColorButtonHover);
+            }
+            &:active{
+                background-color: var(--GrayColorButtonActive);
+            }
+            img{
+                position: relative;
+                top: 0px;
+                right: 20px;
+            }
+           }
+    }
+  
 }
