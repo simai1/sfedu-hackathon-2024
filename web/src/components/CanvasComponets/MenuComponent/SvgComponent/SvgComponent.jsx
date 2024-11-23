@@ -1,15 +1,20 @@
-import React, { useEffect, useRef } from "react";
-import { Layer, Image as KonvaImage } from "react-konva";
-import { useDispatch } from "react-redux";
-import { setSelectedElement } from "../../../../store/CanvasSlice/canvas.Slice";
+import React, { useEffect, useRef, useState } from "react";
+import { Layer, Image as KonvaImage, Transformer } from "react-konva";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setRotation,
+  setSelectedElement,
+} from "../../../../store/CanvasSlice/canvas.Slice";
 
 const MyPolygonWithImage = ({ rect, onChange }) => {
   const imageRef = useRef();
+  const transformerRef = useRef();
   const dispatch = useDispatch();
+  const canvasSlice = useSelector((state) => state.CanvasSlice);
 
   useEffect(() => {
     const img = new window.Image();
-    img.src = rect.svgPath; // Используем переданный путь
+    img.src = rect.svgPath;
     img.onload = () => {
       imageRef.current.image(img);
       imageRef.current.getLayer().batchDraw();
@@ -17,37 +22,66 @@ const MyPolygonWithImage = ({ rect, onChange }) => {
     img.onerror = () => {
       console.error("Ошибка загрузки изображения:", img.src);
     };
-  }, [rect.svgPath]); // Добавляем зависимость от svgPath
+  }, [rect.svgPath]);
+
+  useEffect(() => {
+    // Показать трансформатор, если элемент выбран
+    if (canvasSlice.selectedElement === rect.id) {
+      transformerRef.current.nodes([imageRef.current]);
+      transformerRef.current.getLayer().batchDraw();
+    }
+  }, [canvasSlice.selectedElement]);
 
   const handleDragEnd = (e) => {
     const newX = e.target.x();
     const newY = e.target.y();
+    onChange({ ...rect, x: newX, y: newY, rotation: canvasSlice.rotation });
+  };
 
-    // Вызываем onChange для обновления позиции в родительском компоненте
-    onChange({ ...rect, x: newX, y: newY });
+  const handleClick = () => {
+    dispatch(setSelectedElement({ id: rect.id }));
+    onContextCkick(rect);
   };
 
   const onContextCkick = (elem) => {
-    // dispatch(deleteElem({ id: elem.id }));
     dispatch(setSelectedElement({ id: elem.id }));
   };
 
+  const handleRotate = (e) => {
+    const angle = e.evt.movementX; // Измените это для более точного вращения
+    dispatch(
+      setRotation({ id: rect.id, rotation: canvasSlice.rotation + angle })
+    );
+  };
+
   return (
-    <KonvaImage
-      onMouseDown={() => onContextCkick(rect)}
-      onClick={(e) => {
-        onContextCkick(rect); // передаем событие в onContextClick
-      }}
-      ref={imageRef}
-      x={rect.x} // Используем координаты из rect
-      y={rect.y} // Используем координаты из rect
-      width={100}
-      height={100}
-      offsetX={50} // Центрирование изображения
-      offsetY={50} // Центрирование изображения
-      draggable={rect.draggable}
-      onDragEnd={handleDragEnd} // Обработчик окончания перетаскивания
-    />
+    <React.Fragment>
+      <KonvaImage
+        onMouseDown={handleClick}
+        onClick={handleClick}
+        ref={imageRef}
+        x={rect.x}
+        y={rect.y}
+        width={rect.width}
+        height={rect.height}
+        offsetX={rect.width / 2}
+        offsetY={rect.height / 2}
+        draggable={rect.draggable}
+        rotation={rect.rotation} // Уставливаем угол поворота
+        onDragEnd={handleDragEnd}
+        // onMouseMove={selected ? handleRotate : undefined} // Если элемент выбран, вращаем
+      />
+      {canvasSlice.selectedElement === rect.id && (
+        <Transformer
+          ref={transformerRef}
+          rotateEnabled={true}
+          //   boundBoxFunc={(oldBox, newBox) => {
+          //     // Ограничьте размер (по желанию)
+          //     return newBox;
+          //   }}
+        />
+      )}
+    </React.Fragment>
   );
 };
 
