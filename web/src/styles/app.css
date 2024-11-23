@@ -15,3 +15,14 @@
 body{
     background-color: #F5F6F7;
 }
+#checkboxTdNet{
+    position: relative;
+    top: 18px;
+  }
+  #galochcaNet{
+    left: 34px;
+    top: 18px;
+  }
+  #GlovalChecboxPeople{
+    left: -60px;
+  }

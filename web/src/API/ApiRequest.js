@@ -137,4 +137,21 @@ export const GetProfile = async () => {
     }
 };
 
-
+//! Смена роли
+export const SwitchRole = async () => {
+  try {
+    const response = await http.patch(`${server}/users/switchRole`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    if (error?.response?.status === 403) {
+      window.location.href = `${process.env.REACT_APP_WEB_URL}/Authorization`;
+    } else {
+      console.log("Такой пользователь уже существует!");
+      return false;
+    }
+  }
+};

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from "./HomePageProfileClicker.module.scss";
+import { SwitchRole } from '../../API/ApiRequest';
 
 
 function HomePageProfileClicker() {
@@ -8,6 +9,9 @@ function HomePageProfileClicker() {
 
     const handleClick = () => {
         setIsChecked(!isChecked);
+        SwitchRole().then((res) => {
+            console.log("res", res)
+        })
     };
     return ( 
         <div className={styles.HomePageProfileClicker}>
@@ -17,7 +21,7 @@ function HomePageProfileClicker() {
                 <p>{isChecked ? 'Администратор' : 'Пользователь'}</p>
                 <div
                     className={`${styles.switch} ${isChecked ? styles['switch--checked'] : ''}`}
-                    onClick={handleClick}
+                    onClick={() => handleClick()}
                 >
                     <div className={styles.switch__circle} />
                 </div>

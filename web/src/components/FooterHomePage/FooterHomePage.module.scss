@@ -1,0 +1,40 @@
+@import "./../../styles/colors.scss";
+
+.Footer{
+    // position: absolute;
+    // bottom: 0;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--GrenColor);
+    padding: 18px 30px;
+    color: #fff;
+    box-sizing: border-box;
+    font-weight: 400;
+    img{
+        margin-bottom: 5px;
+    }
+    .FooterIcons{
+        margin-top: 15px;
+        img{
+            &:first-child{
+                margin-right: 34px;
+            }
+        }
+    }
+    .footerList{
+        ul{
+            list-style: none;
+            li{
+                padding: 2px 0px;
+            }
+        }
+    }
+    .FooterBottomOOO{
+        p{
+            margin: 3px 0px;
+            text-align: right;
+        }
+    }
+}
