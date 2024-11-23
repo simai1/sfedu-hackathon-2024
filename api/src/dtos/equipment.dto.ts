@@ -3,6 +3,7 @@ import { conditionsRuLocale } from '../config/conditions';
 import { mapTypes, typesRuLocale } from '../config/type';
 import ElementDto from './element.dto';
 import EmployeeDto from './employee.dto';
+import strftime from 'strftime';
 
 export default class EquipmentDto {
     id!: string;
@@ -14,7 +15,9 @@ export default class EquipmentDto {
     typeHuman!: string;
     inventoryNumber!: string;
     createdAt!: Date;
+    createdAtHuman!: string;
     inspectionDate!: Date;
+    inspectionDateHuman!: string;
     cost?: number;
     element?: ElementDto;
     employee?: EmployeeDto;
@@ -33,7 +36,9 @@ export default class EquipmentDto {
         // @ts-expect-error any
         this.inventoryNumber = `${mapTypes[model.type]}:${model.inventoryNumber}`;
         this.createdAt = model.createdAt;
+        this.createdAtHuman = strftime('%d.%m.%y', model.createdAt);
         this.inspectionDate = model.inspectionDate;
+        this.inspectionDateHuman = strftime('%d.%m.%y', model.inspectionDate);
         this.cost = model.cost;
         // @ts-expect-error any
         this.element = model.Element ? new ElementDto(model.Element) : undefined;
