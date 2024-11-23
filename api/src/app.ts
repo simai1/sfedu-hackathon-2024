@@ -8,6 +8,11 @@ import { errorHandler } from './middlewares/error-handler';
 
 import authRoute from './routes/auth.route';
 import userRoute from './routes/user.route';
+import employeeRoute from './routes/employee.route';
+import elementRoute from './routes/element.route';
+import buildingRoute from './routes/building.route';
+import equipmentRoute from './routes/equipment.route';
+import floorRoute from './routes/floor.route';
 
 const { app, getWss } = expressWs(express());
 
@@ -34,6 +39,11 @@ app.use(
 // routes section
 app.use('/auth', authRoute);
 app.use('/users', userRoute);
+app.use('/employees', employeeRoute);
+app.use('/elements', elementRoute);
+app.use('/buildings', buildingRoute);
+app.use('/equipments', equipmentRoute);
+app.use('/floors', floorRoute);
 
 // websocket section
 app.ws('/', () => {

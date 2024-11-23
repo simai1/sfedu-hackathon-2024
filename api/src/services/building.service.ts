@@ -14,9 +14,9 @@ const getOneBuilding = async (buildingId: string): Promise<BuildingDto> => {
     return new BuildingDto(building);
 };
 
-const getAllBuildings = async (): Promise<BuildingDto[] | null> => {
+const getAllBuildings = async (): Promise<BuildingDto[]> => {
     const buildings = await Building.findAll({ include: [{ model: Floor }] });
-    return buildings ? buildings.map(b => new BuildingDto(b)) : null;
+    return buildings.map(b => new BuildingDto(b));
 };
 
 const createBuilding = async (name: string, addressCity: string, addressOther: string): Promise<BuildingDto> => {

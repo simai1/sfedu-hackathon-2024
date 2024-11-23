@@ -10,15 +10,8 @@ const getFloorById = async (floorId: string): Promise<Floor | null> => {
 };
 
 const getOneFloor = async (floorId: string): Promise<FloorDto> => {
-    const floor = await Floor.findByPk(floorId, { include: [{ model: Floor }] });
+    const floor = await Floor.findByPk(floorId, { include: [{ model: Building }] });
     if (!floor) throw new ApiError(httpStatus.BAD_REQUEST, 'Not found floor with id ' + floorId);
-    return new FloorDto(floor);
-};
-
-const createFloor = async (name: string, buildingId: string): Promise<FloorDto> => {
-    const building = await buildingService.getBuildingById(buildingId);
-    if (!building) throw new ApiError(httpStatus.BAD_REQUEST, 'No building with id ' + buildingId);
-    const floor = await Floor.create({ name, buildingId }, { include: [{ model: Building }] });
     return new FloorDto(floor);
 };
 
@@ -30,6 +23,14 @@ const updateFloor = async (
     const floor = await getFloorById(floorId);
     if (!floor) throw new ApiError(httpStatus.BAD_REQUEST, 'Not found floor with id ' + floorId);
     await floor.update({ name, buildingId });
+};
+
+const createFloor = async (name: string, buildingId: string): Promise<FloorDto> => {
+    const building = await buildingService.getBuildingById(buildingId);
+    if (!building) throw new ApiError(httpStatus.BAD_REQUEST, 'No building with id ' + buildingId);
+    const floor = await Floor.create({ name, buildingId });
+    floor.Building = building;
+    return new FloorDto(floor);
 };
 
 const deleteFloor = async (floorId: string): Promise<void> => {

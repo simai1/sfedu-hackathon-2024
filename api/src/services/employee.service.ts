@@ -4,6 +4,7 @@ import Floor from '../models/floor';
 import Equipment from '../models/equipment';
 import ApiError from '../utils/ApiError';
 import httpStatus from 'http-status';
+import floorService from './floor.service';
 
 const getEmployeeById = async (employeeId: string): Promise<Employee | null> => {
     return await Employee.findByPk(employeeId);
@@ -15,14 +16,22 @@ const getOneEmployee = async (employeeId: string): Promise<EmployeeDto> => {
     return new EmployeeDto(employee);
 };
 
-const getAllEmployees = async (): Promise<EmployeeDto[] | null> => {
+const getAllEmployees = async (): Promise<EmployeeDto[]> => {
     const employees = await Employee.findAll({ include: [{ model: Floor }, { model: Equipment }] });
-    return employees ? employees.map(e => new EmployeeDto(e)) : null;
+    return employees.map(e => new EmployeeDto(e));
 };
 
 const createEmployee = async (name: string, position: number, floorId: string | undefined): Promise<EmployeeDto> => {
-    const employee = await Employee.create({ name, position, floorId }, { include: [{ model: Floor }] });
-    return new EmployeeDto(employee);
+    if (floorId) {
+        const floor = await floorService.getFloorById(floorId);
+        if (!floor) throw new ApiError(httpStatus.BAD_REQUEST, 'Not found floor with id ' + floorId);
+        const employee = await Employee.create({ name, position, floorId });
+        employee.Floor = floor;
+        return new EmployeeDto(employee);
+    } else {
+        const employee = await Employee.create({ name, position, floorId });
+        return new EmployeeDto(employee);
+    }
 };
 
 const updateEmployee = async (

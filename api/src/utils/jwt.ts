@@ -11,7 +11,7 @@ type JwtPayload = {
 };
 
 const generate = (payload: string | Buffer | object) => {
-    const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET as string, { expiresIn: '30m' });
+    const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET as string, { expiresIn: '60m' });
     const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET as string, { expiresIn: '30d' });
     return {
         accessToken,

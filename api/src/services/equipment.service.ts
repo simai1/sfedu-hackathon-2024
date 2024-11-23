@@ -18,11 +18,11 @@ const getOneEquipment = async (equipmentId: string): Promise<EquipmentDto> => {
     return new EquipmentDto(equipment);
 };
 
-const getAllEquipments = async (): Promise<EquipmentDto[] | null> => {
+const getAllEquipments = async (): Promise<EquipmentDto[]> => {
     const equipments = await Equipment.findAll({
         include: [{ model: Floor }, { model: Employee }, { model: Element }],
     });
-    return equipments ? equipments.map(e => new EquipmentDto(e)) : null;
+    return equipments.map(e => new EquipmentDto(e));
 };
 
 const createEquipment = async (
@@ -32,7 +32,7 @@ const createEquipment = async (
     type: number,
     cost: number | undefined
 ): Promise<EquipmentDto> => {
-    const equipment = await Equipment.create({ name, description, condition, type, cost });
+    const equipment = await Equipment.create({ name, description, condition, type, cost, inventoryNumber: 0 });
     return new EquipmentDto(equipment);
 };
 

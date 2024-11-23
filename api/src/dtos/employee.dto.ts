@@ -17,6 +17,6 @@ export default class EmployeeDto {
         // @ts-expect-error any
         this.positionHuman = positionsRuLocale[model.position];
         this.floor = model.Floor?.name;
-        this.equipments = model.Equipments ? model.Equipments.map(m => new EquipmentDto(m)) : undefined;
+        this.equipments = model.Equipment ? model.Equipment.map(m => new EquipmentDto(m)) : undefined;
     }
 }

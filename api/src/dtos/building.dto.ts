@@ -9,7 +9,7 @@ export default class BuildingDto {
     constructor(model: Building) {
         this.id = model.id;
         this.name = model.name;
-        this.address = model.addressCity + model.addressOther;
+        this.address = `г. ${model.addressCity}, ${model.addressOther}`;
         this.floors = model.Floors?.map(m => m.name);
     }
 }
