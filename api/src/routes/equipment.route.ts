@@ -11,6 +11,7 @@ router
     .get(verifyToken.auth, equipmentController.getAll)
     .post(verifyToken.auth, verifyRole(roles.ADMIN), equipmentController.create);
 router.route('/bulk/create').post(verifyToken.auth, verifyRole(roles.ADMIN), equipmentController.bulkCreate);
+router.route('/bulk/delete').post(verifyToken.auth, verifyRole(roles.ADMIN), equipmentController.destroyMany);
 router.route('/canvas/:equipmentId').delete(equipmentController.removeFromCanvas);
 router
     .route('/:equipmentId')

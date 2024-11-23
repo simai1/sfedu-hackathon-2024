@@ -66,6 +66,10 @@ const deleteBuilding = async (buildingId: string): Promise<void> => {
     await building.destroy({ force: true });
 };
 
+const deleteMany = async (ids: any): Promise<void> => {
+    await Building.destroy({ where: { id: ids } });
+};
+
 export default {
     getBuildingById,
     getOneBuilding,
@@ -74,4 +78,5 @@ export default {
     createBuilding,
     updateBuilding,
     deleteBuilding,
+    deleteMany,
 };

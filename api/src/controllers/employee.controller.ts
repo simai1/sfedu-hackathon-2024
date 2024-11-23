@@ -103,6 +103,20 @@ const removeFromCanvas = catchAsync(async (req, res) => {
     } as httpResponse);
 });
 
+const destroyMany = catchAsync(async (req, res) => {
+    const { ids } = req.body;
+    if (!ids) throw new ApiError(httpStatus.BAD_REQUEST, 'Missing ids');
+    if (typeof ids !== 'object') throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid ids');
+    await employeeService.deleteMany(ids);
+    res.json({
+        status: 'ok',
+        exception: null,
+        message: null,
+        tag: null,
+        data: null,
+    } as httpResponse);
+});
+
 export default {
     getAll,
     getOne,
@@ -111,4 +125,5 @@ export default {
     update,
     destroy,
     removeFromCanvas,
+    destroyMany,
 };

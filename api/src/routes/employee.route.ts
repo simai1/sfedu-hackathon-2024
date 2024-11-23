@@ -11,6 +11,7 @@ router
     .get(verifyToken.auth, employeeController.getAll)
     .post(verifyToken.auth, verifyRole(roles.ADMIN), employeeController.create);
 router.route('/bulk/create').post(verifyToken.auth, verifyRole(roles.ADMIN), employeeController.bulkCreate);
+router.route('/bulk/delete').post(verifyToken.auth, verifyRole(roles.ADMIN), employeeController.destroyMany);
 router.route('/canvas/:employeeId').delete(employeeController.removeFromCanvas);
 router
     .route('/:employeeId')

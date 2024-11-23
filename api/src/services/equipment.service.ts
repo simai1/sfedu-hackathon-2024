@@ -126,6 +126,10 @@ const removeFromCanvas = async (equipmentId: string): Promise<void> => {
     await equipment.update({ elementId: null, floorId: null });
 };
 
+const deleteMany = async (ids: any): Promise<void> => {
+    await Equipment.destroy({ where: { id: ids } });
+};
+
 export default {
     getEquipmentById,
     getOneEquipment,
@@ -135,4 +139,5 @@ export default {
     updateEquipment,
     deleteEquipment,
     removeFromCanvas,
+    deleteMany,
 };

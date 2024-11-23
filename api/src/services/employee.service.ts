@@ -94,6 +94,10 @@ const removeFromCanvas = async (employeeId: string): Promise<void> => {
     await employee.update({ elementId: null, floorId: null });
 };
 
+const deleteMany = async (ids: any): Promise<void> => {
+    await Employee.destroy({ where: { id: ids } });
+};
+
 export default {
     getEmployeeById,
     getOneEmployee,
@@ -103,4 +107,5 @@ export default {
     updateEmployee,
     deleteEmployee,
     removeFromCanvas,
+    deleteMany,
 };
