@@ -21,6 +21,7 @@ const login = catchAsync(async (req, res) => {
     if (!login) throw new ApiError(httpStatus.BAD_REQUEST, 'Missing login');
     if (!password) throw new ApiError(httpStatus.BAD_REQUEST, 'Missing password');
     const userData = await authService.login(login, password);
+    res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
     res.json({
         status: 'ok',
         exception: null,
