@@ -5,12 +5,14 @@ export default class BuildingDto {
     id!: string;
     name!: string;
     address!: string;
+    city!: string;
     floors?: FloorDto[];
     countOfEmployees?: number;
 
     constructor(model: Building) {
         this.id = model.id;
         this.name = model.name;
+        this.city = model.addressCity;
         this.address = `г. ${model.addressCity}, ${model.addressOther}`;
         this.floors = model.Floors ? model.Floors.map(f => new FloorDto(f)) : undefined;
         this.countOfEmployees = model.Floors
