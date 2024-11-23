@@ -158,6 +158,7 @@ export const SwitchRole = async () => {
         },
       }
     );
+    refreshTokens()
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -266,6 +267,7 @@ export const CreateWorker = async (UserData) => {
   }
 };
 
+
 //! Получения Списка офисов
 export const GetWorker = async () => {
   try {
@@ -289,6 +291,65 @@ export const GetWorker = async () => {
 export const apiSaveConvas = async (data, id) => {
   try {
     const response = await http.post(`${server}/floors/canvas${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    if (error?.response?.status === 403) {
+      window.location.href = `${process.env.REACT_APP_WEB_URL}/Authorization`;
+    } else {
+      console.log("Такой пользователь уже существует!");
+      return false;
+    }
+  }
+};
+
+
+//! Массовые действия удаления 
+//! Удаление Сотрудников
+export const DeleteWorker = async (Data) => {
+  try {
+    const response = await http.post(`${server}/employees/bulk/delete`, Data, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    if (error?.response?.status === 403) {
+      window.location.href = `${process.env.REACT_APP_WEB_URL}/Authorization`;
+    } else {
+      console.log("Такой пользователь уже существует!");
+      return false;
+    }
+  }
+};
+
+//! Удаление оборудования
+export const DeleteEquipment = async (Data) => {
+  try {
+    const response = await http.post(`${server}/equipments/bulk/delete`, Data, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    if (error?.response?.status === 403) {
+      window.location.href = `${process.env.REACT_APP_WEB_URL}/Authorization`;
+    } else {
+      console.log("Такой пользователь уже существует!");
+      return false;
+    }
+  }
+};
+
+//! Удаление офисов
+export const DeleteOfisses = async (Data) => {
+  try {
+    const response = await http.post(`${server}/buildings/bulk/delete`, Data, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },

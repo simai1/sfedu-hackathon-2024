@@ -20,8 +20,9 @@ function App() {
   const [valueNameStaff, setValueNameStaff] = useState("");
   const [valueNameEquipment, setValueNameEquipment] = useState("");
   const [valueNameOffise, setValueNameOffise] = useState(""); 
-
-
+  const [searchText, setSearchText] = useState("");
+  const [exportFilePopUp, setExportFilePopUp] = useState(false);
+  const [role, setRole] = useState("");
 
 const getTableData = (value) => {
   switch (value) {
@@ -102,7 +103,11 @@ const getLink = (name) => {
     activeTable,
     tableBody,
     setTableBody,
+    role,
+    setRole,
     tableHeader,
+    exportFilePopUp,
+    setExportFilePopUp,
     setTableHeader,
     setSelectedRows,
     selectedRows,
@@ -116,21 +121,20 @@ const getLink = (name) => {
     valueNameOffise,
     setValueNameOffise,
     getOfficeData,
-    getEmployeeData
+    getEmployeeData,
+    setSearchText,
+    searchText
   };
 
   useEffect(() => {
     switch (activeTable) {
       case "Equipment":
-        // setTableBody(tableBodytestData);
         setTableHeader(tableHeadAppoint);
         break;
       case "office":
-        // setTableBody(tableBodyPeopleTestData);
         setTableHeader(tableHeadPeople);
         break;
       case "Staff":
-        // setTableBody(tableBodyOfiseTestData);
         setTableHeader(tableHeadOfise);
         break;
       default:

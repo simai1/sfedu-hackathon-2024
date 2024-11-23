@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import styles from "./HomePageTableMenu.module.scss";
 import DataContext from '../../context';
 import UneversalList from '../UneversalList/UneversalList';
@@ -18,6 +18,30 @@ function HomePageTableMenu(props) {
                 return "";
         }
     } 
+   // Inside your component
+const [uploadedFile, setUploadedFile] = useState(null);
+const fileInputRef = useRef(null); // Create a ref for the file input
+
+const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setUploadedFile(file);
+};
+
+const handleConfirmUpload = () => {
+    // Logic to handle the file upload
+    console.log("File uploaded:", uploadedFile);
+    // Close the popup after confirming
+    context.setExportFilePopUp(false);
+};
+
+const handleClearFile = () => {
+    setUploadedFile(null);
+};
+
+const handleFileInputClick = () => {
+    fileInputRef.current.click(); // Trigger the file input click
+};
+
     const deleteItem = () => {
         console.log("context?.activeTable", context?.activeTable)
         switch (context?.activeTable) {
@@ -143,25 +167,66 @@ function HomePageTableMenu(props) {
                 </div>
             </div>
             <div className={styles.HomePageButtonNewEmployee}>
-                <button onClick={() => addNewItem()}>
-                    <img src="/img/plus.svg" alt="Plus" />
-                    <span>Добавить {getToPathname()}</span>
-                </button>
-                <button onClick={()=> deleteItem()}>
-                    <img className={styles.deleteIcon} src="/img/delete.svg" alt="Plus" />
-                    <span>Удалить</span>
-                </button>
-                <button onClick={() => generateAndDownloadExcel(props?.tableData, context?.activeTable)}>
-                    <img src="/img/export.svg" alt="Plus" style={{transform: "rotate(180deg)" }}/>
-                    <span>Экспорт</span>
-                </button>
-                {
-                    context?.activeTable === "Equipment" &&
-                    <button>
-                    <img src="/img/export.svg" alt="Plus" />
+            {context.role === "Администратор" && (
+                
+                <>
+                    <button onClick={() => addNewItem()}>
+                        <img src="/img/plus.svg" alt="Plus" />
+                        <span>Добавить {getToPathname()}</span>
+                    </button>
+                    <button onClick={()=> deleteItem()}>
+                        <img className={styles.deleteIcon} src="/img/delete.svg" alt="Plus" />
+                        <span>Удалить</span>
+                    </button>
+                    </>
+                )}
+                    <button onClick={() => generateAndDownloadExcel(props?.tableData, context?.activeTable)}>
+                        <img src="/img/export.svg" alt="Plus" style={{transform: "rotate(180deg)" }}/>
+                        <span>Экспорт</span>
+                    </button>
+                   
+                <>
+               
+        {context?.activeTable === "Equipment" && context.role === "Администратор" && (
+            <div className={styles.ImporFilesPole}>
+                    <button onClick={() => context.setExportFilePopUp(!context.exportFilePopUp)} className={styles.Import}>
+                        <img src="/img/export.svg" alt="Plus" />
                         <span>Импорт</span>
                     </button>
-                }
+                            {context.exportFilePopUp && (
+                                <div className={styles.PopUpImporFiles}>
+                                    <input
+                                        type="file"
+                                        ref={fileInputRef}
+                                        style={{ display: "none" }} // Hide the file input
+                                        onChange={handleFileChange}
+                                        accept=".xlsx, .xls, .csv"
+                                    />
+                                    <input
+                                        type="text"
+                                        value={uploadedFile ? uploadedFile.name : "Выберите файл"}
+                                        onClick={handleFileInputClick} // Open file input on click
+                                        readOnly // Make it read-only
+                                    />
+                                    {uploadedFile && (
+                                        <div>
+                                           
+                                            <button onClick={handleClearFile} className={styles.Clear}>
+                                                <div className={styles.ClearInner}>
+                                                    <p>Очистить</p>
+                                                </div>
+                                           
+                                            </button>
+                                        </div>
+                                    )}
+                                    <button onClick={handleConfirmUpload} disabled={!uploadedFile}>
+                                        Подтвердить
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </>
                
                
             </div>

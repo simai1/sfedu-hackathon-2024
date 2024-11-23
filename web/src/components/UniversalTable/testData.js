@@ -6,11 +6,13 @@ export const tableHeadAppoint = [
     { key: "createdAtHuman", value: "Дата добавления", isActive: true  },
     { key: "inspectionDateHuman", value: "Крайнее ТО", isActive: true  },
     { key: "cost", value: "Стоимость", isActive: true  },
+    { key: "factCost", value: "Остаточная стоимость", isActive: true  },
     { key: "conditionHuman", value: "Состояние", isActive: true  }
 ]
 
 export const tableHeadOfise = [
     { key: "name", value: "Наименование", isActive: true  },
+    { key: "city", value: "Город", isActive: true  },
     { key: "address", value: "Адрес", isActive: true  },
     { key: "countOfEmployees", value: "Количество сотрудников", isActive: true  },
 ]

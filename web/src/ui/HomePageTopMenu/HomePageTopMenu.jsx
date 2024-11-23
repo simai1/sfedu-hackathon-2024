@@ -8,6 +8,7 @@ function HomePageTopMenu() {
         context.setSelectedRows([])
         context.setActiveTable(value)
         context.getTableData(value)
+        context.setExportFilePopUp(false)
     }
     return ( 
         <div className={styles.HomePageTopMenu}>

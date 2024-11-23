@@ -19,6 +19,7 @@ export const generateAndDownloadExcel = (data, nameTable) => {
       Дата_Создания: item?.createdAtHuman,
       Дата_Последнего_ТО: item?.inspectionDateHuman,
       Начальная_Стоимость: item?.cost,
+      Остаточная_Стоимость: item?.factCost,
     }));
   }else if(nameTable === 'Staff'){
     transformedData = data.map(({ ...item }) => ({
@@ -30,7 +31,7 @@ export const generateAndDownloadExcel = (data, nameTable) => {
         transformedData = data.map(({ ...item }) => ({
             Название_офиса: item?.name,
             Город: item?.city,
-            Полный_Адрес: item?.address,
+            Адрес: item?.address,
             Количество_сотрудников: item?.countOfEmployees,
     }))
 };
