@@ -2,6 +2,7 @@ import { DataTypes, Model, Sequelize } from 'sequelize';
 import conditions from '../config/conditions';
 import types from '../config/type';
 import Employee from './employee';
+import Floor from './floor';
 
 export default class Equipment extends Model {
     id!: string;
@@ -17,6 +18,8 @@ export default class Equipment extends Model {
     elementId?: string;
     Employee?: Employee;
     employeeId?: string;
+    Floor?: Floor;
+    floorId?: string;
 
     static initialize(sequelize: Sequelize) {
         Equipment.init(

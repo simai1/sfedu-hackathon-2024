@@ -18,6 +18,7 @@ export default class EquipmentDto {
     cost?: number;
     element?: ElementDto;
     employee?: EmployeeDto;
+    floor?: string;
 
     constructor(model: Equipment) {
         this.id = model.id;
@@ -37,5 +38,6 @@ export default class EquipmentDto {
         // @ts-expect-error any
         this.element = model.Element ? new ElementDto(model.Element) : undefined;
         this.employee = model.Employee ? new EmployeeDto(model.Employee) : undefined;
+        this.floor = model.Floor?.name;
     }
 }
