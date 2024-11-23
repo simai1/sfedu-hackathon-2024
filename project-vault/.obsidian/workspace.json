@@ -15,31 +15,16 @@
               "state": {
                 "file": "План.canvas",
                 "viewState": {
-                  "x": 442.8235852964184,
-                  "y": 120.89549307068984,
-                  "zoom": -1.333333333333333
+                  "x": 630.2249910135982,
+                  "y": 198.45753434148318,
+                  "zoom": 0.17219875433792717
                 }
               },
               "icon": "lucide-layout-dashboard",
               "title": "План"
             }
-          },
-          {
-            "id": "9fbf628e21609b01",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Список задач.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Список задач"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -111,7 +96,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Список задач.md",
+                "file": "План.canvas",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -121,7 +106,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for Список задач"
+              "title": "Backlinks for План"
             }
           },
           {
@@ -130,12 +115,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Список задач.md",
+                "file": "План.canvas",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from Список задач"
+              "title": "Outgoing links from План"
             }
           },
           {
@@ -157,10 +142,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Список задач.md"
+                "file": "План.canvas"
               },
               "icon": "lucide-list",
-              "title": "Outline of Список задач"
+              "title": "Outline of План"
             }
           }
         ]
@@ -180,10 +165,10 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "9fbf628e21609b01",
+  "active": "d83f4390fafd75f3",
   "lastOpenFiles": [
-    "План.canvas",
     "Список задач.md",
+    "План.canvas",
     "Welcome.md"
   ]
 }
