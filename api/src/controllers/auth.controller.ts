@@ -32,7 +32,7 @@ const login = catchAsync(async (req, res) => {
 });
 
 const refresh = catchAsync(async (req, res) => {
-    const { refreshToken } = req.cookies;
+    const { refreshToken } = req.body;
     if (!refreshToken) throw new ApiError(httpStatus.BAD_REQUEST, 'Missing refreshToken');
     const data = await authService.refresh(refreshToken);
     res.cookie('refreshToken', data.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
