@@ -36,3 +36,4 @@ export const positionsRuLocale = {
 
 export default positions;
 export const mapPositions = mapObjectKeys(positions);
+export const mapPositionsRuLocale = mapObjectKeys(positionsRuLocale);

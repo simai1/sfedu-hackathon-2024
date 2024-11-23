@@ -11,4 +11,5 @@ export const conditionsRuLocale = {
 };
 
 export default conditions;
+export const mapConditionsRuLocale = mapObjectKeys(conditionsRuLocale);
 export const mapConditions = mapObjectKeys(conditions);

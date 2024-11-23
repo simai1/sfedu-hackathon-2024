@@ -27,4 +27,5 @@ export const typesRuLocale = {
 };
 
 export default types;
+export const mapTypesRuLocale = mapObjectKeys(typesRuLocale);
 export const mapTypes = mapObjectKeys(types);
