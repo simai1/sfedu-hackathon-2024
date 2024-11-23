@@ -7,29 +7,35 @@ const server = "http://195.58.54.23:3000";
 const REFRESH_INTERVAL = 500000; // 8 минут 500000
 let refreshTokensTimeout;
 
-//!Рефреш токенов
+//! Рефреш токенов
 export const refreshTokens = async () => {
+  const data = {
+    refreshToken: sessionStorage.getItem("refreshToken")
+  }
   try {
-    const response = await http.get(`${server}/auth/refresh`);
-    console.log("response", response);
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    const { accessToken, refreshToken } = response.data.data; // Destructure the required data from the response
-    localStorage.setItem("accessToken", accessToken);
-    localStorage.setItem("refreshToken", refreshToken);
+    const response = await http.post(`${server}/auth/refresh`, data, {});
+    // Remove old tokens
+    sessionStorage.removeItem("accessToken");
+    sessionStorage.removeItem("refreshToken");
+    
+    // Destructure the required data from the response
+    const { accessToken, refreshToken } = response.data.data; 
+    sessionStorage.setItem("accessToken", accessToken);
+    sessionStorage.setItem("refreshToken", refreshToken);
+    
     return response;
   } catch (error) {
-    console.error("Tokens were not updated!");
+    console.error("Tokens were not updated!", error);
   }
 };
 
 //!таймер рефреша
 const refreshTokensTimer = () => {
   clearTimeout(refreshTokensTimeout);
-  if (localStorage.getItem("accessToken") === "null") {
+  if (sessionStorage.getItem("accessToken") === "null") {
     return;
   }
-  const lastRefreshTime = localStorage.getItem("lastRefreshTime");
+  const lastRefreshTime = sessionStorage.getItem("lastRefreshTime");
   const currentTime = Date.now();
   let timeRemaining;
   if (lastRefreshTime) {
@@ -40,11 +46,11 @@ const refreshTokensTimer = () => {
   }
   refreshTokensTimeout = setTimeout(() => {
     refreshTokens();
-    localStorage.setItem("lastRefreshTime", Date.now());
+    sessionStorage.setItem("lastRefreshTime", Date.now());
     refreshTokensTimer();
   }, timeRemaining);
 
-  localStorage.setItem("refreshTokensInterval", refreshTokensTimeout);
+  sessionStorage.setItem("refreshTokensInterval", refreshTokensTimeout);
 };
 
 window.addEventListener("load", () => {
@@ -60,9 +66,15 @@ export const LoginFunc = async (UserData) => {
   try {
     const response = await http.post(`${server}/auth/login`, UserData);
     const { accessToken, refreshToken, ...user } = response.data.data;
-    localStorage.setItem("accessToken", accessToken);
-    localStorage.setItem("refreshToken", refreshToken);
-    localStorage.setItem("userData", JSON.stringify(user));
+
+    // Store tokens in sessionStorage
+    sessionStorage.setItem("accessToken", accessToken);
+    sessionStorage.setItem("refreshToken", refreshToken);
+    sessionStorage.setItem("userData", JSON.stringify(user));
+
+    // Set the refresh token as a cookie
+    document.Сookie = `refreshToken=${refreshToken}; path=/; secure; SameSite=Strict`; // Adjust attributes as needed
+
     refreshTokensTimer();
     return response;
   } catch (error) {
@@ -79,7 +91,7 @@ export const Register = async (UserData) => {
   try {
     const response = await http.post(`${server}/auth/register`, UserData, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },
     });
     return response;
@@ -101,7 +113,7 @@ export const LogOut = async () => {
       {},
       {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },
         withCredentials: true,
       }
@@ -122,7 +134,7 @@ export const GetProfile = async () => {
         `${server}/users`,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
           },
           withCredentials: true,
         }
@@ -139,10 +151,11 @@ export const GetProfile = async () => {
 
 //! Смена роли
 export const SwitchRole = async () => {
+  console.log("accessToken", sessionStorage.getItem("accessToken"));
   try {
-    const response = await http.patch(`${server}/users/switchRole`, {
+    const response = await http.patch(`${server}/users/switchRole`, {}, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },
     });
     return response;
@@ -155,3 +168,122 @@ export const SwitchRole = async () => {
     }
   }
 };
+
+
+//! Создание оборудования
+export const CreateEquipment = async (UserData) => {
+  try {
+    const response = await http.post(`${server}/equipments`, UserData, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    if (error?.response?.status === 403) {
+      window.location.href = `${process.env.REACT_APP_WEB_URL}/Authorization`;
+    } else {
+      console.log("Такой пользователь уже существует!");
+      return false;
+    }
+  }
+};
+
+//! Получения Списка оборудования
+export const GetEquipment = async () => {
+  try {
+    const response = await http.get(`${server}/equipments`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    if (error?.response?.status === 403) {
+      window.location.href = `${process.env.REACT_APP_WEB_URL}/Authorization`;
+    } else {
+      console.log("Такой пользователь уже существует!");
+      return false;
+    }
+  }
+};
+
+
+//! Офисы
+//!Созданеи офиса 
+export const CreateOffice = async (UserData) => {
+  try {
+    const response = await http.post(`${server}/buildings`, UserData, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    if (error?.response?.status === 403) {
+      window.location.href = `${process.env.REACT_APP_WEB_URL}/Authorization`;
+    } else {
+      console.log("Такой пользователь уже существует!");
+      return false;
+    }
+  }
+};
+
+//! Получения Списка офисов
+export const GetOffice = async () => {
+  try {
+    const response = await http.get(`${server}/buildings`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    if (error?.response?.status === 403) {
+      window.location.href = `${process.env.REACT_APP_WEB_URL}/Authorization`;
+    } else {
+      console.log("Такой пользователь уже существует!");
+      return false;
+    }
+  }
+};
+
+//! Сотрудники
+//!Создане Сотрудника 
+export const CreateWorker = async (UserData) => {
+  try {
+    const response = await http.post(`${server}/employees`, UserData, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    if (error?.response?.status === 403) {
+      window.location.href = `${process.env.REACT_APP_WEB_URL}/Authorization`;
+    } else {
+      console.log("Такой пользователь уже существует!");
+      return false;
+    }
+  }
+};
+
+//! Получения Списка офисов
+export const GetWorker = async () => {
+  try {
+    const response = await http.get(`${server}/employees`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    if (error?.response?.status === 403) {
+      window.location.href = `${process.env.REACT_APP_WEB_URL}/Authorization`;
+    } else {
+      console.log("Такой пользователь уже существует!");
+      return false;
+    }
+  }
+};
+

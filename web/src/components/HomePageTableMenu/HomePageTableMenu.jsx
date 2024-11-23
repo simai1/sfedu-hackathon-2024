@@ -19,6 +19,7 @@ function HomePageTableMenu() {
         }
     } 
     const deleteItem = () => {
+        console.log("context?.activeTable", context?.activeTable)
         switch (context?.activeTable) {
             case "office":
                 if(context?.selectedRows.length >= 1) {
@@ -43,22 +44,22 @@ function HomePageTableMenu() {
         switch (context?.activeTable) {
             case "office":
                 return  <UneversalList
-                        valueName={valueNameOffise}
-                        setValueName={setValueNameOffise}
+                        valueName={context.valueNameOffise}
+                        setValueName={context.setValueNameOffise}
                         dataList={dataListOffise}
                         placeholder="Город"
                     />;
             case "Equipment":
                 return <UneversalList
-                valueName={valueNameEquipment}
-                setValueName={setValueNameEquipment}
+                valueName={context.valueNameEquipment}
+                setValueName={context.setValueNameEquipment}
                 dataList={dataListEquipment}
                 placeholder="Категория"
             />;
             case "Staff":
                 return <UneversalList
-                valueName={valueNameStaff}
-                setValueName={setValueNameStaff}
+                valueName={context.valueNameStaff}
+                setValueName={context.setValueNameStaff}
                 dataList={dataListStaff}
                 placeholder="Выбрать офис"
             />;
@@ -71,34 +72,52 @@ function HomePageTableMenu() {
         setSearchText('');
         switch (context?.activeTable) {
             case "office":
-                setValueNameOffise("");
+                context.setValueNameOffise("");
                 return 0;
             case "Equipment":
-                setValueNameEquipment("");
+                context.setValueNameEquipment("");
                 return 0;
             case "Staff":
-                setValueNameStaff("");
+                context.setValueNameStaff("");
                 return 0;
             default:
                 return "";
         }
     }
 
-    const [valueNameStaff, setValueNameStaff] = useState("");
-    const [valueNameEquipment, setValueNameEquipment] = useState("");
-    const [valueNameOffise, setValueNameOffise] = useState(""); // State to hold the selected item name
+    const addNewItem = () => {
+        switch (context?.activeTable) {
+            case "office":
+                context.setPopUp("PopUpCreateOffice")
+                return 0;
+            case "Equipment":
+                context.setPopUp("PopUpCreateEquipment")
+                return 0;
+            case "Staff":
+                context.setPopUp("PopUpCreateWorker")
+                return 0;
+            default:
+                return "";
+        }
+    }
     const dataListOffise = [
       { id: 1, name: "Таганрог" },
       { id: 2, name: "Ростов-на-Дону" },
       { id: 3, name: "Москва" },
     ]; // Sample data list
     const dataListEquipment = [
-        { id: 1, name: "Мониторы" },
-        { id: 2, name: "Принтеры" },
+        { id: 1, name: "Ноутбуки" },
+        { id: 2, name: "Столы" },
         { id: 3, name: "Лампы" },
-        { id: 4, name: "Столы" },
-        { id: 5, name: "Системные блоки" },
+        { id: 4, name: "Мониторы" },
+        { id: 5, name: "Диваны" },
+        { id: 6, name: "Принтеры" },
+        { id: 7, name: "Компьютеры" },
+        { id: 8, name: "Кофемашины" },
+        { id: 9, name: "Клавиатуры" },
+        { id: 10, name: "Стулья" },
       ]; // Sample data list
+    
       const dataListStaff = [
         { id: 1, name: "Инженерный офис" },
         { id: 2, name: "Офис цифровых решений" },
@@ -128,7 +147,7 @@ function HomePageTableMenu() {
                     <img src="/img/edit.svg" alt="Plus" />
                     <span>Редактировать</span>
                 </button>
-                <button>
+                <button onClick={() => addNewItem()}>
                     <img src="/img/plus.svg" alt="Plus" />
                     <span>Добавить {getToPathname()}</span>
                 </button>

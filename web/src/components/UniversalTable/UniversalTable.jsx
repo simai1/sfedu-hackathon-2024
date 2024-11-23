@@ -16,6 +16,8 @@ function UniversalTable(props) {
 
   const getValue = (value, key) => {
     switch (key) {
+      case "countOfEmployees":
+        return value;
       default:
         return value || "___";
     }
@@ -51,10 +53,11 @@ function UniversalTable(props) {
   };
   
   const getBorder = (value) => {
+    console.log("getBorder", value)
     switch (value) {
       case "Хорошее":
         return "1px solid#0A9030";
-      case "Неисправное":
+      case "Сломано":
         return "1px solid #B20707";
     }
   }
@@ -62,7 +65,7 @@ function UniversalTable(props) {
     switch (value) {
       case "Хорошее":
         return "#0A903014";
-      case "Неисправное":
+      case "Сломано":
         return "#B2070714";
     }
   }
@@ -146,7 +149,7 @@ function UniversalTable(props) {
                       {context.selectedRows.includes(rowIndex) && <img className={styles.galochka} src="/img/galochca.svg" alt="Selected"  id={ context.activeTable != "Equipment" && "galochcaNet"} />}
                       { context.activeTable === "Equipment" && <img 
                         className={styles.imgEquipment} 
-                        src="./img/notebook.svg" 
+                        src={context.getLink(row[header.key])}
                         onMouseEnter={(e) => showPopup(e, row[header.key])} 
                         onMouseLeave={hidePopup} 
                         alt="Equipment"
@@ -155,7 +158,7 @@ function UniversalTable(props) {
                         context.activeTable != "Equipment" && <p className={styles.namesTd}>{row[header.key]}</p>
                       }
                     </>
-                  ) : header.key === "state" ? (
+                  ) : header.key === "conditionHuman" ? (
                       <div className={styles.stateWrapper} key={row[header.key]}> {/* Unique wrapper for styling */}
                         <div className={styles.state} style={{ border: getBorder(row[header.key]), backgroundColor: getBackground(row[header.key]) }}>
                           {row[header.key]}

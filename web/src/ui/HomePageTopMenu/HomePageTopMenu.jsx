@@ -4,10 +4,10 @@ import DataContext from "../../context";
 
 function HomePageTopMenu() {
     const context = useContext(DataContext);
-    console.log("context?.activeTable", context?.activeTable)
     const clickLi = (value) => {
         context.setSelectedRows([])
         context.setActiveTable(value)
+        context.getTableData(value)
     }
     return ( 
         <div className={styles.HomePageTopMenu}>

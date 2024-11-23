@@ -1,8 +1,8 @@
-import PopUpContainer from "../../PopUpContainer/PopUpContainer";
+import PopUpContainer from "../../../PopUpContainer/PopUpContainer";
 import styles from "./PopUpEquipmentPeople.module.scss";
 function PopUpEquipmentPeople() {
     return ( 
-        <PopUpContainer title="Смирнов Александр Иванович" width="640px">
+        <PopUpContainer title="Смирнов Александр Иванович" width="640px" buttonCancel={true}>
                 <div className={styles.PopUpEquipmentPeopleContainer}>
                     <div className={styles.PopUpEquipmentPeopleContainerInner}>
                         <div className={styles.PopUpEquipmentPeople}>
