@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   addElem,
   addElemOfis,
@@ -7,14 +8,25 @@ import {
 import { components } from "../../../store/CanvasSlice/components";
 import styles from "./MenuComponent.module.scss";
 import { useSelector, useDispatch } from "react-redux";
+import { GetEquipment } from "../../../API/ApiRequest";
+import { setEquipment } from "../../../store/basicSlice/basic.Slice";
 
 function MenuComponent() {
   const canvasSlice = useSelector((state) => state.CanvasSlice);
+  const equipmentSlice = useSelector((state) => state.EquipmentSlice);
   const dispatch = useDispatch();
 
-  const funClikElement = (id) => {
-    dispatch(addElem({ id }));
+  const funClikElement = (type, id) => {
+    dispatch(addElem({ id: type + "", idEquipment: id }));
   };
+
+  useEffect(() => {
+    GetEquipment().then((resp) => {
+      if (resp?.status === 200) {
+        dispatch(setEquipment({ data: resp.data.data }));
+      }
+    });
+  }, []);
 
   const editSten = () => {
     if (canvasSlice.mode === 1) {
@@ -82,9 +94,9 @@ function MenuComponent() {
   return (
     <div className={styles.MenuComponent}>
       <ul>
-        {components.map((component) => (
+        {equipmentSlice.equipment.map((component) => (
           <li
-            onClick={() => funClikElement(component.elemId)}
+            onClick={() => funClikElement(component.type, component.id)}
             key={component.elemId}
           >
             {component.name}

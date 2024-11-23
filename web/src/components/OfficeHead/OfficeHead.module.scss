@@ -1,0 +1,88 @@
+.OfficeHead {
+  position: absolute;
+  right: 30px;
+  top: 20px;
+  z-index: 300;
+
+  width: 252px;
+  height: 30px;
+  background-color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 5px;
+
+  .head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: relative;
+    .office {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      background-color: #ffffff;
+      left: -20px;
+      top: 44px;
+      box-shadow: 0px 0px 2px 0px #00000040;
+      border: 5px;
+      z-index: 300;
+      li {
+        padding: 5px 10px;
+        outline: none;
+        text-decoration: none;
+        list-style: none;
+        cursor: pointer;
+
+        &:hover {
+          background-color: var(--GrayColorButtonHover);
+        }
+        &:active {
+          background-color: var(--GrayColorButtonActive);
+        }
+      }
+    }
+    .left {
+      display: flex;
+      flex-direction: row;
+      padding: 5px 10px;
+      border-radius: 5px;
+      // padding-left: 0;
+      cursor: pointer;
+
+      transform: translateX(-10px);
+
+      &:hover {
+        background-color: var(--GrayColorButtonHover);
+      }
+      &:active {
+        background-color: var(--GrayColorButtonActive);
+      }
+      p {
+        font-family: Open Sans;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 21.79px;
+        text-align: left;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+      }
+      img {
+        margin-left: 10px;
+        padding-top: 2px;
+      }
+    }
+    .rigth {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 5px;
+      &:hover {
+        background-color: var(--GrayColorButtonHover);
+      }
+      &:active {
+        background-color: var(--GrayColorButtonActive);
+      }
+    }
+  }
+}

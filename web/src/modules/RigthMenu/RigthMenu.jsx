@@ -9,6 +9,7 @@ import {
 
 function RigthMenu() {
   const canvasSlice = useSelector((state) => state.CanvasSlice);
+  const equipmentSlice = useSelector((state) => state.EquipmentSlice);
   const dispatch = useDispatch();
   const [element, setElement] = useState(
     canvasSlice.elements.find((elem) => elem.id === canvasSlice.selectedElement)
@@ -35,13 +36,15 @@ function RigthMenu() {
     <div className={styles.RigthMenu}>
       <div className={styles.head}>
         <div className={styles.left}>
-          <p>1 этаж</p>
+          <p>1 Этаж</p>
+
           <img src="./img/v.svg" alt="img" />
         </div>
         <div className={styles.rigth}>
           <img src="./img/+.svg" alt="img" />
         </div>
       </div>
+
       {canvasSlice.selectedElement ? (
         <>
           <div className={styles.con1}>
@@ -88,7 +91,20 @@ function RigthMenu() {
             <p>Стоимость</p>
 
             <div className={styles.box}>
-              <span>25 000 ₽</span>
+              <span>
+                {(() => {
+                  const cost = equipmentSlice.equipment.find(
+                    (el) => el.id === element?.idEquipment
+                  )?.cost;
+
+                  if (cost !== undefined) {
+                    // Применяем форматирование с пробелами для тысячи
+                    return `${Number(cost).toLocaleString("ru-RU")} ₽`;
+                  }
+
+                  return "Цена не указана";
+                })()}
+              </span>
             </div>
           </div>
 
@@ -96,7 +112,11 @@ function RigthMenu() {
             <p>Инвентарный номер</p>
 
             <div className={styles.box}>
-              <span style={{ color: "#989898" }}>{element?.id}</span>
+              <span style={{ color: "#989898" }}>
+                {equipmentSlice.equipment.find(
+                  (el) => el.id === element?.idEquipment
+                )?.inventoryNumber || "Отсутствует"}
+              </span>
             </div>
           </div>
           <div className={styles.btn}>
