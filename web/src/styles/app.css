@@ -1,4 +1,28 @@
+@font-face {
+	font-family: 'OpenSans';
+	src: 
+		url('./../assets/fonts/open_sans.woff') format('woff'),
+        url('./../assets/fonts/open_sans.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
 *{
     margin: 0;
     padding: 0;
+    font-family: "OpenSans"!important;    
 }
+body{
+    background-color: #F5F6F7;
+}
+#checkboxTdNet{
+    position: relative;
+    top: 18px;
+  }
+  #galochcaNet{
+    left: 34px;
+    top: 18px;
+  }
+  #GlovalChecboxPeople{
+    left: -60px;
+  }

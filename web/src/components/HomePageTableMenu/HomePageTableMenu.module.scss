@@ -1,0 +1,80 @@
+@import "./../../styles/colors.scss";
+
+.HomePageTableMenu{
+    border-bottom: 1px solid #D2D2D2;
+    width: 100%;
+    padding: 10px 40px;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    height: 60px;
+    .Search{
+        display: flex;
+        align-items: center;
+        img{
+            margin-left: 30px;
+        }
+    }
+    .HomePageButtonNewEmployee{
+        button{
+            background-color: inherit;
+            border: none;
+            transition: 0.1s linear all;
+            padding: 9px 7px;
+            border-radius: 5px;
+            margin: 0px 15px;
+            &:last-child{
+                margin-right: 0;
+            }
+            img{
+                margin-right: 10px;
+                position: relative;
+                top: 1px;
+            }
+            &:hover{
+                background-color: var(--GrayColorButtonHover);
+                
+            }
+            &:active{
+                background-color: var(--GrayColorButtonActive);
+            }
+            cursor: pointer;
+            .deleteIcon{
+                position: relative;
+                top: 4px;
+            }
+        }
+    }
+    .InputContainer {
+        position: relative;
+        display: flex;
+        align-items: center;
+    
+        .SearchIcon {
+            position: absolute;
+            left: -20px;
+            transition: transform 0.3s ease;
+        }
+    
+        .SearchInput {
+            padding-left: 40px; // Space for the icon
+            transition: padding-left 0.3s ease;
+            background-color: inherit;
+            height: 28px;
+            border: none;
+            border-bottom: 1px solid #D2D2D2;
+            width: 200px;
+            &:focus {
+                padding-left: 10px; // Adjust padding when focused
+                border: none;
+            }
+    
+            &:focus + .SearchIcon {
+                transform: translateX(170px); // Move the icon to the right
+            }
+        }
+    
+}
+    
+   
+}

@@ -10,17 +10,17 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import basicSlice from "./basicSlice/basic.Slice.js";
+import CanvasSlice from "./CanvasSlice/canvas.Slice.js";
 
 const rootReducer = combineReducers({
-  BasicSlice: basicSlice,
+  CanvasSlice: CanvasSlice,
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["BasicSlice",],
-  // blacklist: ["editColumTableSlice", "isCheckedSlice"],
+  // whitelist: ["CanvasSlice"],
+  blacklist: ["CanvasSlice"],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

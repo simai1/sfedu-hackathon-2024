@@ -1,0 +1,35 @@
+.HelloPage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+    .HelloPageTitle{
+        font-size: 40px;
+        width: 650px;
+        text-align: center;
+        margin-bottom: 50px;
+    }
+    button{
+        height: 60px;
+        width: 650px;
+    }
+    img{
+        position: absolute;
+    }
+    .HelloPageImgTop{
+        top: 0;
+    }
+    .HelloPageImgRight{
+        right: 0;
+        // width: 1000px;
+        // top: 200px;
+    }
+    .HelloPageImgLeft{
+        left: 0;
+        // width: 1000px;
+        // top: -100px;
+        // transform: rotate(-10deg);
+      
+    }
+}
