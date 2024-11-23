@@ -5,6 +5,7 @@ import ApiError from '../utils/ApiError';
 import httpStatus from 'http-status';
 import conditions from '../config/conditions';
 import types from '../config/type';
+import employeeService from '../services/employee.service';
 
 const getAll = catchAsync(async (req, res) => {
     const equipments = await equipmentService.getAllEquipments();
@@ -27,6 +28,18 @@ const getOne = catchAsync(async (req, res) => {
         message: null,
         tag: null,
         data: equipment,
+    } as httpResponse);
+});
+
+const bulkCreate = catchAsync(async (req, res) => {
+    const { data } = req.body;
+    await equipmentService.bulkCreate(data);
+    res.json({
+        status: 'ok',
+        exception: null,
+        message: null,
+        tag: null,
+        data: null,
     } as httpResponse);
 });
 
@@ -103,6 +116,7 @@ const destroy = catchAsync(async (req, res) => {
 export default {
     getAll,
     getOne,
+    bulkCreate,
     create,
     update,
     destroy,

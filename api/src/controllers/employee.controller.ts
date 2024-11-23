@@ -16,6 +16,18 @@ const getAll = catchAsync(async (req, res) => {
     } as httpResponse);
 });
 
+const bulkCreate = catchAsync(async (req, res) => {
+    const { data } = req.body;
+    await employeeService.bulkCreate(data);
+    res.json({
+        status: 'ok',
+        exception: null,
+        message: null,
+        tag: null,
+        data: null,
+    } as httpResponse);
+});
+
 const getOne = catchAsync(async (req, res) => {
     const { employeeId } = req.params;
     if (!employeeId) throw new ApiError(httpStatus.BAD_REQUEST, 'Missing employeeId');
@@ -78,6 +90,7 @@ const destroy = catchAsync(async (req, res) => {
 export default {
     getAll,
     getOne,
+    bulkCreate,
     create,
     update,
     destroy,

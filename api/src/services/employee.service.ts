@@ -21,6 +21,10 @@ const getAllEmployees = async (): Promise<EmployeeDto[]> => {
     return employees.map(e => new EmployeeDto(e));
 };
 
+const bulkCreate = async (data: any): Promise<void> => {
+    await Employee.bulkCreate(data);
+};
+
 const createEmployee = async (name: string, position: number, floorId: string | undefined): Promise<EmployeeDto> => {
     if (floorId) {
         const floor = await floorService.getFloorById(floorId);
@@ -56,6 +60,7 @@ export default {
     getEmployeeById,
     getOneEmployee,
     getAllEmployees,
+    bulkCreate,
     createEmployee,
     updateEmployee,
     deleteEmployee,

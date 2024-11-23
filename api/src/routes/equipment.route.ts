@@ -10,6 +10,7 @@ router
     .route('/')
     .get(verifyToken.auth, equipmentController.getAll)
     .post(verifyToken.auth, verifyRole(roles.ADMIN), equipmentController.create);
+router.route('/bulk/create').post(verifyToken.auth, verifyRole(roles.ADMIN), equipmentController.bulkCreate);
 router
     .route('/:equipmentId')
     .get(verifyToken.auth, equipmentController.getOne)

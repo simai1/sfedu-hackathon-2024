@@ -10,7 +10,7 @@ router
     .route('/')
     .get(verifyToken.auth, employeeController.getAll)
     .post(verifyToken.auth, verifyRole(roles.ADMIN), employeeController.create);
-
+router.route('/bulk/create').post(verifyToken.auth, verifyRole(roles.ADMIN), employeeController.bulkCreate);
 router
     .route('/:employeeId')
     .get(verifyToken.auth, employeeController.getOne)

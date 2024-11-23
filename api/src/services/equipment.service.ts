@@ -25,6 +25,14 @@ const getAllEquipments = async (): Promise<EquipmentDto[]> => {
     return equipments.map(e => new EquipmentDto(e));
 };
 
+const bulkCreate = async (data: any): Promise<void> => {
+    for (const item of data) {
+        item.inventoryNumber = 0;
+    }
+
+    await Equipment.bulkCreate(data);
+};
+
 const createEquipment = async (
     name: string,
     description: string | undefined,
@@ -73,6 +81,7 @@ export default {
     getEquipmentById,
     getOneEquipment,
     getAllEquipments,
+    bulkCreate,
     createEquipment,
     updateEquipment,
     deleteEquipment,

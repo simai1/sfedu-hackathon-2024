@@ -22,6 +22,10 @@ const getAllBuildings = async (): Promise<BuildingDto[]> => {
     return buildings.map(b => new BuildingDto(b));
 };
 
+const bulkCreate = async (data: any): Promise<void> => {
+    await Building.bulkCreate(data);
+};
+
 const createBuilding = async (name: string, addressCity: string, addressOther: string): Promise<BuildingDto> => {
     const building = await Building.create({ name, addressCity, addressOther });
     return new BuildingDto(building);
@@ -48,6 +52,7 @@ export default {
     getBuildingById,
     getOneBuilding,
     getAllBuildings,
+    bulkCreate,
     createBuilding,
     updateBuilding,
     deleteBuilding,

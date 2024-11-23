@@ -3,6 +3,7 @@ import buildingService from '../services/building.service';
 import { httpResponse } from '../utils/response';
 import ApiError from '../utils/ApiError';
 import httpStatus from 'http-status';
+import equipmentService from '../services/equipment.service';
 
 const getAll = catchAsync(async (req, res) => {
     const buildings = await buildingService.getAllBuildings();
@@ -25,6 +26,18 @@ const getOne = catchAsync(async (req, res) => {
         message: null,
         tag: null,
         data: building,
+    } as httpResponse);
+});
+
+const bulkCreate = catchAsync(async (req, res) => {
+    const { data } = req.body;
+    await buildingService.bulkCreate(data);
+    res.json({
+        status: 'ok',
+        exception: null,
+        message: null,
+        tag: null,
+        data: null,
     } as httpResponse);
 });
 
@@ -73,6 +86,7 @@ const destroy = catchAsync(async (req, res) => {
 export default {
     getAll,
     getOne,
+    bulkCreate,
     create,
     update,
     destroy,
