@@ -3,19 +3,22 @@ import BuildingDto from '../dtos/building.dto';
 import ApiError from '../utils/ApiError';
 import httpStatus from 'http-status';
 import Floor from '../models/floor';
+import Employee from '../models/employee';
 
 const getBuildingById = async (buildingId: string): Promise<Building | null> => {
     return await Building.findByPk(buildingId);
 };
 
 const getOneBuilding = async (buildingId: string): Promise<BuildingDto> => {
-    const building = await Building.findByPk(buildingId, { include: [{ model: Floor }] });
+    const building = await Building.findByPk(buildingId, {
+        include: [{ model: Floor, include: [{ model: Employee }] }],
+    });
     if (!building) throw new ApiError(httpStatus.BAD_REQUEST, 'Not found building with id ' + buildingId);
     return new BuildingDto(building);
 };
 
 const getAllBuildings = async (): Promise<BuildingDto[]> => {
-    const buildings = await Building.findAll({ include: [{ model: Floor }] });
+    const buildings = await Building.findAll({ include: [{ model: Floor, include: [{ model: Employee }] }] });
     return buildings.map(b => new BuildingDto(b));
 };
 
