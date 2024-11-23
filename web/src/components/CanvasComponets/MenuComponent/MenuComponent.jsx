@@ -19,21 +19,61 @@ function MenuComponent() {
   const editSten = () => {
     if (canvasSlice.mode === 1) {
       dispatch(setMode({ mode: 0 }));
-      dispatch(
-        addElemOfis({
-          x: 100,
-          y: 10,
-          fill: "#313131",
-          elemId: "6",
-          name: "Кабинет",
-          opacity: 0.5,
-          zIndex: 100,
-          draggable: true,
-          figure: "4",
-          id: Date.now().toString(),
-          points: [...canvasSlice.pointsLines],
-        })
-      );
+      const groupedPoints = [];
+      //   const mass = [...canvasSlice.pointsLines];
+      //   for (let i = 0; i < mass.length; i++) {
+      //     let m = [];
+      //     m.push([mass[i], mass[i + 1], mass[i + 2], mass[i + 3]]);
+      //   }
+
+      for (let i = 0; i < canvasSlice.pointsLines.length - 2; i += 2) {
+        const startPoint = canvasSlice.pointsLines[i]; // Начало текущей линии
+        const endPoint = canvasSlice.pointsLines[i + 1]; // Конец текущей линии
+        const nextStartPoint = canvasSlice.pointsLines[i + 2]; // Начало следующей линии
+        // Создаем группу из четырех точек: (начало, конец текущей, начало следующей, конец следующей)
+        const group = [
+          startPoint,
+          endPoint,
+          nextStartPoint,
+          canvasSlice.pointsLines[i + 3],
+        ];
+        groupedPoints.push(group);
+      }
+
+      console.log("groupedPoints", groupedPoints);
+      groupedPoints.forEach((group, index) => {
+        dispatch(
+          addElemOfis({
+            x: 100,
+            y: 10,
+            fill: "#313131",
+            elemId: "6",
+            name: "Кабинет",
+            opacity: 0.5,
+            zIndex: 100,
+            draggable: true,
+            figure: "2",
+            id: Date.now().toString() + index,
+            points: group,
+          })
+        );
+      });
+
+      //   dispatch(
+      //     addElemOfis({
+      //       x: 100,
+      //       y: 10,
+      //       fill: "#313131",
+      //       elemId: "6",
+      //       name: "Кабинет",
+      //       opacity: 0.5,
+      //       zIndex: 100,
+      //       draggable: true,
+      //       figure: "4",
+      //       id: Date.now().toString(),
+      //       points: [...canvasSlice.pointsLines],
+      //     })
+      //   );
     } else {
       dispatch(setMode({ mode: 1 }));
     }

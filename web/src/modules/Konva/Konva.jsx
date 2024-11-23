@@ -70,39 +70,46 @@ const Konva = () => {
     setSelectedPointIndex(null);
   };
 
-  const [isDrawing, setIsDrawing] = useState(false);
   const addPointsInCanvas = (e) => {
-    setIsDrawing(true);
     const stage = e.target.getStage();
     const point = stage.getPointerPosition();
-    dispatch(
-      setPointsLines({ points: [...canvasSlice.pointsLines, point.x, point.y] })
-    );
-  };
-  // const handleMouseMoveAddPoints = (e) => {
-  //   if (!isDrawing) return;
-  //   const stage = e.target.getStage();
-  //   const point = stage.getPointerPosition();
-  //   dispatch(
-  //     setPointsLines({ points: [...canvasSlice.pointsLines, point.x, point.y] })
-  //   );
-  // };
-  const handleMouseUpAddPoints = () => {
-    setIsDrawing(false);
+    if (
+      Math.abs(point.x - canvasSlice.pointsLines[0]) < 50 &&
+      Math.abs(point.y - canvasSlice.pointsLines[1]) < 50
+    ) {
+      dispatch(
+        setPointsLines({
+          points: [
+            ...canvasSlice.pointsLines,
+            canvasSlice.pointsLines[0],
+            canvasSlice.pointsLines[1],
+          ],
+        })
+      );
+    } else {
+      dispatch(
+        setPointsLines({
+          points: [...canvasSlice.pointsLines, point.x, point.y],
+        })
+      );
+    }
   };
 
   console.log("canvasSlice", canvasSlice);
   return (
     <>
       <Stage
+        // onClick={
+        //   canvasSlice.selectedElement
+        //     ? () => dispatch(setSelectedElement({ id: null }))
+        //     : null
+        // }
         width={window.innerWidth}
         height={window.innerHeight}
         onMouseDown={canvasSlice.mode === 1 ? addPointsInCanvas : checkDeselect}
         onTouchStart={checkDeselect}
         onMouseMove={canvasSlice.mode === 1 ? null : handleMouseMove}
-        onMouseUp={
-          canvasSlice.mode === 1 ? handleMouseUpAddPoints : handleMouseUp
-        }
+        onMouseUp={canvasSlice.mode === 1 ? null : handleMouseUp}
       >
         {/* //!сетка */}
         <Layer>
@@ -184,7 +191,12 @@ const Konva = () => {
                           newPoints[index * 2] = x; // Изменяем X
                           newPoints[index * 2 + 1] = y; // Изменяем Y
                           dispatch(
-                            setPointsElem({ id: rect.id, points: newPoints })
+                            setPointsElem({
+                              id: rect.id,
+                              points: newPoints,
+                              x,
+                              y,
+                            })
                           );
                         }}
                       />

@@ -1,6 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { components } from "./components";
 
+function funGetPoints(points, elem) {
+  if (points[2] !== elem.points[2] && points[3] !== elem.points[3]) {
+    return [points[2], points[3], elem.points[2], elem.points[3]];
+  } else {
+    return points;
+  }
+}
+
+function funGetPoints2(points, elem) {
+  if (points[0] !== elem.points[0] && points[1] !== elem.points[1]) {
+    return [elem.points[0], elem.points[1], points[0], points[1]];
+  } else {
+    return points;
+  }
+}
+
 const CanvasSlice = createSlice({
   name: "canvas",
   initialState: {
@@ -53,9 +69,23 @@ const CanvasSlice = createSlice({
       });
     },
 
-    setPointsElem(state, action) {
-      const { id, points } = action.payload;
+    setRotation(state, action) {
+      const { id, rotation } = action.payload;
       state.elements = state.elements.map((elem) => {
+        if (elem.id === id) {
+          return {
+            ...elem,
+            rotation: rotation,
+          };
+        }
+        return elem;
+      });
+    },
+
+    setPointsElem(state, action) {
+      const { id, points, x, y } = action.payload;
+
+      state.elements = [...state.elements].map((elem) => {
         if (elem.id === id) {
           return {
             ...elem,
@@ -64,6 +94,49 @@ const CanvasSlice = createSlice({
         }
         return elem;
       });
+
+      let element = null;
+      let se = 0;
+      if (points && points.length > 0) {
+        element = [...state.elements].find(
+          (el) =>
+            el.figure &&
+            el.figure === "2" &&
+            Math.abs(el.points[0] - x) < 50 &&
+            Math.abs(el.points[1] - y) < 50
+        );
+        console.log("ee", element);
+      }
+
+      if (points && points.length > 0) {
+        let e = [...state.elements].find(
+          (el) =>
+            el.figure &&
+            el.figure === "2" &&
+            Math.abs(el.points[2] - x) < 50 &&
+            Math.abs(el.points[3] - y) < 50
+        );
+        if (e) {
+          element = e;
+          console.log("e", e);
+          se = 1;
+        }
+      }
+      if (element) {
+        // console.log("element", element);
+        state.elements = state.elements.map((elem) => {
+          if (elem.id === element.id && elem.id) {
+            return {
+              ...elem,
+              points:
+                se === 0
+                  ? funGetPoints(points, elem)
+                  : funGetPoints2(points, elem),
+            };
+          }
+          return elem;
+        });
+      }
     },
 
     addElemOfis(state, action) {
@@ -107,6 +180,7 @@ export const {
   setPointsLines,
   addElemOfis,
   setPositionElem,
+  setRotation,
 } = CanvasSlice.actions;
 
 export default CanvasSlice.reducer;
