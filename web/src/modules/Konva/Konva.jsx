@@ -26,7 +26,7 @@ const Konva = () => {
   };
 
   // line
-  const [points, setPoints] = useState([200, 200, 200, 400]);
+  // const [points, setPoints] = useState([200, 200, 200, 400]);
 
   const [isDragging, setIsDragging] = useState(false);
   const [selectedPointIndex, setSelectedPointIndex] = useState(null);
@@ -48,12 +48,18 @@ const Konva = () => {
   };
 
   const handleMouseMove = (e) => {
+    const points = canvasSlice.selectedElement
+      ? canvasSlice.elements.find(
+          (elem) => elem.id === canvasSlice.selectedElement
+        ).points
+      : [];
     if (isDragging && selectedPointIndex !== null) {
       const { x, y } = e.target.getStage().getPointerPosition();
       const newPoints = [...points];
       newPoints[selectedPointIndex] = x; // Изменяем X
       newPoints[selectedPointIndex + 1] = y; // Изменяем Y
-      setPoints(newPoints);
+      // setPoints(newPoints);
+      dispatch(setPointsElem(canvasSlice.selectedElement, newPoints));
     }
   };
 
@@ -62,24 +68,51 @@ const Konva = () => {
     setSelectedPointIndex(null);
   };
 
-  const handleLineClick = (e) => {
-    const { x, y } = e.target.getStage().getPointerPosition();
-    setPoints([...points, x, y]); // Добавляем новую точку
+  const [points, setPoints] = useState([]);
+  const [isDrawing, setIsDrawing] = useState(false);
+  const addPointsInCanvas = (e) => {
+    setIsDrawing(true);
+    const stage = e.target.getStage();
+    const point = stage.getPointerPosition();
+    setPoints([...points, point.x, point.y]); // добавляем координаты точки
   };
-
+  const handleMouseMoveAddPoints = (e) => {
+    if (!isDrawing) return;
+    const stage = e.target.getStage();
+    const point = stage.getPointerPosition();
+    setPoints([...points, point.x, point.y]); // обновляем координаты для рисования
+  };
+  const handleMouseUpAddPoints = () => {
+    setIsDrawing(false);
+  };
   return (
     <>
       <Stage
         width={window.innerWidth}
         height={window.innerHeight}
-        onMouseDown={checkDeselect}
+        onMouseDown={canvasSlice.mode === 1 ? addPointsInCanvas : checkDeselect}
         onTouchStart={checkDeselect}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
+        onMouseMove={
+          canvasSlice.mode === 1 ? handleMouseMoveAddPoints : handleMouseMove
+        }
+        onMouseUp={
+          canvasSlice.mode === 1 ? handleMouseUpAddPoints : handleMouseUp
+        }
       >
         {/* //!сетка */}
         <Layer>
           <Setka />
+        </Layer>
+
+        <Layer>
+          <Line
+            points={points}
+            stroke="black"
+            strokeWidth={5}
+            // tension={0.5} // сглаживание линии
+            lineCap="round" // скругление концов линии
+            lineJoin="round" // скругление соединений
+          />
         </Layer>
         <Layer>
           {canvasSlice.elements.map((rect, i) => {
@@ -113,10 +146,11 @@ const Konva = () => {
                       strokeWidth={2} // Толщина линии
                       lineCap="round" // Закругление концов линии
                       lineJoin="round" // Закругление углов линии
-                      onMouseDown={(e) => handleMouseDown(e, rect.points)}
-                      onSelect={() => {
+                      onMouseDown={(e) => {
+                        handleMouseDown(e, rect.points);
                         dispatch(setSelectedElement({ id: rect.id }));
                       }}
+
                       // onClick={handleLineClick}
                     />
                     {[
@@ -130,7 +164,10 @@ const Konva = () => {
                         radius={4}
                         fill=" #989898"
                         draggable
-                        onMouseDown={(e) => handleMouseDown(e, rect.points)}
+                        onMouseDown={(e) => {
+                          handleMouseDown(e, rect.points);
+                          dispatch(setSelectedElement({ id: rect.id }));
+                        }}
                         onDragMove={(e) => {
                           const { x, y } = e.target
                             .getStage()

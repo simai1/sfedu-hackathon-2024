@@ -1,4 +1,8 @@
-import { addElem, setMode } from "../../../store/CanvasSlice/canvas.Slice";
+import {
+  addElem,
+  setMode,
+  setSelectedElement,
+} from "../../../store/CanvasSlice/canvas.Slice";
 import { components } from "../../../store/CanvasSlice/components";
 import styles from "./MenuComponent.module.scss";
 import { useSelector, useDispatch } from "react-redux";
