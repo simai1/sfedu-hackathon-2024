@@ -11,4 +11,4 @@ export const conditionsRuLocale = {
 };
 
 export default conditions;
-export const mapRoles = mapObjectKeys(conditions);
+export const mapConditions = mapObjectKeys(conditions);

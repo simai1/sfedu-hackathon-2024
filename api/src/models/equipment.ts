@@ -1,6 +1,7 @@
 import { DataTypes, Model, Sequelize } from 'sequelize';
 import conditions from '../config/conditions';
 import types from '../config/type';
+import Employee from './employee';
 
 export default class Equipment extends Model {
     id!: string;
@@ -12,6 +13,10 @@ export default class Equipment extends Model {
     createdAt!: Date;
     inspectionDate!: Date;
     cost?: number;
+    Element?: Element;
+    elementId?: string;
+    Employee?: Employee;
+    employeeId?: string;
 
     static initialize(sequelize: Sequelize) {
         Equipment.init(

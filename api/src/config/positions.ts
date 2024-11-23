@@ -35,4 +35,4 @@ export const positionsRuLocale = {
 };
 
 export default positions;
-export const mapRoles = mapObjectKeys(positions);
+export const mapPositions = mapObjectKeys(positions);

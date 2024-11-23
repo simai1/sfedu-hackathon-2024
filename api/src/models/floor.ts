@@ -1,9 +1,12 @@
 import { DataTypes, Model, Sequelize } from 'sequelize';
+import Building from './building';
 
 export default class Floor extends Model {
     id!: string;
     name!: string;
     content!: string;
+    Building!: Building;
+    buildingId!: string;
 
     static initialize(sequelize: Sequelize) {
         Floor.init(
