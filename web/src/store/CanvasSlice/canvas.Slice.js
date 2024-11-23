@@ -7,6 +7,7 @@ const CanvasSlice = createSlice({
     elements: [],
     selectedElement: "",
     mode: 0,
+    pointsLines: [],
   },
 
   reducers: {
@@ -25,6 +26,11 @@ const CanvasSlice = createSlice({
     setMode(state, action) {
       const { mode } = action.payload;
       state.mode = mode;
+    },
+
+    setPointsLines(state, action) {
+      const { points } = action.payload;
+      state.pointsLines = points;
     },
 
     setElem(state, action) {
@@ -60,6 +66,25 @@ const CanvasSlice = createSlice({
       });
     },
 
+    addElemOfis(state, action) {
+      state.elements = [...state.elements, action.payload];
+      state.pointsLines = [];
+    },
+
+    setPositionElem(state, action) {
+      const { id, x, y } = action.payload;
+      state.elements = state.elements.map((elem) => {
+        if (elem.id === id) {
+          return {
+            ...elem,
+            x: x,
+            y: y,
+          };
+        }
+        return elem;
+      });
+    },
+
     setSelectedElement(state, action) {
       const { id } = action.payload;
       state.selectedElement = id;
@@ -79,6 +104,9 @@ export const {
   setDraggable,
   setPointsElem,
   setMode,
+  setPointsLines,
+  addElemOfis,
+  setPositionElem,
 } = CanvasSlice.actions;
 
 export default CanvasSlice.reducer;
