@@ -19,6 +19,7 @@ export default class EquipmentDto {
     inspectionDate!: Date;
     inspectionDateHuman!: string;
     cost?: number;
+    factCost?: number;
     element?: ElementDto;
     employee?: EmployeeDto;
     floor?: string;
@@ -40,6 +41,18 @@ export default class EquipmentDto {
         this.inspectionDate = model.inspectionDate;
         this.inspectionDateHuman = strftime('%d.%m.%y', model.inspectionDate);
         this.cost = model.cost;
+
+        const serviceLife = 10;
+        const salvageValue = 0;
+        const yearsUsed = Math.floor((new Date().getTime() - model.createdAt.getTime()) / (1000 * 60 * 60 * 24 * 365)); // В годах
+
+        if (model.cost && yearsUsed <= serviceLife) {
+            const annualDepreciation = (model.cost - salvageValue) / serviceLife;
+            this.factCost = Math.max(model.cost - annualDepreciation * yearsUsed, salvageValue);
+        } else {
+            this.factCost = undefined;
+        }
+
         // @ts-expect-error any
         this.element = model.Element ? new ElementDto(model.Element) : undefined;
         this.employee = model.Employee ? new EmployeeDto(model.Employee) : undefined;
