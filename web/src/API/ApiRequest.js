@@ -559,3 +559,47 @@ export const apiDeleteFloor = async (id) => {
     return error;
   }
 };
+
+
+//! Запрос на Импорт файла
+export const ImportFileToEquipments = async (data) => {
+  try {
+    const response = await http.post(`${server}/uploads/equipments`, data, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+}
+
+//! Запрос на Импорт файла
+export const ImportFileToBuildings = async (data) => {
+  try {
+    const response = await http.post(`${server}/uploads/buildings`, data, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+}
+
+
+  //! Запрос на Импорт файла
+export const ImportFileToEmployees = async (data) => {
+  try {
+    const response = await http.post(`${server}/uploads/employees`, data, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+}
