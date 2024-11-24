@@ -94,12 +94,11 @@ function RigthMenu() {
     setModalDeleteFloor(id);
   };
 
-  const deleteFloorTrue = () => {
-    apiDeleteFloor(equipmentSlice.selectedFloor).then((req) => {
+  const deleteFloorTrue = (id) => {
+    console.log("id", floors, id);
+    apiDeleteFloor(id).then((req) => {
       if (req?.status === 200) {
-        setFloors(
-          floors.filter((it) => it.id !== equipmentSlice.selectedFloor)
-        );
+        setFloors(floors.filter((it) => it.id !== id));
         dispatch(setSelectedFloor({ id: floors[0].id }));
       }
     });
@@ -162,7 +161,9 @@ function RigthMenu() {
                         >
                           отменить
                         </button>
-                        <button onClick={deleteFloorTrue}>удалить</button>
+                        <button onClick={() => deleteFloorTrue(item.id)}>
+                          удалить
+                        </button>
                       </div>
                     </div>
                   )}
