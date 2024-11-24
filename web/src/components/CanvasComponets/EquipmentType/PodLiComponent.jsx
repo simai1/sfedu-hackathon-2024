@@ -24,13 +24,16 @@ function PodLiComponent(props) {
             ?.map((el) => {
               return (
                 <li
-                  onClick={() => props.funClikElement(1, el.id)}
+                  onClick={() => props.funClikElement(el.type, el.id)}
                   className={styles.liTypeTeh2}
                 >
                   {el.name}/{el.inventoryNumber}
                 </li>
               );
             })}
+          {equipmentSlice.equipment?.filter(
+            (elem) => elem.typeHuman === props.el
+          ).length === 0 && <li className={styles.noData}>Нет оборудования</li>}
         </ul>
       )}
     </>

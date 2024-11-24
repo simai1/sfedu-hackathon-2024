@@ -17,8 +17,8 @@ export const components = [
   },
 
   {
-    x: 300,
-    y: 200,
+    x: 500,
+    y: 500,
     width: 21,
     height: 21,
     rotation: 0,
@@ -34,10 +34,10 @@ export const components = [
   },
 
   {
-    x: 300,
-    y: 200,
-    width: 20,
-    height: 20,
+    x: 500,
+    y: 500,
+    width: 70,
+    height: 70,
     rotation: 0,
     fill: " #989898",
     elemId: "8",
@@ -46,15 +46,15 @@ export const components = [
     zIndex: 100,
     draggable: true,
     figure: "3",
-    svgPath: "/img/canvasImg/nout.svg",
+    svgPath: "/img/kof.svg",
     type: "equipments",
   },
 
   {
-    x: 300,
-    y: 200,
-    width: 20,
-    height: 20,
+    x: 500,
+    y: 500,
+    width: 70,
+    height: 70,
     rotation: 0,
     fill: " #989898",
     elemId: "6",
@@ -63,13 +63,13 @@ export const components = [
     zIndex: 100,
     draggable: true,
     figure: "3",
-    svgPath: "/img/canvasImg/nout.svg",
+    svgPath: "/img/pr.svg",
     type: "equipments",
   },
 
   {
-    x: 100,
-    y: 10,
+    x: 500,
+    y: 500,
     width: 200,
     height: 100,
     fill: " #D2D2D2",
@@ -142,8 +142,8 @@ export const components = [
   },
 
   {
-    x: 300,
-    y: 200,
+    x: 500,
+    y: 500,
     width: 20,
     height: 12,
     fill: "red",
@@ -157,8 +157,8 @@ export const components = [
     type: "background",
   },
   {
-    x: 300,
-    y: 200,
+    x: 500,
+    y: 500,
     width: 60,
     height: 16,
     rotation: 0,
@@ -207,10 +207,10 @@ export const components = [
   },
 
   {
-    x: 300,
-    y: 200,
-    width: 21,
-    height: 21,
+    x: 500,
+    y: 500,
+    width: 35,
+    height: 35,
     rotation: 0,
     fill: " #989898",
     elemId: "200",
@@ -219,7 +219,7 @@ export const components = [
     zIndex: 51,
     draggable: true,
     figure: "3",
-    svgPath: "/img/canvasImg/lampa.svg",
+    svgPath: "/img/canvasImg/chel.svg",
     type: "employees",
   },
 ];

@@ -95,6 +95,18 @@ function EquipmentType(props) {
               </li>
             ))}
 
+          {props.name === "Мебель" &&
+            equipmentSlice.equipment
+              .filter((el) => props.type.some((e) => e === el.type))
+              ?.map((user) => (
+                <li
+                  className={styles.liType}
+                  onClick={() => funClikElement(user.type, user.id)}
+                >
+                  {user.name}
+                </li>
+              ))}
+
           {props.name === "Техника" &&
             tehnika.map((el) => (
               <PodLiComponent
