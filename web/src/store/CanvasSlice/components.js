@@ -77,8 +77,8 @@ export const components = [
     name: "Стол",
     opacity: 0.6,
     zIndex: 50,
-    stroke: "black", // Цвет бордера
-    strokeWidth: 2, // Ширина бордера
+    // stroke: "black", // Цвет бордера
+    // strokeWidth: 2, // Ширина бордера
     draggable: true,
     figure: "1",
     type: "background",

@@ -11,11 +11,33 @@
     display: flex;
     flex-direction: row;
     position: absolute;
-    left: 356px;
-    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 20px;
+    background-color: #fff;
+    width: 300px;
+    height: 50px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 15px;
+    box-sizing: border-box;
 
     button {
-      margin-left: 20px;
+      width: 130px;
+      height: 40px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #fff;
+      border: none;
+
+      &:hover {
+        background-color: var(--GrayColorButtonHover);
+      }
+      &:active {
+        background-color: var(--GrayColorButtonActive);
+      }
     }
   }
 }

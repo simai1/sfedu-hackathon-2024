@@ -208,10 +208,28 @@ export const CreateEquipment = async (UserData) => {
   }
 };
 
+//! Запрос на оборудование оборудования
+export const UpdateEquipment = async (Data, id) => {
+  try {
+    const response = await http.patch(`${server}/employees/${id}`, Data, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    if (error?.response?.status === 403) {
+      window.location.href = `${process.env.REACT_APP_WEB_URL}/Authorization`;
+    } else {
+      console.log("Такой пользователь уже существует!");
+      return false;
+    }
+  }
+};
+
 //! Получения Списка оборудования
 export const GetEquipment = async (searchText) => {
   let s = searchText ? `?search=${searchText}` : "";
-
   try {
     const response = await http.get(`${server}/equipments${s}`, {
       headers: {
@@ -317,6 +335,47 @@ export const CreateWorker = async (UserData) => {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },
     });
+    return response;
+  } catch (error) {
+    if (error?.response?.status === 403) {
+      window.location.href = `${process.env.REACT_APP_WEB_URL}/Authorization`;
+    } else {
+      console.log("Такой пользователь уже существует!");
+      return false;
+    }
+  }
+};
+
+//!Получение Сотрудника по Id
+export const GetWorkerOne = async (id) => {
+  try {
+    const response = await http.get(`${server}/employees/${id}`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    if (error?.response?.status === 403) {
+      window.location.href = `${process.env.REACT_APP_WEB_URL}/Authorization`;
+    } else {
+      console.log("Такой пользователь уже существует!");
+      return false;
+    }
+  }
+};
+
+//! Обновлеение Сотрудника по Id
+export const EditWorkerForId = async (data, id) => {
+  try {
+    const response = await http.patch(
+      `${server}/employees/${id}`, data,
+      {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+        },
+      }
+    );
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
