@@ -107,6 +107,13 @@ function RigthMenu() {
     setAccept(false);
     setOpenModalFloor(false);
   };
+  useEffect(() => {
+    apiGetConvas(equipmentSlice.selectedFloor).then((res) => {
+      if (res?.status === 200) {
+        dispatch(apiAddElemConvas({ data: res.data?.data }));
+      }
+    });
+  }, [equipmentSlice.selectedFloor]);
 
   const addFloor = () => {
     setOpenModalCreareFloor(!openModalCreateFloor);
@@ -263,7 +270,7 @@ function RigthMenu() {
           )}
         </div>
 
-        {canvasSlice.selectedElement ? (
+        {canvasSlice.selectedElement && element?.name ? (
           <>
             <div className={styles.con1}>
               <div className={styles.box}>

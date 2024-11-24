@@ -118,6 +118,7 @@ function MenuComponent() {
           canvasSlicemode={canvasSlice?.mode}
           name="Строение"
           type={[100, 101, 102, 103]}
+          action={true}
         />
         <EquipmentType name="Сотрудники" type={[]} />
         <EquipmentType name="Мебель" type={[2, 3, 5, 10]} />
