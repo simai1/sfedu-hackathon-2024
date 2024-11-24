@@ -27,7 +27,7 @@ function HomePage() {
   
 
   useEffect(() => {
-    context.getEquuipmentData()
+    context.getTableData()
   },[])
 
   useEffect(() => {

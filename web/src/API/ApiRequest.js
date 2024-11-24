@@ -251,9 +251,11 @@ export const CreateOffice = async (UserData) => {
 
 //! Получения Списка офисов
 export const GetOffice = async (searchText) => {
+  let s = searchText ? `?search=${searchText}` : "";
+
   try {
     const response = await http.get(
-      `${server}/buildings?search=${searchText}`,
+      `${server}/buildings?search=${s}`,
       {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
@@ -270,6 +272,52 @@ export const GetOffice = async (searchText) => {
     }
   }
 };
+
+//! Получения офиса по Id
+export const GetOfficeOne = async (id) => {
+  try {
+    const response = await http.get(
+      `${server}/buildings/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    if (error?.response?.status === 403) {
+      window.location.href = `${process.env.REACT_APP_WEB_URL}/Authorization`;
+    } else {
+      console.log("Такой пользователь уже существует!");
+      return false;
+    }
+  }
+};
+
+//! Обновлеение офиса по Id
+export const EditOfficeForId = async (data, id) => {
+  try {
+    const response = await http.patch(
+      `${server}/buildings/${id}`, data,
+      {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    if (error?.response?.status === 403) {
+      window.location.href = `${process.env.REACT_APP_WEB_URL}/Authorization`;
+    } else {
+      console.log("Такой пользователь уже существует!");
+      return false;
+    }
+  }
+};
+
+
 
 //! Сотрудники
 //!Создане Сотрудника

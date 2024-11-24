@@ -124,6 +124,21 @@ const handleFileInputClick = () => {
                 return "";
         }
     }
+    const EditItem = () => {
+        switch (context?.activeTable) {
+            case "office":
+                context.setPopUp("PopUpEditOffice")
+                return 0;
+            case "Equipment":
+                context.setPopUp("PopUpEditEquipment")
+                return 0;
+            case "Staff":
+                context.setPopUp("PopUpEditWorker")
+                return 0;
+            default:
+                return "";
+        }
+    }
     const dataListOffise = [
       { id: 1, name: "Таганрог" },
       { id: 2, name: "Ростов-на-Дону" },
@@ -169,6 +184,10 @@ const handleFileInputClick = () => {
             {context.role === "Администратор" && (
                 
                 <>
+                    <button onClick={() => context.selectedRows.length === 1 && EditItem()}>
+                        <img src="/img/edit.svg" alt="Plus" />
+                        <span>Редактировать</span>
+                    </button>
                     <button onClick={() => addNewItem()}>
                         <img src="/img/plus.svg" alt="Plus" />
                         <span>Добавить {getToPathname()}</span>
