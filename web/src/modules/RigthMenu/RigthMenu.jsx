@@ -7,7 +7,7 @@ import {
   setSelectedElement,
 } from "../../store/CanvasSlice/canvas.Slice";
 import { setSelectedFloor } from "../../store/basicSlice/basic.Slice";
-import { apiAddFloor } from "../../API/ApiRequest";
+import { apiAddFloor, apiDeleteFloor } from "../../API/ApiRequest";
 import CreatFloor from "../../components/CreatFloor/CreatFloor";
 
 function RigthMenu() {
@@ -19,6 +19,7 @@ function RigthMenu() {
   const [element, setElement] = useState(
     canvasSlice.elements.find((elem) => elem.id === canvasSlice.selectedElement)
   );
+  const [modalDeleteFloor, setModalDeleteFloor] = useState(false);
 
   const [creatFloorData, setCreatFloorData] = useState({
     name: "",
@@ -80,6 +81,7 @@ function RigthMenu() {
       }
       if (modalRef2.current && !modalRef2.current.contains(event.target)) {
         setOpenModalFloor(false);
+        setModalDeleteFloor("");
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -87,6 +89,23 @@ function RigthMenu() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [modalRef]);
+
+  const deleteFloor = (id) => {
+    setModalDeleteFloor(id);
+  };
+
+  const deleteFloorTrue = () => {
+    apiDeleteFloor(equipmentSlice.selectedFloor).then((req) => {
+      if (req?.status === 200) {
+        setFloors(
+          floors.filter((it) => it.id !== equipmentSlice.selectedFloor)
+        );
+        dispatch(setSelectedFloor({ id: floors[0].id }));
+      }
+    });
+    setModalDeleteFloor("");
+  };
+
   return (
     <div className={styles.RigthMenu}>
       <div className={styles.head}>
@@ -122,6 +141,31 @@ function RigthMenu() {
               {floors.map((item) => (
                 <li onClick={() => selectFloor(item.id)} key={item.id}>
                   {item.name}
+                  <div
+                    className={styles.delete}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      deleteFloor(item.id);
+                    }}
+                  >
+                    <img src="./img/delete.svg" alt="img" />
+                  </div>
+                  {modalDeleteFloor === item.id && (
+                    <div className={styles.deletFloor}>
+                      <p>Вы уверены что хотите удалить этаж?</p>
+                      <div className={styles.btn}>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setModalDeleteFloor("");
+                          }}
+                        >
+                          отменить
+                        </button>
+                        <button onClick={deleteFloorTrue}>удалить</button>
+                      </div>
+                    </div>
+                  )}
                 </li>
               ))}
             </ul>

@@ -3,6 +3,7 @@ import styles from "./EquipmentType.module.scss";
 import { useState } from "react";
 import { addElem } from "../../../store/CanvasSlice/canvas.Slice";
 import { components } from "../../../store/CanvasSlice/components";
+import PodLiComponent from "./PodLiComponent";
 function EquipmentType(props) {
   const equipmentSlice = useSelector((state) => state.EquipmentSlice);
 
@@ -15,6 +16,32 @@ function EquipmentType(props) {
 
   const clickLi = () => {
     setOpenType(!openType);
+  };
+
+  const tehnika = [
+    "Ноутбук",
+    "Монитор",
+    "Принтер",
+    "Компьютер",
+    "Кофемашина",
+    "Клавиатура",
+  ];
+  const getLink = (name) => {
+    switch (name) {
+      case "Ноутбук":
+        return "/img/n.svg";
+      case "Монитор":
+        return "/img/m.svg";
+      case "Принтер":
+        return "/img/pr.svg";
+      case "Компьютер":
+        return "/img/sb1.svg";
+      case "Кофемашина":
+        return "/img/kof.svg";
+      case "Клавиатура":
+        return "/img/k.svg";
+      default:
+    }
   };
 
   return (
@@ -32,7 +59,7 @@ function EquipmentType(props) {
       </li>
       {openType && (
         <ul>
-          {equipmentSlice.equipment
+          {/* {equipmentSlice.equipment
             .filter((el) => props.type.some((e) => e === el.type))
             .map((component) => (
               <li
@@ -41,7 +68,7 @@ function EquipmentType(props) {
               >
                 {component.name}
               </li>
-            ))}
+            ))} */}
           {props.name === "Офис" &&
             components
               ?.filter(
@@ -66,6 +93,16 @@ function EquipmentType(props) {
               >
                 {user.name}
               </li>
+            ))}
+
+          {props.name === "Техника" &&
+            tehnika.map((el) => (
+              <PodLiComponent
+                funClikElement={funClikElement}
+                getLink={getLink}
+                el={el}
+                styles={styles}
+              />
             ))}
         </ul>
       )}

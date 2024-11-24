@@ -4,13 +4,16 @@ import {
   setOffice,
   setSelectedOffice,
 } from "../../store/basicSlice/basic.Slice";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import PopUpCreateEquipment from "../PopUp/EquipmentPopUp/PopUpCreateEquipment/PopUpCreateEquipment";
+import DataContext from "../../context";
 
 function OfficeHead() {
   const dispatch = useDispatch();
-
+  const context = useContext(DataContext);
   const [openModalOffice, setOpenModalOffice] = useState(false);
+  const [opetnModalCreatOffice, setOpetnModalCreatOffice] = useState(false);
   const equipmentSlice = useSelector((state) => state.EquipmentSlice);
   useEffect(() => {
     GetOfficeAll().then((resp) => {
@@ -51,7 +54,10 @@ function OfficeHead() {
 
           <img src="./img/v.svg" alt="img" />
         </div>
-        <div className={styles.rigth}>
+        <div
+          className={styles.rigth}
+          onClick={() => context.setPopUp("PopUpCreateEquipment")}
+        >
           <img src="./img/+.svg" alt="img" />
         </div>
         {openModalOffice && (

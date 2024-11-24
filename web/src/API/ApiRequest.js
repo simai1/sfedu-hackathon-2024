@@ -177,7 +177,7 @@ export const SwitchRole = async () => {
         },
       }
     );
-    refreshTokens()
+    refreshTokens();
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -210,8 +210,10 @@ export const CreateEquipment = async (UserData) => {
 
 //! Получения Списка оборудования
 export const GetEquipment = async (searchText) => {
+  let s = searchText ? `?search=${searchText}` : "";
+
   try {
-    const response = await http.get(`${server}/equipments?search=${searchText}`, {
+    const response = await http.get(`${server}/equipments${s}`, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },
@@ -250,11 +252,14 @@ export const CreateOffice = async (UserData) => {
 //! Получения Списка офисов
 export const GetOffice = async (searchText) => {
   try {
-    const response = await http.get(`${server}/buildings?search=${searchText}`, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-      },
-    });
+    const response = await http.get(
+      `${server}/buildings?search=${searchText}`,
+      {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+        },
+      }
+    );
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -286,11 +291,11 @@ export const CreateWorker = async (UserData) => {
   }
 };
 
-
 //! Получения Списка офисов
 export const GetWorker = async (searchText) => {
+  let s = searchText ? `?search=${searchText}` : "";
   try {
-    const response = await http.get(`${server}/employees`, {
+    const response = await http.get(`${server}/employees${s}`, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },
@@ -325,8 +330,7 @@ export const apiSaveConvas = async (data, id) => {
   }
 };
 
-
-//! Массовые действия удаления 
+//! Массовые действия удаления
 //! Удаление Сотрудников
 export const DeleteWorker = async (Data) => {
   try {
@@ -386,31 +390,31 @@ export const DeleteOfisses = async (Data) => {
 
 //! добавить этаж
 export const apiAddFloor = async (data) => {
-try {
-const response = await http.post(`${server}/floors`, data, {
-headers: {
-Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-},
-});
-return response;
-} catch (error) {
-console.log("error", error);
-return;
-}
+  try {
+    const response = await http.post(`${server}/floors`, data, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log("error", error);
+    return;
+  }
 };
 
 //! Получения елементов конваса
 export const apiGetConvas = async (id) => {
-try {
-const response = await http.get(`${server}/floors/canvas/${id}`, {
-headers: {
-Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-},
-});
-return response;
-} catch (error) {
-return error;
-}
+  try {
+    const response = await http.get(`${server}/floors/canvas/${id}`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
 };
 
 //! Получения Списка офисов
@@ -429,5 +433,33 @@ export const GetOfficeAll = async () => {
       console.log("Такой пользователь уже существует!");
       return false;
     }
+  }
+};
+
+//! очистить канвас
+export const refreshCanvas = async (id) => {
+  try {
+    const response = await http.delete(`${server}/floors/canvas/${id}`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+//! удалить этаж
+export const apiDeleteFloor = async (id) => {
+  try {
+    const response = await http.delete(`${server}/floors/${id}`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
   }
 };

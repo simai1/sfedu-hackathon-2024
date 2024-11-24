@@ -34,6 +34,7 @@ function CreatFloor(props) {
           .finally(() => {
             props.setOpenModalCreareFloor(false);
           });
+        props.setCreatFloorData({ name: "", number: "" });
       } else {
         setError("Произошла ошибка");
       }
