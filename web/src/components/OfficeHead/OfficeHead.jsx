@@ -4,7 +4,7 @@ import {
   setOffice,
   setSelectedOffice,
 } from "../../store/basicSlice/basic.Slice";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 function OfficeHead() {
@@ -23,6 +23,19 @@ function OfficeHead() {
     dispatch(setSelectedOffice({ id }));
     setOpenModalOffice(!openModalOffice);
   };
+
+  const modalRef = useRef(null);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        setOpenModalOffice(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [modalRef]);
   return (
     <div className={styles.OfficeHead}>
       <div className={styles.head}>
@@ -42,7 +55,7 @@ function OfficeHead() {
           <img src="./img/+.svg" alt="img" />
         </div>
         {openModalOffice && (
-          <div className={styles.office}>
+          <div ref={modalRef} className={styles.office}>
             <ul>
               {equipmentSlice.office.map((item) => (
                 <li onClick={() => selectOffice(item.id)} key={item.id}>

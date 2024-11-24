@@ -288,7 +288,7 @@ export const GetWorker = async () => {
 //! сохранить конвас
 export const apiSaveConvas = async (data, id) => {
   try {
-    const response = await http.post(`${server}/floors/canvas${id}`, data, {
+    const response = await http.post(`${server}/floors/canvas/${id}`, data, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },
@@ -301,5 +301,20 @@ export const apiSaveConvas = async (data, id) => {
       console.log("Такой пользователь уже существует!");
       return false;
     }
+  }
+};
+
+//! добавить этаж
+export const apiAddFloor = async (data) => {
+  try {
+    const response = await http.post(`${server}/floors`, data, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log("error", error);
+    return;
   }
 };

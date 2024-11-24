@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   addElem,
   addElemOfis,
@@ -8,8 +8,9 @@ import {
 import { components } from "../../../store/CanvasSlice/components";
 import styles from "./MenuComponent.module.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { GetEquipment } from "../../../API/ApiRequest";
-import { setEquipment } from "../../../store/basicSlice/basic.Slice";
+import { GetEquipment, GetWorker } from "../../../API/ApiRequest";
+import { setEquipment, setWorker } from "../../../store/basicSlice/basic.Slice";
+import EquipmentType from "../EquipmentType/EquipmentType";
 
 function MenuComponent() {
   const canvasSlice = useSelector((state) => state.CanvasSlice);
@@ -24,6 +25,12 @@ function MenuComponent() {
     GetEquipment().then((resp) => {
       if (resp?.status === 200) {
         dispatch(setEquipment({ data: resp.data.data }));
+      }
+    });
+
+    GetWorker().then((resp) => {
+      if (resp?.status === 200) {
+        dispatch(setWorker({ data: resp.data.data }));
       }
     });
   }, []);
@@ -94,7 +101,7 @@ function MenuComponent() {
   return (
     <div className={styles.MenuComponent}>
       <ul>
-        {equipmentSlice.equipment.map((component) => (
+        {/* {equipmentSlice.equipment.map((component) => (
           <li
             onClick={() => funClikElement(component.type, component.id)}
             key={component.elemId}
@@ -104,7 +111,12 @@ function MenuComponent() {
         ))}
         <li onClick={() => editSten()}>
           {canvasSlice.mode === 1 ? "Сохранить" : "Рисовать стены"}
-        </li>
+        </li> */}
+
+        <EquipmentType name="Офис" type={[100, 101, 102, 103]} />
+        <EquipmentType name="Сотрудники" type={[]} />
+        <EquipmentType name="Мебель" type={[2, 3, 5, 10]} />
+        <EquipmentType name="Техника" type={[1, 4, 6, 7, 8, 9]} />
       </ul>
     </div>
   );
