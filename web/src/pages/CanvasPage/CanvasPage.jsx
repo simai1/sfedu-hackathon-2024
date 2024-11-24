@@ -23,6 +23,7 @@ import { setOffice } from "../../store/basicSlice/basic.Slice";
 import DataContext from "../../context";
 import PopUpCreateEquipment from "../../components/PopUp/EquipmentPopUp/PopUpCreateEquipment/PopUpCreateEquipment";
 import PopUpCreateOffice from "../../components/PopUp/OffisePopUp/PopUpCreateOffice/PopUpCreateOffice";
+import { useNavigate } from "react-router-dom";
 
 function CanvasPage() {
   const canvasSlice = useSelector((state) => state.CanvasSlice);
@@ -116,6 +117,8 @@ function CanvasPage() {
     console.log("searchElems", searchElems);
   }, [canvasSlice.serch]);
 
+  const nabigate = useNavigate();
+
   return (
     <div className={styles.CanvasPage}>
       <div className={styles.HomePageProfileClicker}>
@@ -170,6 +173,10 @@ function CanvasPage() {
         </button>
 
         <button onClick={funSaveConvas}>Сохранить</button>
+      </div>
+      <div className={styles.Back} onClick={() => nabigate("/homePage")}>
+        <img src="./img/iii.svg" alt="img" />
+        <p>На главную</p>
       </div>
     </div>
   );
