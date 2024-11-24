@@ -78,6 +78,11 @@ const updateEmployee = async (
 ): Promise<void> => {
     const employee = await getEmployeeById(employeeId);
     if (!employee) throw new ApiError(httpStatus.BAD_REQUEST, 'No employee with id ' + employeeId);
+    if (equipmentId) {
+        const equipment = await Equipment.findByPk(equipmentId);
+        if (!equipment) throw new ApiError(httpStatus.BAD_REQUEST, 'No equipment with id ' + equipmentId);
+        await equipment.update({ employeeId });
+    }
     await employee.update({ name, position, floorId, equipmentId, elementId });
 };
 
