@@ -16,6 +16,7 @@ import { GetEquipment } from "../../API/ApiRequest";
 import { filterData } from "../../function";
 import PopUpCreateOffice from "../../components/PopUp/OffisePopUp/PopUpCreateOffice/PopUpCreateOffice";
 import PopUpCreateWorker from "../../components/PopUp/StaffPopUp/PopUpCreateWorker/PopUpCreateWorker";
+import { dataListEquipment } from "./data";
 
 function HomePage() {
   const context = useContext(DataContext);
@@ -24,10 +25,15 @@ function HomePage() {
 
   useEffect(() => {
     context.getEquuipmentData()
-   
+  },[])
+
+  useEffect(() => {
+    context.setSelectedRows([]);
+    context.getTableData()
   },[context.valueNameStaff, context.valueNameOffise, context.valueNameEquipment])
 
   const filterData = (data) => {
+    
     let value;
     if (context.activeTable === "Equipment") {
       value = context.valueNameEquipment;
@@ -39,31 +45,22 @@ function HomePage() {
 
     if(!value){
       return data
-    }
-
-    const dataListEquipment = [
-      { id: 1, name: "Ноутбуки" },
-      { id: 2, name: "Столы" },
-      { id: 3, name: "Лампы" },
-      { id: 4, name: "Мониторы" },
-      { id: 5, name: "Диваны" },
-      { id: 6, name: "Принтеры" },
-      { id: 7, name: "Компьютеры" },
-      { id: 8, name: "Кофемашины" },
-      { id: 9, name: "Клавиатуры" },
-      { id: 10, name: "Стулья" },
-    ]; 
-
-    // Сопоставление типа по названию
-    const equipment = dataListEquipment.find(item => item.name === value);
-    const typeId = equipment ? equipment.id : null;
-    console.log("typeId", typeId)
-    console.log("data", data)
-    console.log("value", value)
-    // Фильтрация данных по указанному столбцу
-    console.log(data.filter(item => item.type === typeId))
-    return data.filter(item => item.type === typeId);
+    }else{
+      switch (context.activeTable) {
+        case "Equipment":
+          const equipment = dataListEquipment.find(item => item.name === value);
+          const typeId = equipment ? equipment.id : null;
+          return data.filter(item => item.type === typeId);
+        case "Staff":
+          return data.filter(item => item?.building?.toLowerCase().includes(value.toLowerCase()));
+        case "office":
+          return data.filter(item => item?.address?.toLowerCase().includes(value.toLowerCase()));
+        default:
+          return data;
+      }
+    }    
   };
+
 
   return (
     <div className={styles.HomePageContainer}>
@@ -78,7 +75,7 @@ function HomePage() {
         </div>
       </header>
       <main>
-        <HomePageTableMenu />
+        <HomePageTableMenu  tableData={filterData(context.tableBody)} />
         <div className={styles.HomePageTable}>
           <UniversalTable 
             tableBody={filterData(context.tableBody)} 

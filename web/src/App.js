@@ -20,36 +20,42 @@ function App() {
   const [valueNameStaff, setValueNameStaff] = useState("");
   const [valueNameEquipment, setValueNameEquipment] = useState("");
   const [valueNameOffise, setValueNameOffise] = useState(""); 
-
-
-
+  const [searchText, setSearchText] = useState("");
+  const [exportFilePopUp, setExportFilePopUp] = useState(false);
+  const [role, setRole] = useState("");
+  const [getProfileId, setGetProfileId] = useState(null);
 const getTableData = (value) => {
   switch (value) {
     case "Equipment":
-      getEquuipmentData();
+      getEquuipmentData(searchText);
       break;
     case "office":
-      getOfficeData();      
+      getOfficeData(searchText);      
       break;
     case "Staff":
-      getEmployeeData();
+      getEmployeeData(searchText);
       break;
     default:
       break;
   }
 }
- const getEquuipmentData = () =>{
-  GetEquipment().then((resp)=>{
+
+
+useEffect(() => {
+  getTableData(activeTable);
+},[searchText])
+
+ const getEquuipmentData = (searchText) =>{
+  GetEquipment(searchText).then((resp)=>{
     if(resp?.status === 200){
-    console.log("resp", resp.data.data)
     setTableBody(resp.data.data);
     setTableHeader(tableHeadAppoint);
     }
   })
  }
 
- const getOfficeData = () =>{
-  GetOffice().then((resp)=>{
+ const getOfficeData = (searchText) =>{
+  GetOffice(searchText).then((resp)=>{
     if(resp?.status === 200){
     setTableBody(resp.data.data)
     setTableHeader(tableHeadOfise);
@@ -57,8 +63,8 @@ const getTableData = (value) => {
   })
  }
 
- const getEmployeeData = () =>{
-  GetWorker().then((resp)=>{
+ const getEmployeeData = (searchText) =>{
+  GetWorker(searchText).then((resp)=>{
     if(resp?.status === 200){
     setTableBody(resp.data.data)
     setTableHeader(tableHeadPeople);
@@ -68,7 +74,6 @@ const getTableData = (value) => {
  
 
 const getLink = (name) => {
-  console.log("name", name)
   switch (name) {
       case "Ноутбук":
           return "/img/notebook.svg";
@@ -103,10 +108,16 @@ const getLink = (name) => {
     activeTable,
     tableBody,
     setTableBody,
+    role,
+    setRole,
     tableHeader,
+    exportFilePopUp,
+    setExportFilePopUp,
     setTableHeader,
     setSelectedRows,
     selectedRows,
+    setGetProfileId,
+    getProfileId,
     popUp,
     setPopUp,
     getLink,
@@ -116,21 +127,21 @@ const getLink = (name) => {
     setValueNameEquipment,
     valueNameOffise,
     setValueNameOffise,
-    getOfficeData
+    getOfficeData,
+    getEmployeeData,
+    setSearchText,
+    searchText
   };
 
   useEffect(() => {
     switch (activeTable) {
       case "Equipment":
-        // setTableBody(tableBodytestData);
         setTableHeader(tableHeadAppoint);
         break;
       case "office":
-        // setTableBody(tableBodyPeopleTestData);
         setTableHeader(tableHeadPeople);
         break;
       case "Staff":
-        // setTableBody(tableBodyOfiseTestData);
         setTableHeader(tableHeadOfise);
         break;
       default:

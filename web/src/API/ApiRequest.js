@@ -145,6 +145,25 @@ export const GetProfile = async () => {
   }
 };
 
+//! Получение профиля по Id
+export const GetProfileOne = async (id) => {
+  try {
+    const response = await http.get(`${server}/employees/${id}`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+      withCredentials: true,
+    });
+    return response;
+  } catch (error) {
+    if (error?.response?.status === 403) {
+      window.location.href = `${process.env.REACT_APP_WEB_URL}/Authorization`;
+    } else {
+      console.log("Возникла ошибка при выходе!");
+    }
+  }
+};
+
 //! Смена роли
 export const SwitchRole = async () => {
   console.log("accessToken", sessionStorage.getItem("accessToken"));
@@ -158,6 +177,7 @@ export const SwitchRole = async () => {
         },
       }
     );
+    refreshTokens()
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -189,9 +209,9 @@ export const CreateEquipment = async (UserData) => {
 };
 
 //! Получения Списка оборудования
-export const GetEquipment = async () => {
+export const GetEquipment = async (searchText) => {
   try {
-    const response = await http.get(`${server}/equipments`, {
+    const response = await http.get(`${server}/equipments?search=${searchText}`, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },
@@ -228,9 +248,9 @@ export const CreateOffice = async (UserData) => {
 };
 
 //! Получения Списка офисов
-export const GetOffice = async () => {
+export const GetOffice = async (searchText) => {
   try {
-    const response = await http.get(`${server}/buildings`, {
+    const response = await http.get(`${server}/buildings?search=${searchText}`, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },
@@ -266,10 +286,11 @@ export const CreateWorker = async (UserData) => {
   }
 };
 
+
 //! Получения Списка офисов
-export const GetWorker = async () => {
+export const GetWorker = async (searchText) => {
   try {
-    const response = await http.get(`${server}/employees`, {
+    const response = await http.get(`${server}/employees?search=${searchText}`, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },
@@ -288,7 +309,66 @@ export const GetWorker = async () => {
 //! сохранить конвас
 export const apiSaveConvas = async (data, id) => {
   try {
-    const response = await http.post(`${server}/floors/canvas/${id}`, data, {
+    const response = await http.post(`${server}/floors/canvas${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    if (error?.response?.status === 403) {
+      window.location.href = `${process.env.REACT_APP_WEB_URL}/Authorization`;
+    } else {
+      console.log("Такой пользователь уже существует!");
+      return false;
+    }
+  }
+};
+
+
+//! Массовые действия удаления 
+//! Удаление Сотрудников
+export const DeleteWorker = async (Data) => {
+  try {
+    const response = await http.post(`${server}/employees/bulk/delete`, Data, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    if (error?.response?.status === 403) {
+      window.location.href = `${process.env.REACT_APP_WEB_URL}/Authorization`;
+    } else {
+      console.log("Такой пользователь уже существует!");
+      return false;
+    }
+  }
+};
+
+//! Удаление оборудования
+export const DeleteEquipment = async (Data) => {
+  try {
+    const response = await http.post(`${server}/equipments/bulk/delete`, Data, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    if (error?.response?.status === 403) {
+      window.location.href = `${process.env.REACT_APP_WEB_URL}/Authorization`;
+    } else {
+      console.log("Такой пользователь уже существует!");
+      return false;
+    }
+  }
+};
+
+//! Удаление офисов
+export const DeleteOfisses = async (Data) => {
+  try {
+    const response = await http.post(`${server}/buildings/bulk/delete`, Data, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },
@@ -306,31 +386,31 @@ export const apiSaveConvas = async (data, id) => {
 
 //! добавить этаж
 export const apiAddFloor = async (data) => {
-  try {
-    const response = await http.post(`${server}/floors`, data, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-      },
-    });
-    return response;
-  } catch (error) {
-    console.log("error", error);
-    return;
-  }
+try {
+const response = await http.post(`${server}/floors`, data, {
+headers: {
+Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+},
+});
+return response;
+} catch (error) {
+console.log("error", error);
+return;
+}
 };
 
 //! Получения елементов конваса
 export const apiGetConvas = async (id) => {
-  try {
-    const response = await http.get(`${server}/floors/canvas/${id}`, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-      },
-    });
-    return response;
-  } catch (error) {
-    return error;
-  }
+try {
+const response = await http.get(`${server}/floors/canvas/${id}`, {
+headers: {
+Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+},
+});
+return response;
+} catch (error) {
+return error;
+}
 };
 
 //! Получения Списка офисов

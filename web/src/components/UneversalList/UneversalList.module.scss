@@ -9,8 +9,9 @@
   padding-left: 20px;
   input {
     // width: 420px!important;
-    @include input-text(200px, 8px);
+    @include input-text(180px, 8px);
     height: 12px!important;
+    padding-right: 40px;
     // margin-bottom: 18px;
     font-size: 16px;
     color: #000;
