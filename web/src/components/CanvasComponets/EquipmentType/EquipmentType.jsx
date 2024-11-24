@@ -84,6 +84,9 @@ function EquipmentType(props) {
                 {component.name}
               </li>
             ))} */}
+          <li className={styles.liType} onClick={() => props.editSten()}>
+            {props.canvasSliceMode === 1 ? "Сохранить" : "Рисовать стены"}
+          </li>
           {props.name === "Строение" &&
             components
               ?.filter(
