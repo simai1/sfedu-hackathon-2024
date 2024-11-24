@@ -297,43 +297,45 @@ function RigthMenu() {
                 <span>{element?.name}</span>
               </div>
             </div>
-            <div className={styles.con2}>
-              <p>
-                Сотрудник{" "}
-                <img
-                  onClick={funOpemList}
-                  src="./img/karandash.svg"
-                  alt="img"
-                />
-              </p>
-
-              <div className={styles.box}>
-                <span>
-                  {equipmentSlice.equipment.find(
-                    (el) => el.id === element?.idEquipment
-                  )?.employee?.name || "Не закреплено"}
-                </span>
-              </div>
-              {listOpen && (
-                <ul className={styles.list}>
-                  <input
-                    type="text"
-                    placeholder="Поиск..."
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                    className={styles.searchInput} // Добавьте свои стили
+            {element.type !== "employees" && (
+              <div className={styles.con2}>
+                <p>
+                  Сотрудник{" "}
+                  <img
+                    onClick={funOpemList}
+                    src="./img/karandash.svg"
+                    alt="img"
                   />
-                  {filteredWorkers.map((wo) => (
-                    <li
-                      key={wo.id}
-                      onClick={() => selectUser(wo, element.idEquipment)}
-                    >
-                      {wo.name}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
+                </p>
+
+                <div className={styles.box}>
+                  <span>
+                    {equipmentSlice.equipment.find(
+                      (el) => el.id === element?.idEquipment
+                    )?.employee?.name || "Не закреплено"}
+                  </span>
+                </div>
+                {listOpen && (
+                  <ul className={styles.list}>
+                    <input
+                      type="text"
+                      placeholder="Поиск..."
+                      value={searchTerm}
+                      onChange={handleSearchChange}
+                      className={styles.searchInput} // Добавьте свои стили
+                    />
+                    {filteredWorkers.map((wo) => (
+                      <li
+                        key={wo.id}
+                        onClick={() => selectUser(wo, element.idEquipment)}
+                      >
+                        {wo.name}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
 
             <div className={styles.con2}>
               <p>Стоимость</p>
