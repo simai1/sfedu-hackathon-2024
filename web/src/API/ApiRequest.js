@@ -3,7 +3,7 @@ const http = axios.create({
   withCredentials: true,
 });
 
-const server = "http://195.58.54.23:3000";
+const server = process.env.REACT_APP_SERVICE_URL;
 const REFRESH_INTERVAL = 500000; // 8 минут 500000
 let refreshTokensTimeout;
 
@@ -115,7 +115,7 @@ export const LogOut = async () => {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },
         withCredentials: true,
-      }
+      },
     );
     return response;
   } catch (error) {
@@ -175,7 +175,7 @@ export const SwitchRole = async () => {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },
-      }
+      },
     );
     refreshTokens();
     return response;
@@ -254,14 +254,11 @@ export const GetOffice = async (searchText) => {
   let s = searchText ? `?search=${searchText}` : "";
 
   try {
-    const response = await http.get(
-      `${server}/buildings?search=${s}`,
-      {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-        },
-      }
-    );
+    const response = await http.get(`${server}/buildings?search=${s}`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -276,14 +273,11 @@ export const GetOffice = async (searchText) => {
 //! Получения офиса по Id
 export const GetOfficeOne = async (id) => {
   try {
-    const response = await http.get(
-      `${server}/buildings/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-        },
-      }
-    );
+    const response = await http.get(`${server}/buildings/${id}`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -298,14 +292,11 @@ export const GetOfficeOne = async (id) => {
 //! Обновлеение офиса по Id
 export const EditOfficeForId = async (data, id) => {
   try {
-    const response = await http.patch(
-      `${server}/buildings/${id}`, data,
-      {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-        },
-      }
-    );
+    const response = await http.patch(`${server}/buildings/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -316,8 +307,6 @@ export const EditOfficeForId = async (data, id) => {
     }
   }
 };
-
-
 
 //! Сотрудники
 //!Создане Сотрудника
