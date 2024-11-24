@@ -2,17 +2,23 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./RigthMenu.module.scss";
 import { useEffect, useRef, useState } from "react";
 import {
+  apiAddElemConvas,
   deleteElem,
   setDraggable,
   setSelectedElement,
 } from "../../store/CanvasSlice/canvas.Slice";
 import { setSelectedFloor } from "../../store/basicSlice/basic.Slice";
-import { apiAddFloor, apiDeleteFloor } from "../../API/ApiRequest";
+import {
+  apiAddFloor,
+  apiDeleteFloor,
+  apiGetConvas,
+} from "../../API/ApiRequest";
 import CreatFloor from "../../components/CreatFloor/CreatFloor";
 
 function RigthMenu() {
   const canvasSlice = useSelector((state) => state.CanvasSlice);
   const equipmentSlice = useSelector((state) => state.EquipmentSlice);
+  const [accept, setAccept] = useState(false);
   const dispatch = useDispatch();
   const [openModalFloor, setOpenModalFloor] = useState(false);
   const [openModalCreateFloor, setOpenModalCreareFloor] = useState(false);
@@ -45,6 +51,24 @@ function RigthMenu() {
 
   const selectFloor = (id) => {
     dispatch(setSelectedFloor({ id }));
+    setOpenModalFloor(false);
+    // apiGetConvas(equipmentSlice.selectedFloor).then((res) => {
+    //   if (res?.status === 200) {
+    //     dispatch(apiAddElemConvas({ data: res.data?.data }));
+    //   }
+    // });
+    if (canvasSlice.elements.length > 0) {
+      setAccept(true);
+    }
+  };
+
+  const acceptOk = () => {
+    apiGetConvas(equipmentSlice.selectedFloor).then((res) => {
+      if (res?.status === 200) {
+        dispatch(apiAddElemConvas({ data: res.data?.data }));
+      }
+    });
+    setAccept(false);
     setOpenModalFloor(false);
   };
 
@@ -106,159 +130,174 @@ function RigthMenu() {
   };
 
   return (
-    <div className={styles.RigthMenu}>
-      <div className={styles.head}>
-        <div
-          className={styles.left}
-          onClick={() => setOpenModalFloor(!openModalFloor)}
-        >
+    <>
+      {accept && (
+        <div className={styles.Accept}>
           <p>
-            {equipmentSlice.office
-              .find((it) => it.id === equipmentSlice.selectedOffice)
-              ?.floors.find((it) => it.id === equipmentSlice.selectedFloor)
-              ?.name || "Этаж"}
+            Не сохраненниые данные будут утеряны! <br />
+            <p style={{ paddingTop: "10px" }}>Продолжить?</p>
           </p>
-
-          <img src="./img/v.svg" alt="img" />
+          <div className={styles.button}>
+            <button onClick={() => setAccept(false)}>Отменить</button>
+            <button onClick={acceptOk}>Продолжить</button>
+          </div>
         </div>
-        <div className={styles.rigth} onClick={addFloor}>
-          <img src="./img/+.svg" alt="img" />
-        </div>
-        {openModalCreateFloor && (
-          <div ref={modalRef}>
-            <CreatFloor
-              creatFloorData={creatFloorData}
-              setCreatFloorData={setCreatFloorData}
-              setOpenModalCreareFloor={setOpenModalCreareFloor}
-              setFloors={setFloors}
-            />
-          </div>
-        )}
-        {openModalFloor && (
-          <div className={styles.office} ref={modalRef2}>
-            <ul>
-              {floors.map((item) => (
-                <li onClick={() => selectFloor(item.id)} key={item.id}>
-                  {item.name}
-                  <div
-                    className={styles.delete}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      deleteFloor(item.id);
-                    }}
-                  >
-                    <img src="./img/delete.svg" alt="img" />
-                  </div>
-                  {modalDeleteFloor === item.id && (
-                    <div className={styles.deletFloor}>
-                      <p>Вы уверены что хотите удалить этаж?</p>
-                      <div className={styles.btn}>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setModalDeleteFloor("");
-                          }}
-                        >
-                          отменить
-                        </button>
-                        <button onClick={() => deleteFloorTrue(item.id)}>
-                          удалить
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                </li>
-              ))}
-            </ul>
-            {floors.length === 0 && (
-              <p className={styles.noFloor}>Нет этажей</p>
-            )}
-          </div>
-        )}
-      </div>
+      )}
 
-      {canvasSlice.selectedElement ? (
-        <>
-          <div className={styles.con1}>
-            <div className={styles.box}>
-              <span>X</span>
-              <span>{element?.x?.toFixed(0)}</span>
-            </div>
-            <div className={styles.box}>
-              <span>Y</span>
-              <span>{element?.y?.toFixed(0)}</span>
-            </div>
-            <div className={styles.box}>
-              <span>W</span>
-              <span>{element?.width?.toFixed(0)}</span>
-            </div>
-            <div className={styles.box}>
-              <span>H</span>
-              <span>{element?.height?.toFixed(0)}</span>
-            </div>
-          </div>
-          <div className={styles.con2}>
+      <div className={styles.RigthMenu}>
+        <div className={styles.head}>
+          <div
+            className={styles.left}
+            onClick={() => setOpenModalFloor(!openModalFloor)}
+          >
             <p>
-              Название{" "}
-              <img
-                onClick={() => onBloked(element.id)}
-                src={element?.draggable ? "./img/zo.svg" : "./img/zc.svg"}
-                alt="img"
-              />
+              {equipmentSlice.office
+                .find((it) => it.id === equipmentSlice.selectedOffice)
+                ?.floors.find((it) => it.id === equipmentSlice.selectedFloor)
+                ?.name || "Этаж"}
             </p>
 
-            <div className={styles.box}>
-              <span>{element?.name}</span>
-            </div>
+            <img src="./img/v.svg" alt="img" />
           </div>
-          <div className={styles.con2}>
-            <p>Сотрудник</p>
-
-            <div className={styles.box}>
-              <span>Иванов И И</span>
-            </div>
+          <div className={styles.rigth} onClick={addFloor}>
+            <img src="./img/+.svg" alt="img" />
           </div>
+          {openModalCreateFloor && (
+            <div ref={modalRef}>
+              <CreatFloor
+                creatFloorData={creatFloorData}
+                setCreatFloorData={setCreatFloorData}
+                setOpenModalCreareFloor={setOpenModalCreareFloor}
+                setFloors={setFloors}
+              />
+            </div>
+          )}
+          {openModalFloor && (
+            <div className={styles.office} ref={modalRef2}>
+              <ul>
+                {floors.map((item) => (
+                  <li onClick={() => selectFloor(item.id)} key={item.id}>
+                    {item.name}
+                    <div
+                      className={styles.delete}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deleteFloor(item.id);
+                      }}
+                    >
+                      <img src="./img/delete.svg" alt="img" />
+                    </div>
+                    {modalDeleteFloor === item.id && (
+                      <div className={styles.deletFloor}>
+                        <p>Вы уверены что хотите удалить этаж?</p>
+                        <div className={styles.btn}>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setModalDeleteFloor("");
+                            }}
+                          >
+                            отменить
+                          </button>
+                          <button onClick={() => deleteFloorTrue(item.id)}>
+                            удалить
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </li>
+                ))}
+              </ul>
+              {floors.length === 0 && (
+                <p className={styles.noFloor}>Нет этажей</p>
+              )}
+            </div>
+          )}
+        </div>
 
-          <div className={styles.con2}>
-            <p>Стоимость</p>
+        {canvasSlice.selectedElement ? (
+          <>
+            <div className={styles.con1}>
+              <div className={styles.box}>
+                <span>X</span>
+                <span>{element?.x?.toFixed(0)}</span>
+              </div>
+              <div className={styles.box}>
+                <span>Y</span>
+                <span>{element?.y?.toFixed(0)}</span>
+              </div>
+              <div className={styles.box}>
+                <span>W</span>
+                <span>{element?.width?.toFixed(0)}</span>
+              </div>
+              <div className={styles.box}>
+                <span>H</span>
+                <span>{element?.height?.toFixed(0)}</span>
+              </div>
+            </div>
+            <div className={styles.con2}>
+              <p>
+                Название{" "}
+                <img
+                  onClick={() => onBloked(element.id)}
+                  src={element?.draggable ? "./img/zo.svg" : "./img/zc.svg"}
+                  alt="img"
+                />
+              </p>
 
-            <div className={styles.box}>
-              <span>
-                {(() => {
-                  const cost = equipmentSlice.equipment.find(
+              <div className={styles.box}>
+                <span>{element?.name}</span>
+              </div>
+            </div>
+            <div className={styles.con2}>
+              <p>Сотрудник</p>
+
+              <div className={styles.box}>
+                <span>Иванов И И</span>
+              </div>
+            </div>
+
+            <div className={styles.con2}>
+              <p>Стоимость</p>
+
+              <div className={styles.box}>
+                <span>
+                  {(() => {
+                    const cost = equipmentSlice.equipment.find(
+                      (el) => el.id === element?.idEquipment
+                    )?.cost;
+
+                    if (cost !== undefined) {
+                      // Применяем форматирование с пробелами для тысячи
+                      return `${Number(cost).toLocaleString("ru-RU")} ₽`;
+                    }
+
+                    return "Цена не указана";
+                  })()}
+                </span>
+              </div>
+            </div>
+
+            <div className={styles.con2}>
+              <p>Инвентарный номер</p>
+
+              <div className={styles.box}>
+                <span style={{ color: "#989898" }}>
+                  {equipmentSlice.equipment.find(
                     (el) => el.id === element?.idEquipment
-                  )?.cost;
-
-                  if (cost !== undefined) {
-                    // Применяем форматирование с пробелами для тысячи
-                    return `${Number(cost).toLocaleString("ru-RU")} ₽`;
-                  }
-
-                  return "Цена не указана";
-                })()}
-              </span>
+                  )?.inventoryNumber || "Отсутствует"}
+                </span>
+              </div>
             </div>
-          </div>
-
-          <div className={styles.con2}>
-            <p>Инвентарный номер</p>
-
-            <div className={styles.box}>
-              <span style={{ color: "#989898" }}>
-                {equipmentSlice.equipment.find(
-                  (el) => el.id === element?.idEquipment
-                )?.inventoryNumber || "Отсутствует"}
-              </span>
+            <div className={styles.btn}>
+              <button onClick={() => deleteElement(element.id)}>Удалить</button>
             </div>
-          </div>
-          <div className={styles.btn}>
-            <button onClick={() => deleteElement(element.id)}>Удалить</button>
-          </div>
-        </>
-      ) : (
-        <div>Выберите элемент</div>
-      )}
-    </div>
+          </>
+        ) : (
+          <div>Выберите элемент</div>
+        )}
+      </div>
+    </>
   );
 }
 
