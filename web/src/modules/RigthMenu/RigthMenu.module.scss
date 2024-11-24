@@ -225,6 +225,70 @@
     flex-direction: column;
     margin-top: 20px;
     width: 100%;
+    position: relative;
+
+    .list {
+      position: absolute;
+      background-color: #fff;
+      top: 74px;
+      width: 252px;
+      z-index: 2000;
+      padding: 20px;
+      box-shadow: 0px 0px 2px 0px #00000040;
+      overflow-y: auto;
+      overflow-x: hidden;
+      height: auto;
+      box-sizing: border-box;
+
+      input {
+        border: 1px solid #87878740;
+        padding: 4px 8px;
+        outline: none;
+        width: 90%;
+        margin-bottom: 10px;
+      }
+
+      // Стили для scrollbar
+      &::-webkit-scrollbar {
+        width: 4px; // Ширина полосы прокрутки
+      }
+
+      &::-webkit-scrollbar-track {
+        background: #f1f1f1; // Цвет дорожки
+        border-radius: 10px; // Скругление краев дорожки
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: #888; // Цвет "ползунка"
+        border-radius: 10px; // Скругление краев "ползунка"
+
+        &:hover {
+          background: #555; // Цвет "ползунка" при наведении
+        }
+      }
+
+      // Стили для Firefox
+      scrollbar-width: thin; // Можно использовать auto или thin
+      scrollbar-color: #888 #f1f1f1; // Цвет "ползунка" и дорожки
+
+      li {
+        outline: none;
+        list-style: none;
+        text-decoration: none;
+        margin-bottom: 5px;
+        padding: 5px 10px;
+        border-radius: 5px;
+
+        cursor: pointer;
+
+        &:hover {
+          background-color: var(--GrayColorButtonHover);
+        }
+        &:active {
+          background-color: var(--GrayColorButtonActive);
+        }
+      }
+    }
     img {
       width: 25px;
       height: 25px;
