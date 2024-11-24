@@ -1,12 +1,13 @@
 .PopUpEquipmentPeopleContainer{
-    display: flex;
+    display: block;
     margin-top:40px;
-    justify-content: center;
+    position: relative;
     .PopUpEquipmentPeopleContainerInner{
         margin: 0 auto;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+        
     }
     .PopUpEquipmentPeople{
         display: flex;
@@ -23,6 +24,53 @@
         margin-top: 100px;
         p{
             text-align: center;
+        }
+    }
+    .buttonCont{
+        display: flex;
+        justify-content: center;
+        position: relative;
+        bottom: -180px;
+        button{
+            width: 95%;
+            height: 50px;
+            border-radius: 5px;
+            border: none;
+            background-color: var(--GrenColor);
+            color: #fff;
+            font-size: 16px;
+            transition: 0.1s linear all;
+            &:hover{
+                background-color: var(--GrenColorHover);
+                cursor: pointer;
+            }
+            &:active{
+                background-color: var(--GrenColorActive);
+            }
+        }
+    }
+    .PopUpAddEquipment{
+        position: absolute;
+        left: 0;
+        top: 0;
+        background-color: rgb(255, 255, 255);
+        border: 1px solid #ccc;
+        border-radius:5px ;
+        max-height: 325px;
+        width: 100%;
+        overflow-y: scroll;
+        ul{
+            list-style: none;
+            padding: 10px;
+            li{
+                padding: 10px 5px;
+                &:hover{
+                    background-color: var(--GrayColorButtonHover);
+                }
+                &:active{
+                    background-color: var(--GrayColorButtonActive);
+                }
+            }
         }
     }
 }
