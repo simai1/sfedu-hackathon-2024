@@ -1,5 +1,5 @@
 import styles from "./OfficeHead.module.scss";
-import { GetOffice } from "../../API/ApiRequest";
+import { GetOfficeAll } from "../../API/ApiRequest";
 import {
   setOffice,
   setSelectedOffice,
@@ -13,7 +13,7 @@ function OfficeHead() {
   const [openModalOffice, setOpenModalOffice] = useState(false);
   const equipmentSlice = useSelector((state) => state.EquipmentSlice);
   useEffect(() => {
-    GetOffice().then((resp) => {
+    GetOfficeAll().then((resp) => {
       if (resp?.status === 200) {
         dispatch(setOffice({ data: resp.data.data }));
       }
