@@ -26,6 +26,8 @@ function EquipmentType(props) {
     "Кофемашина",
     "Клавиатура",
   ];
+
+  const mebel = ["Стол", "Стул", "Диван", "Лампа"];
   const getLink = (name) => {
     switch (name) {
       case "Ноутбук":
@@ -41,6 +43,19 @@ function EquipmentType(props) {
       case "Клавиатура":
         return "/img/k.svg";
       default:
+    }
+  };
+
+  const getLink2 = (name) => {
+    switch (name) {
+      case "Стол":
+        return "/img/stoll.svg";
+      case "Стул":
+        return "/img/stull.svg";
+      case "Диван":
+        return "/img/div.svg";
+      case "Лампа":
+        return "/img/lampp.svg";
     }
   };
 
@@ -69,7 +84,7 @@ function EquipmentType(props) {
                 {component.name}
               </li>
             ))} */}
-          {props.name === "Офис" &&
+          {props.name === "Строение" &&
             components
               ?.filter(
                 (el) => Number(el.elemId) > 99 && Number(el.elemId) < 199
@@ -96,16 +111,24 @@ function EquipmentType(props) {
             ))}
 
           {props.name === "Мебель" &&
-            equipmentSlice.equipment
-              .filter((el) => props.type.some((e) => e === el.type))
-              ?.map((user) => (
-                <li
-                  className={styles.liType}
-                  onClick={() => funClikElement(user.type, user.id)}
-                >
-                  {user.name}
-                </li>
-              ))}
+            // equipmentSlice.equipment
+            //   .filter((el) => props.type.some((e) => e === el.type))
+            //   ?.map((user) => (
+            //     <li
+            //       className={styles.liType}
+            //       onClick={() => funClikElement(user.type, user.id)}
+            //     >
+            //       {user.name}
+            //     </li>
+            //   ))
+            mebel.map((el) => (
+              <PodLiComponent
+                funClikElement={funClikElement}
+                getLink={getLink2}
+                el={el}
+                styles={styles}
+              />
+            ))}
 
           {props.name === "Техника" &&
             tehnika.map((el) => (

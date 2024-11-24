@@ -15,6 +15,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    width: 100%;
     position: relative;
     .office {
       display: flex;
@@ -26,8 +27,11 @@
       box-shadow: 0px 0px 2px 0px #00000040;
       border: 5px;
       z-index: 300;
+
       li {
         padding: 5px 10px;
+        margin: 15px;
+        border-radius: 5px;
         outline: none;
         text-decoration: none;
         list-style: none;
@@ -79,6 +83,7 @@
       width: 30px;
       height: 30px;
       border-radius: 5px;
+      margin-right: 10px;
       &:hover {
         background-color: var(--GrayColorButtonHover);
       }

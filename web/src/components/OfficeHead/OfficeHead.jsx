@@ -56,7 +56,7 @@ function OfficeHead() {
         </div>
         <div
           className={styles.rigth}
-          onClick={() => context.setPopUp("PopUpCreateEquipment")}
+          onClick={() => context.setPopUp("PopUpCreateOffice")}
         >
           <img src="./img/+.svg" alt="img" />
         </div>

@@ -12,10 +12,14 @@ import Konva from "../../modules/Konva/Konva";
 import RigthMenu from "../../modules/RigthMenu/RigthMenu";
 import styles from "./CanvasPage.module.scss";
 import { useContext, useEffect } from "react";
-import { apiAddElemConvas } from "../../store/CanvasSlice/canvas.Slice";
+import {
+  apiAddElemConvas,
+  setElem,
+} from "../../store/CanvasSlice/canvas.Slice";
 import { setOffice } from "../../store/basicSlice/basic.Slice";
 import DataContext from "../../context";
 import PopUpCreateEquipment from "../../components/PopUp/EquipmentPopUp/PopUpCreateEquipment/PopUpCreateEquipment";
+import PopUpCreateOffice from "../../components/PopUp/OffisePopUp/PopUpCreateOffice/PopUpCreateOffice";
 
 function CanvasPage() {
   const canvasSlice = useSelector((state) => state.CanvasSlice);
@@ -81,6 +85,7 @@ function CanvasPage() {
         GetOfficeAll().then((resp) => {
           if (resp?.status === 200) {
             dispatch(setOffice({ data: resp.data.data }));
+            dispatch(setElem({ mass: [] }));
           }
         });
       }
@@ -91,16 +96,20 @@ function CanvasPage() {
     <div className={styles.CanvasPage}>
       <div className={styles.HomePageProfileClicker}>
         <HomePageProfileClicker />
-        <div className={styles.Save}>
-          <button onClick={funSaveConvas}>Сохранить</button>
-          <button onClick={refrechConvas}>Очистить</button>
-        </div>
       </div>
       <MenuComponent />
       <Konva />
       <OfficeHead />
       <RigthMenu />
-      {context.popUp === "PopUpCreateEquipment" && <PopUpCreateEquipment />}
+      {context.popUp === "PopUpCreateOffice" && <PopUpCreateOffice />}
+      <div className={styles.Save}>
+        <button onClick={refrechConvas}>
+          <img src="/img/delete.svg" alt="1" />
+          Сбросит
+        </button>
+
+        <button onClick={funSaveConvas}>Сохранить</button>
+      </div>
     </div>
   );
 }

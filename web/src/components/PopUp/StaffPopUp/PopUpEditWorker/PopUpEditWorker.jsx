@@ -1,16 +1,21 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import InputField from "../../../../ui/Input/Input";
 import PopUpContainer from "../../../PopUpContainer/PopUpContainer";
+import styles from "./PopUpEditWorker.module.scss";
 import DataContext from "../../../../context";
-import styles from "./PopUpCreateWorker.module.scss";
-import { CreateOffice, CreateWorker } from "../../../../API/ApiRequest";
-import { dataListEquipment } from "./data";
+import { dataListEquipment } from "../PopUpCreateWorker/data";
+import { EditWorkerForId, GetWorkerOne } from "../../../../API/ApiRequest";
 
-function PopUpCreateWorker() {
+function PopUpEditWorker() {
     const [formData, setFormData] = useState({
         FIO: '',
         position: '',
+
     });
+    // Имя
+    // Должность
+    // Адрес офиса
+    
     const [isOpen, setIsOpen] = useState(false);
    const dropdownRef = useRef(null);
     const handleChange = (e) => {
@@ -20,6 +25,20 @@ function PopUpCreateWorker() {
             [name]: value
         });
     };
+
+    useEffect(() => {
+        console.log("context.selectedRows", context.selectedRows)
+        GetWorkerOne(context.selectedRows[0]).then(res => {
+            if(res.status === 200){
+                console.log("res", res)
+                setFormData({
+                    FIO: res?.data?.data?.name,
+                    position: res?.data?.data?.position,
+                    name: res?.data?.data?.positionHuman
+                })
+            }
+        })
+    },[])
     
     const handleItemClick = (item) => {
         setFormData({ ...formData, name: item.name });
@@ -33,7 +52,7 @@ function PopUpCreateWorker() {
             name : formData.FIO,
             position : positionId
         }
-        CreateWorker(formatData).then(res => {
+        EditWorkerForId(formatData, context.selectedRows[0]).then(res => {
             if(res.status === 200){
                 context.getEmployeeData()
                 context.setPopUp("");
@@ -53,17 +72,17 @@ function PopUpCreateWorker() {
         };
     }, [dropdownRef]);
     return ( 
-        <PopUpContainer width="580px" buttonCancel={true} height="280px" StandartTitle="Новый сотрудник" >
+        <div className={styles.PopUpEditWorker}>
+             <PopUpContainer width="580px" buttonCancel={true} height="280px" StandartTitle="Редактирование сотрудника" >
             <div className={styles.PopUpCreateWorker}>
                 <div className={styles.PopUpCreateWorkerInner}>
-                    <InputField 
+                    <InputField
                         type="text" 
                         name="FIO"
                         placeholder="ФИО сотрудника" 
                         value={formData.FIO} 
                         handleChange={handleChange} 
                     />
-                    
                     <div className={styles.PopUpCreateEquipmentContainer} ref={dropdownRef}>
                         <div>
                             <div className={styles.InputList}>
@@ -102,11 +121,12 @@ function PopUpCreateWorker() {
                    
                 <div className={styles.PopUpCreateEquipmentContainerButton}>
                     <button onClick={()=> context.setPopUp("")}>Отмена</button>
-                    <button onClick={()=>sendData()} >Добавить</button>
+                    <button onClick={()=>sendData()} >Сохранить</button>
                 </div>
             </div>
         </PopUpContainer>
+        </div>
      );
 }
 
-export default PopUpCreateWorker;
+export default PopUpEditWorker;

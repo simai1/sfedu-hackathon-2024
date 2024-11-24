@@ -113,7 +113,7 @@ function MenuComponent() {
           {canvasSlice.mode === 1 ? "Сохранить" : "Рисовать стены"}
         </li> */}
 
-        <EquipmentType name="Офис" type={[100, 101, 102, 103]} />
+        <EquipmentType name="Строение" type={[100, 101, 102, 103]} />
         <EquipmentType name="Сотрудники" type={[]} />
         <EquipmentType name="Мебель" type={[2, 3, 5, 10]} />
         <EquipmentType name="Техника" type={[1, 4, 6, 7, 8, 9]} />

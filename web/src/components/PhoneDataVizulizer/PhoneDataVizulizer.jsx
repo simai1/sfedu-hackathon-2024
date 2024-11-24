@@ -7,24 +7,54 @@ function PhoneDataVizulizer(props) {
         console.log("tableHeader", props.tableHeader);
     }, [props.tableBody]);
 
-    return ( 
+    const getBorder = (value) => {
+        switch (value) {
+          case "Хорошее":
+            return "1px solid #0A9030";
+          case "Сломано":
+            return "1px solid #B20707";
+        }
+      };
+    
+      const getBackground = (value) => {
+        switch (value) {
+          case "Хорошее":
+            return "#0A903014";
+          case "Сломано":
+            return "#B2070714";
+        }
+      };
+
+      return ( 
         <div className={styles.PhoneDataVizulizer}>
-            {props.tableBody.map((item, index) => (
-                <div key={item.id} className={styles.dataBlock}>
-                <div key={item.id} className={styles.dataBlockInner}>
-                    {props.tableHeader.map(header => {
-                        if (header.isActive && header.key !== "Qr") {
-                            return (
-                                <div key={header.key} className={styles.dataItem}>
-                                    <strong>{header.value}:</strong> <span>{item[header.key]}</span>
-                                </div>
-                            );
-                        }
-                        return null;
-                    })}
+            {props.tableBody.length > 0 ? ( // Corrected 'lenght' to 'length'
+                props.tableBody.map((item, index) => (
+                    <div key={item.id} className={styles.dataBlock}>
+                        <div className={styles.dataBlockInner}>
+                            {props.tableHeader.map(header => {
+                                if (header.isActive && header.key !== "Qr") {
+                                    return (
+                                        <div 
+                                            key={header.key} 
+                                            className={`${styles.dataItem} ${header.key === "conditionHuman" ? styles.dataItemCondition : ''}`}
+                                        >
+                                            <strong>{header.value}:</strong> 
+                                            <span style={{ border: getBorder(item[header.key]), backgroundColor: getBackground(item[header.key]) }}>
+                                                {item[header.key]}
+                                            </span>
+                                        </div>
+                                    );
+                                }
+                                return null;
+                            })}
+                        </div>
+                    </div>
+                ))
+            ) : (
+                <div className={styles.dataBlockNote}>
+                    <p>Нет данных</p>
                 </div>
-                </div>
-            ))}
+            )}
         </div>
     );
 }
