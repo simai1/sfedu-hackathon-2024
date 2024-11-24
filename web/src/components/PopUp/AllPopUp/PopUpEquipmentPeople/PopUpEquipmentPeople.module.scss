@@ -29,8 +29,9 @@
     .buttonCont{
         display: flex;
         justify-content: center;
-        position: relative;
-        bottom: -180px;
+        position: absolute;
+        bottom: -185px;
+        width: 100%;
         button{
             width: 95%;
             height: 50px;

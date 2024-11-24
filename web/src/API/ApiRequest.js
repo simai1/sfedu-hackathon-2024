@@ -3,7 +3,7 @@ const http = axios.create({
   withCredentials: true,
 });
 
-const server = "http://195.58.54.23:3000";
+const server = process.env.REACT_APP_SERVICE_URL;
 const REFRESH_INTERVAL = 500000; // 8 минут 500000
 let refreshTokensTimeout;
 
@@ -115,7 +115,7 @@ export const LogOut = async () => {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },
         withCredentials: true,
-      }
+      },
     );
     return response;
   } catch (error) {
@@ -175,7 +175,7 @@ export const SwitchRole = async () => {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },
-      }
+      },
     );
     refreshTokens();
     return response;

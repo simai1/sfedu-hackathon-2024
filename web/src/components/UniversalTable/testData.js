@@ -1,6 +1,7 @@
 
 export const tableHeadAppoint = [
-    { key: "name", value: "Наименование", isActive: true  },
+    { key: "name", value: "Тип", isActive: true  },
+    { key: "nameEquiomenrt", value: "Название оборудования", isActive: true  },
     { key: "inventoryNumber", value: "Инвертарный номер", isActive: true  },
     { key: "description", value: "Описание", isActive: true  },
     { key: "createdAtHuman", value: "Дата добавления", isActive: true  },
