@@ -76,6 +76,8 @@ const clearFloor = async (floorId: string): Promise<void> => {
     const floor = await getFloorById(floorId);
     if (!floor) throw new ApiError(httpStatus.BAD_REQUEST, 'Not found floor with id ' + floorId);
     await Element.destroy({ where: { floorId }, force: true });
+    await Employee.update({ elementId: null }, { where: { floorId } });
+    await Equipment.update({ elementId: null }, { where: { floorId } });
 };
 
 const getCanvas = async (floorId: string): Promise<any> => {
