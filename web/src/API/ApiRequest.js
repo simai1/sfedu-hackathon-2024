@@ -3,7 +3,8 @@ const http = axios.create({
   withCredentials: true,
 });
 
-const server = process.env.REACT_APP_SERVICE_URL;
+// const server = process.env.REACT_APP_SERVICE_URL;
+const server = "http://195.58.54.23:3000";
 const REFRESH_INTERVAL = 500000; // 8 минут 500000
 let refreshTokensTimeout;
 
