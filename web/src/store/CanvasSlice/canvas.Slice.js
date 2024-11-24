@@ -27,6 +27,13 @@ const CanvasSlice = createSlice({
   },
 
   reducers: {
+    apiAddElemConvas(state, action) {
+      const { data } = action.payload;
+      const mass = [...data.background, ...data.employees, ...data.equipments];
+      const newMass = mass.map((elem) => elem.data);
+      state.elements = newMass;
+    },
+
     addElem(state, action) {
       const { id, idEquipment } = action.payload;
       const newElement = {
@@ -182,6 +189,7 @@ export const {
   addElemOfis,
   setPositionElem,
   setRotation,
+  apiAddElemConvas,
 } = CanvasSlice.actions;
 
 export default CanvasSlice.reducer;

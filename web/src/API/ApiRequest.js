@@ -318,3 +318,17 @@ export const apiAddFloor = async (data) => {
     return;
   }
 };
+
+//! Получения елементов конваса
+export const apiGetConvas = async (id) => {
+  try {
+    const response = await http.get(`${server}/floors/canvas/${id}`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
