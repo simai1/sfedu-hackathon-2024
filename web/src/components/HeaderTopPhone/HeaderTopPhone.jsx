@@ -20,7 +20,7 @@ function HeaderTopPhone(props) {
                 </div>
                 <div className={styles.Export}>
                     <button onClick={() => generateAndDownloadExcel(props?.tableData, context?.activeTable)}>
-                        <img src="/img/export.svg" alt="Plus" style={{transform: "rotate(180deg)" }}/>
+                        <img src="/img/exportImg.svg" alt="Plus" style={{transform: "rotate(180deg)" }}/>
                         <span>Экспорт</span>
                     </button>
                 </div>
