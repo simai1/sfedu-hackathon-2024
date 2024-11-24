@@ -91,16 +91,20 @@ function CanvasPage() {
     <div className={styles.CanvasPage}>
       <div className={styles.HomePageProfileClicker}>
         <HomePageProfileClicker />
-        <div className={styles.Save}>
-          <button onClick={funSaveConvas}>Сохранить</button>
-          <button onClick={refrechConvas}>Очистить</button>
-        </div>
       </div>
       <MenuComponent />
       <Konva />
       <OfficeHead />
       <RigthMenu />
       {context.popUp === "PopUpCreateEquipment" && <PopUpCreateEquipment />}
+      <div className={styles.Save}>
+        <button onClick={refrechConvas}>
+          <img src="/img/delete.svg" alt="1" />
+          Сбросит
+        </button>
+
+        <button onClick={funSaveConvas}>Сохранить</button>
+      </div>
     </div>
   );
 }
