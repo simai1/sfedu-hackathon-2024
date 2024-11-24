@@ -17,13 +17,13 @@ function UniversalTable(props) {
 }, [props?.tableHeader, props?.tableBody, context.role]);
 
 const filterRole = (data) => {
-  console.log("context.role", context.role)
-  console.log("data", data)
     switch (context.role) {
         case "Администратор":
             return data; // Return all data for Admin role
         case "Пользователь":
           return data.filter((item) => item.isActive !== false);
+        default:
+            return data;
     }
 }
 
@@ -173,7 +173,7 @@ const filterRole = (data) => {
                 className={`${styles.tableRow} ${context.selectedRows.includes(row.id) ? styles.selectedRow : ''}`}
                 onClick={(e) => { e.stopPropagation(); handleRowSelect(row.id, e); }}
               >
-                {tableHeaderData.map((header) => (
+                {tableHeaderData?.map((header) => (
                   <td
                     key={header.key}
                     name={header.key}
@@ -228,7 +228,7 @@ const filterRole = (data) => {
             ))
           ) : (
             <tr>
-              <td colSpan={tableHeaderData.length} className={styles.tableNotData}>
+              <td colSpan={tableHeaderData?.length} className={styles.tableNotData}>
                 Нет данных
               </td>
             </tr>
