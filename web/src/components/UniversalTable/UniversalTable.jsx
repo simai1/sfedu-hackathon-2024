@@ -13,8 +13,9 @@ function UniversalTable(props) {
 
   useEffect(() => {
     setTableHeaderData(filterRole(props?.tableHeader));
+    
     setTableBodyData(props?.tableBody);
-}, [props?.tableHeader, props?.tableBody, context.role]);
+}, [props?.tableHeader, props?.tableBody, context?.role]);
 
 const filterRole = (data) => {
     switch (context.role) {
