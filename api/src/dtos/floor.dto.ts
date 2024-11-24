@@ -8,6 +8,6 @@ export default class FloorDto {
     constructor(model: Floor) {
         this.id = model.id;
         this.name = model.name;
-        this.building = model.Building.name;
+        this.building = model.Building?.name;
     }
 }

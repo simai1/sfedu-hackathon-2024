@@ -1,11 +1,13 @@
 import { DataTypes, Model, Sequelize } from 'sequelize';
 import Building from './building';
+import Employee from './employee';
 
 export default class Floor extends Model {
     id!: string;
     name!: string;
     Building!: Building;
     buildingId!: string;
+    Employees!: Employee[];
 
     static initialize(sequelize: Sequelize) {
         Floor.init(

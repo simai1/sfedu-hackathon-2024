@@ -12,14 +12,38 @@
     color: #fff;
     box-sizing: border-box;
     font-weight: 400;
+    @media (max-width: 768px) {
+        height: 60px;
+        padding: 10px 20px;
+    }
     img{
         margin-bottom: 5px;
+        @media (max-width: 768px) {
+            margin-bottom: 0px;
+        }
     }
     .FooterIcons{
         margin-top: 15px;
         img{
             &:first-child{
                 margin-right: 34px;
+            }
+        }
+    }
+    .FooterContact{
+        @media (max-width: 768px) {
+            display: none;
+          }
+    }
+    .FooterLogo{
+        img{
+            @media (max-width: 768px) {
+                width: 90px;
+            }
+        }
+        p{
+            @media (max-width: 768px) {
+               font-size: 14px;
             }
         }
     }
@@ -30,11 +54,17 @@
                 padding: 2px 0px;
             }
         }
+        @media (max-width: 768px) {
+            display: none;
+          }
     }
     .FooterBottomOOO{
         p{
             margin: 3px 0px;
             text-align: right;
         }
+        @media (max-width: 768px) {
+            display: none;
+          }
     }
 }

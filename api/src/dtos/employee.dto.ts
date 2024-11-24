@@ -8,6 +8,7 @@ export default class EmployeeDto {
     position!: number;
     positionHuman!: string;
     floor?: string;
+    building?: string;
     equipments?: EquipmentDto[];
 
     constructor(model: Employee) {
@@ -17,6 +18,7 @@ export default class EmployeeDto {
         // @ts-expect-error any
         this.positionHuman = positionsRuLocale[model.position];
         this.floor = model.Floor?.name;
-        this.equipments = model.Equipments ? model.Equipments.map(m => new EquipmentDto(m)) : undefined;
+        this.building = model.Floor?.Building?.name;
+        this.equipments = model.Equipment ? model.Equipment.map(m => new EquipmentDto(m)) : undefined;
     }
 }

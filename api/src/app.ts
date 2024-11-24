@@ -2,12 +2,18 @@ import express from 'express';
 import corsMiddleware from './middlewares/cors';
 import cookieParser from 'cookie-parser';
 import cookieSession from 'cookie-session';
-// import * as fs from 'fs';
+import * as fs from 'fs';
 import expressWs from 'express-ws';
 import { errorHandler } from './middlewares/error-handler';
 
 import authRoute from './routes/auth.route';
 import userRoute from './routes/user.route';
+import employeeRoute from './routes/employee.route';
+import elementRoute from './routes/element.route';
+import buildingRoute from './routes/building.route';
+import equipmentRoute from './routes/equipment.route';
+import floorRoute from './routes/floor.route';
+import uploadRoute from './routes/upload.route';
 
 const { app, getWss } = expressWs(express());
 
@@ -21,12 +27,13 @@ app.use(
         keys: [process.env.COOKIE_KEY as string],
     })
 );
+
 // uploader section
-// app.use('/uploads', express.static('./uploads'));
-// const dir = './uploads';
-// if (!fs.existsSync(dir)) {
-//     fs.mkdirSync(dir);
-// }
+app.use('/uploads', express.static('./uploads'));
+const dir = './uploads';
+if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+}
 
 // cron section
 // cronService.setDays.start();
@@ -34,6 +41,12 @@ app.use(
 // routes section
 app.use('/auth', authRoute);
 app.use('/users', userRoute);
+app.use('/employees', employeeRoute);
+app.use('/elements', elementRoute);
+app.use('/buildings', buildingRoute);
+app.use('/equipments', equipmentRoute);
+app.use('/floors', floorRoute);
+app.use('/uploads', uploadRoute);
 
 // websocket section
 app.ws('/', () => {

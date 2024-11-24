@@ -86,5 +86,15 @@ export default class Equipment extends Model {
                 model.set('inventoryNumber', maxNumber + 1);
             }
         });
+
+        Equipment.beforeBulkCreate(async (instances: Equipment[]) => {
+            let maxNumber = await Equipment.max('inventoryNumber');
+            if (!maxNumber) maxNumber = 1;
+            for (const instance of instances) {
+                // @ts-expect-error any
+                maxNumber++;
+                instance.set('inventoryNumber', maxNumber);
+            }
+        });
     }
 }

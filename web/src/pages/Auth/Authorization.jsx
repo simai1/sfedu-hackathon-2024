@@ -13,13 +13,13 @@ function Authorization() {
     const context = useContext(DataContext);
     const navigate = useNavigate();
     useEffect(() => {
-        GetProfile().then((resp) => {
-            if(resp?.status === 200){
-            navigate("/helloPage")
-            }else{
-            navigate("/")
-            }
-        });
+        // GetProfile().then((resp) => {
+        //     if(resp?.status === 200){
+        //     navigate("/helloPage")
+        //     }else{
+        //     navigate("/")
+        //     }
+        // });
         },[])
     return ( 
         <>

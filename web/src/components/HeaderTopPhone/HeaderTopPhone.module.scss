@@ -1,0 +1,68 @@
+.HeaderTopPhone{
+    border-bottom: 1px solid #D2D2D2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px 5px 10px;
+    .InputContainer {
+        position: relative;
+        display: flex;
+        align-items: center;
+    
+        .SearchIcon {
+            position: absolute;
+            left: 10px;
+            transition: transform 0.3s ease;
+            top: 13px;
+            width: 16px;
+        }
+    
+        .SearchInput {
+            padding-left: 40px; // Space for the icon
+            transition: padding-left 0.3s ease;
+            background-color: inherit;
+            height: 30px;
+            border: none;
+            width: 200px;
+            font-size: 14px;
+            position: relative;
+            top: 5px;
+            &::placeholder{
+                font-size: 14px;
+            }
+            &:focus {
+                padding-left: 10px; // Adjust padding when focused
+                border: none;
+                padding-right: 30px;
+               box-sizing: border-box;
+                outline: none; /* Убирает подсветку */
+            }
+    
+            &:focus + .SearchIcon {
+                transform: translateX(165px); // Move the icon to the right
+            }
+        }
+    
+}
+.Export{
+    button{
+        border: none;
+        background-color: inherit;
+        display: flex;
+        align-items: center;
+        padding: 2px 5px;
+        border-radius: 5px;
+        span{
+            margin-left: 5px;
+        }
+        position: relative;
+        top: 8px;
+        &:hover{
+           background-color: var(--GrenColorHover);
+        }
+        &:active{
+            background-color: var(--GrenColorActive);
+        }
+    }
+}
+}

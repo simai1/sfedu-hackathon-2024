@@ -1,6 +1,6 @@
 import { DataTypes, Model, Sequelize } from 'sequelize';
 
-export default class Element extends Model {
+export default class  Element extends Model {
     id!: string;
     data!: object;
 
