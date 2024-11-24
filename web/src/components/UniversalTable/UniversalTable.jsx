@@ -67,6 +67,7 @@ function UniversalTable(props) {
 
   const showPopup = (event, content) => {
     const { clientX, clientY } = event;
+    content = content?.typeHuman
     setPopupInfo({
       visible: true,
       content,
@@ -96,6 +97,33 @@ function UniversalTable(props) {
     console.log(basicUrl)
     return `https://quickchart.io/qr?text=${basicUrl}?pageId=${id}`
   } 
+
+  const getLinkImgHomePage = (row) => {
+    const value = row.typeHuman
+    switch (value) {
+        case "Ноутбук":
+            return "/img/notebook.svg";
+        case "Стол":
+            return "/img/table.svg";
+        case "Лампа":
+            return "/img/lamp.svg";
+        case "Монитор":
+            return "/img/monitor.svg";
+        case "Диван":
+            return "/img/divan.svg";
+        case "Принтер":
+            return "/img/printer.svg";
+        case "Компьютер":
+            return "/img/system.svg";
+        case "Кофемашина":
+            return "/img/cofeWorker.svg";
+        case "Клавиатура":
+            return "/img/clava.svg";
+        case "Стул":
+            return "/img/stul.svg";
+        default:
+    }
+  }
   return (
     <div className={styles.UniversalTable}>
       <table>
@@ -107,6 +135,7 @@ function UniversalTable(props) {
                   <input
                     className={styles.checkboxGlobal}
                     type="checkbox"
+                    style={{left: context.activeTable === "Equipment" && "-66px"}}
                     id={context.activeTable === "Staff" && "GlovalChecboxPeople"}
                     checked={checkGlobalCheckboxes()}
                     onChange={(e) => {
@@ -153,8 +182,8 @@ function UniversalTable(props) {
                         {context.selectedRows.includes(row.id) && <img className={styles.galochka} src="/img/galochca.svg" alt="Selected" id={context.activeTable != "Equipment" && "galochcaNet"} />}
                         {context.activeTable === "Equipment" && <img
                           className={styles.imgEquipment}
-                          src={context.getLink(row[header.key])}
-                          onMouseEnter={(e) => showPopup(e, row[header.key])}
+                          src={getLinkImgHomePage(row)}
+                          onMouseEnter={(e) => showPopup(e, row)}
                           onMouseLeave={hidePopup}
                           alt="Equipment"
                         />}
@@ -168,6 +197,9 @@ function UniversalTable(props) {
                       </div>
                     ): header.key === "Qr" ? (
                       <a href={getLink(row.id)} target="_blank"><button className={styles.QrEquipments}>Сгенерировать Qr</button></a>
+                    )
+                    : header.key === "nameEquiomenrt" ? (
+                       getValue(row["name"], header.key)
                     ) : header.key === "equipment" ? (
                       <div className={styles.equipmentButton} key={row[header.key]}>
                         <div className={styles.equipmentButtonInner}>

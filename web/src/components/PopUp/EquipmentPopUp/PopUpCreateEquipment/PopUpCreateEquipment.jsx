@@ -100,12 +100,11 @@ function PopUpCreateEquipment() {
 
     // Формирование нового объекта
     const formattedData = {
-      name: formData.name,
+      name: formData.nameEquipment,
       description: formData.description,
       condition: conditionId,
       type: equipmentId,
       cost: parseInt(formData.cost, 10), // Преобразуем строку в число
-      nameEquipment: formData.nameEquipment,
     };
     console.log("formattedData", formattedData);
     CreateEquipment(formattedData).then((res) => {
