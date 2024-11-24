@@ -6,6 +6,8 @@ const EquipmentSlice = createSlice({
     equipment: [],
     office: [],
     selectedOffice: null,
+    selectedFloor: null,
+    worker: [],
   },
 
   reducers: {
@@ -13,6 +15,11 @@ const EquipmentSlice = createSlice({
     setEquipment(state, action) {
       const { data } = action.payload;
       state.equipment = data;
+    },
+
+    setWorker(state, action) {
+      const { data } = action.payload;
+      state.worker = data;
     },
     setOffice(state, action) {
       const { data } = action.payload;
@@ -23,10 +30,20 @@ const EquipmentSlice = createSlice({
       const { id } = action.payload;
       state.selectedOffice = id;
     },
+
+    setSelectedFloor(state, action) {
+      const { id } = action.payload;
+      state.selectedFloor = id;
+    },
   },
 });
 
-export const { setEquipment, setOffice, setSelectedOffice } =
-  EquipmentSlice.actions;
+export const {
+  setEquipment,
+  setOffice,
+  setSelectedOffice,
+  setSelectedFloor,
+  setWorker,
+} = EquipmentSlice.actions;
 
 export default EquipmentSlice.reducer;

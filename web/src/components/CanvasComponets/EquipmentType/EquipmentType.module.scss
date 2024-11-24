@@ -1,0 +1,31 @@
+.EquipmentType {
+  .liType {
+    cursor: pointer;
+    margin: 10px;
+    outline: none;
+    padding: 10px;
+    margin: 0;
+    list-style: none;
+
+    font-family: Open Sans;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 21.79px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    border-radius: 5px;
+    margin-left: 23px;
+
+    img {
+      margin-right: 10px;
+    }
+
+    &:hover {
+      background-color: var(--GrayColorButtonHover);
+    }
+    &:active {
+      background-color: var(--GrayColorButtonActive);
+    }
+  }
+}

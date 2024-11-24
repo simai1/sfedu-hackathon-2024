@@ -1,7 +1,7 @@
 .RigthMenu {
   position: absolute;
   right: 30px;
-  top: 85px;
+  top: 110px;
   z-index: 100;
 
   width: 252px;
@@ -13,7 +13,7 @@
   .head {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    // justify-content: space-between;
     margin-bottom: 20px;
     position: relative;
     .office {
@@ -21,12 +21,14 @@
       flex-direction: column;
       position: absolute;
       background-color: #ffffff;
-      left: -100px;
-      top: 100px;
+      left: -18px;
+      top: 46px;
       box-shadow: 0px 0px 2px 0px #00000040;
       border: 5px;
+      min-width: 150px;
       li {
         padding: 5px 10px;
+
         outline: none;
         text-decoration: none;
         list-style: none;
@@ -38,6 +40,9 @@
         &:active {
           background-color: var(--GrayColorButtonActive);
         }
+      }
+      .noFloor {
+        padding: 20px 20px;
       }
     }
     .left {
@@ -71,6 +76,8 @@
       }
     }
     .rigth {
+      position: absolute;
+      right: 10px;
       display: flex;
       justify-content: center;
       align-items: center;
