@@ -13,9 +13,8 @@ function UniversalTable(props) {
 
   useEffect(() => {
     setTableHeaderData(filterRole(props?.tableHeader));
-    
     setTableBodyData(props?.tableBody);
-}, [props?.tableHeader, props?.tableBody, context?.role]);
+}, [props?.tableHeader, props?.tableBody, context.role]);
 
 const filterRole = (data) => {
   console.log("context.role", context.role)
@@ -229,7 +228,7 @@ const filterRole = (data) => {
             ))
           ) : (
             <tr>
-              <td colSpan={tableHeaderData?.length} className={styles.tableNotData}>
+              <td colSpan={tableHeaderData.length} className={styles.tableNotData}>
                 Нет данных
               </td>
             </tr>
