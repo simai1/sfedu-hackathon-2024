@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import styles from "./UniversalTable.module.scss";
 import DataContext from "../../context";
+import QRCode from 'qrcode.react';
+import { jsPDF } from 'jspdf';
 
 function UniversalTable(props) {
   const context = useContext(DataContext);
@@ -83,7 +85,17 @@ function UniversalTable(props) {
       context.setSelectedRows(tableBodyData.map((row) => row.id));
     }
   };
-
+  const checkGlobalCheckboxes = () => {
+    if (context.selectedRows.length === tableBodyData.length && tableBodyData.length !== 0) {
+      return true;
+    }
+    return false;
+  }
+  const getLink = (id) =>{
+    const basicUrl = window.location.origin;
+    console.log(basicUrl)
+    return `https://quickchart.io/qr?text=${basicUrl}?pageId=${id}`
+  } 
   return (
     <div className={styles.UniversalTable}>
       <table>
@@ -96,13 +108,13 @@ function UniversalTable(props) {
                     className={styles.checkboxGlobal}
                     type="checkbox"
                     id={context.activeTable === "Staff" && "GlovalChecboxPeople"}
-                    checked={context.selectedRows.length === tableBodyData.length && tableBodyData.length !== 0}
+                    checked={checkGlobalCheckboxes()}
                     onChange={(e) => {
                       e.stopPropagation();
                       SelectAllCheckbox();
                     }}
                   />
-                  {context.selectedRows.length === tableBodyData.length && <img className={styles.galochkaAll} src="/img/galochca.svg" alt="Selected" />}
+                  {checkGlobalCheckboxes() && <img className={styles.galochkaAll} src="/img/galochca.svg" alt="Selected" />}
                   {el.value}
                 </th>
               ) : (
@@ -154,10 +166,12 @@ function UniversalTable(props) {
                           {row[header.key]}
                         </div>
                       </div>
+                    ): header.key === "Qr" ? (
+                      <a href={getLink(row.id)} target="_blank"><button className={styles.QrEquipments}>Сгенерировать Qr</button></a>
                     ) : header.key === "equipment" ? (
                       <div className={styles.equipmentButton} key={row[header.key]}>
                         <div className={styles.equipmentButtonInner}>
-                          <button onClick={() => context.setPopUp("PopUpEquipmentPeople")}>
+                          <button onClick={() => {context.setPopUp("PopUpEquipmentPeople"); context.setGetProfileId(row.id) }}>
                             <img src="./img/equipment.svg" />
                           </button>
                         </div>

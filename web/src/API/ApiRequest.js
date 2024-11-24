@@ -145,6 +145,25 @@ export const GetProfile = async () => {
   }
 };
 
+//! Получение профиля по Id
+export const GetProfileOne = async (id) => {
+  try {
+    const response = await http.get(`${server}/employees/${id}`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+      withCredentials: true,
+    });
+    return response;
+  } catch (error) {
+    if (error?.response?.status === 403) {
+      window.location.href = `${process.env.REACT_APP_WEB_URL}/Authorization`;
+    } else {
+      console.log("Возникла ошибка при выходе!");
+    }
+  }
+};
+
 //! Смена роли
 export const SwitchRole = async () => {
   console.log("accessToken", sessionStorage.getItem("accessToken"));
@@ -190,9 +209,9 @@ export const CreateEquipment = async (UserData) => {
 };
 
 //! Получения Списка оборудования
-export const GetEquipment = async () => {
+export const GetEquipment = async (searchText) => {
   try {
-    const response = await http.get(`${server}/equipments`, {
+    const response = await http.get(`${server}/equipments?search=${searchText}`, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },
@@ -229,9 +248,9 @@ export const CreateOffice = async (UserData) => {
 };
 
 //! Получения Списка офисов
-export const GetOffice = async () => {
+export const GetOffice = async (searchText) => {
   try {
-    const response = await http.get(`${server}/buildings`, {
+    const response = await http.get(`${server}/buildings?search=${searchText}`, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },
@@ -269,9 +288,9 @@ export const CreateWorker = async (UserData) => {
 
 
 //! Получения Списка офисов
-export const GetWorker = async () => {
+export const GetWorker = async (searchText) => {
   try {
-    const response = await http.get(`${server}/employees`, {
+    const response = await http.get(`${server}/employees?search=${searchText}`, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },

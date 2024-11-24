@@ -23,25 +23,30 @@ function App() {
   const [searchText, setSearchText] = useState("");
   const [exportFilePopUp, setExportFilePopUp] = useState(false);
   const [role, setRole] = useState("");
-
+  const [getProfileId, setGetProfileId] = useState(null);
 const getTableData = (value) => {
   switch (value) {
     case "Equipment":
-      getEquuipmentData();
+      getEquuipmentData(searchText);
       break;
     case "office":
-      getOfficeData();      
+      getOfficeData(searchText);      
       break;
     case "Staff":
-      getEmployeeData();
+      getEmployeeData(searchText);
       break;
     default:
       break;
   }
 }
 
- const getEquuipmentData = () =>{
-  GetEquipment().then((resp)=>{
+
+useEffect(() => {
+  getTableData(activeTable);
+},[searchText])
+
+ const getEquuipmentData = (searchText) =>{
+  GetEquipment(searchText).then((resp)=>{
     if(resp?.status === 200){
     setTableBody(resp.data.data);
     setTableHeader(tableHeadAppoint);
@@ -49,8 +54,8 @@ const getTableData = (value) => {
   })
  }
 
- const getOfficeData = () =>{
-  GetOffice().then((resp)=>{
+ const getOfficeData = (searchText) =>{
+  GetOffice(searchText).then((resp)=>{
     if(resp?.status === 200){
     setTableBody(resp.data.data)
     setTableHeader(tableHeadOfise);
@@ -58,8 +63,8 @@ const getTableData = (value) => {
   })
  }
 
- const getEmployeeData = () =>{
-  GetWorker().then((resp)=>{
+ const getEmployeeData = (searchText) =>{
+  GetWorker(searchText).then((resp)=>{
     if(resp?.status === 200){
     setTableBody(resp.data.data)
     setTableHeader(tableHeadPeople);
@@ -111,6 +116,8 @@ const getLink = (name) => {
     setTableHeader,
     setSelectedRows,
     selectedRows,
+    setGetProfileId,
+    getProfileId,
     popUp,
     setPopUp,
     getLink,

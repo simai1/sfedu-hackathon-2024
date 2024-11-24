@@ -52,19 +52,15 @@ function HomePage() {
           const typeId = equipment ? equipment.id : null;
           return data.filter(item => item.type === typeId);
         case "Staff":
-          return data;
+          return data.filter(item => item?.building?.toLowerCase().includes(value.toLowerCase()));
         case "office":
           return data.filter(item => item?.address?.toLowerCase().includes(value.toLowerCase()));
         default:
           return data;
       }
-    }
-    
+    }    
   };
 
-  useEffect(() => {
-    console.log("selectedRows", context.selectedRows)
-  }, [context.selectedRows]);
 
   return (
     <div className={styles.HomePageContainer}>

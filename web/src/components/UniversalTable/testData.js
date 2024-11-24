@@ -7,7 +7,8 @@ export const tableHeadAppoint = [
     { key: "inspectionDateHuman", value: "Крайнее ТО", isActive: true  },
     { key: "cost", value: "Стоимость", isActive: true  },
     { key: "factCost", value: "Остаточная стоимость", isActive: true  },
-    { key: "conditionHuman", value: "Состояние", isActive: true  }
+    { key: "conditionHuman", value: "Состояние", isActive: true  },
+    { key: "Qr", value: "Qr код", isActive: true  }
 ]
 
 export const tableHeadOfise = [

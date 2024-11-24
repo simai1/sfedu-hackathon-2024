@@ -93,7 +93,7 @@ const handleFileInputClick = () => {
     }
 
     const dropFilter = () => {
-        setSearchText('');
+        context.setSearchText('');
         switch (context?.activeTable) {
             case "office":
                 context.setValueNameOffise("");
@@ -147,7 +147,6 @@ const handleFileInputClick = () => {
         { id: 2, name: "Главный офис" },
         { id: 3, name: "Дизайн центр" },
       ]; // Sample data list
-      const [searchText, setSearchText] = useState('');
     return (
         <div className={styles.HomePageTableMenu}>
             <div className={styles.Search}>
@@ -156,8 +155,8 @@ const handleFileInputClick = () => {
                         type="text"
                         className={styles.SearchInput}
                         placeholder="Поиск"
-                        value={searchText}
-                        onChange={(e) => setSearchText(e.target.value)}
+                        value={context.searchText}
+                        onChange={(e) => context.setSearchText(e.target.value)}
                     />
                     <img src="/img/loop.svg" alt="Search" className={styles.SearchIcon} />
                 </div>
