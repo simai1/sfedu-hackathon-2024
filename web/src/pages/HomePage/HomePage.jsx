@@ -108,6 +108,7 @@ function HomePage() {
             tableHeader={context.tableHeader}
           />
         </section>
+        
       </main>
 
       <FooterHomePageComp />
