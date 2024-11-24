@@ -4,11 +4,20 @@
     align-items: center;
     height: 100vh;
     position: relative;
+    button{
+        @media (max-width: 768px) {
+            width: 300px!important;
+            height: 50px!important;
+        }
+    }
     .HelloPageTitle{
         font-size: 40px;
         width: 650px;
         text-align: center;
         margin-bottom: 50px;
+        @media (max-width: 768px) {
+            font-size: 32px;
+        }
     }
     button{
         height: 60px;
@@ -16,20 +25,28 @@
     }
     img{
         position: absolute;
+        pointer-events: none;
     }
     .HelloPageImgTop{
         top: 0;
+        @media (max-width: 768px) {
+            width: 400px;
+            right: 0;
+        }
     }
     .HelloPageImgRight{
         right: 0;
-        // width: 1000px;
-        // top: 200px;
+      
+        @media (max-width: 768px) {
+            width: 400px;
+            bottom: -25px;
+        }
     }
     .HelloPageImgLeft{
         left: 0;
-        // width: 1000px;
-        // top: -100px;
-        // transform: rotate(-10deg);
+        @media (max-width: 768px) {
+            display: none;
+        }
       
     }
 }

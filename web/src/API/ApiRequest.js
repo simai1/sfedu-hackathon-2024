@@ -290,7 +290,7 @@ export const CreateWorker = async (UserData) => {
 //! Получения Списка офисов
 export const GetWorker = async (searchText) => {
   try {
-    const response = await http.get(`${server}/employees?search=${searchText}`, {
+    const response = await http.get(`${server}/employees`, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },

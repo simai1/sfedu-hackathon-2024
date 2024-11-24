@@ -17,6 +17,9 @@ import { filterData } from "../../function";
 import PopUpCreateOffice from "../../components/PopUp/OffisePopUp/PopUpCreateOffice/PopUpCreateOffice";
 import PopUpCreateWorker from "../../components/PopUp/StaffPopUp/PopUpCreateWorker/PopUpCreateWorker";
 import { dataListEquipment } from "./data";
+import HeaderTopPhone from "../../components/HeaderTopPhone/HeaderTopPhone";
+import PhoneDataVizulizer from "../../components/PhoneDataVizulizer/PhoneDataVizulizer";
+import PopUpEditOffice from "../../components/PopUp/OffisePopUp/PopUpEditOffice/PopUpEditOffice";
 
 function HomePage() {
   const context = useContext(DataContext);
@@ -65,24 +68,41 @@ function HomePage() {
   return (
     <div className={styles.HomePageContainer}>
       <header>
-        <HomePageProfileClicker />
-        <HomePageTopMenu />
-        <div className={styles.EditLink} onClick={() => navigate("/konva")}>
-          <div className={styles.EditLinkInner}>
-            <p>Перейти в конструктор</p>
-            <img src="/img/linkArrow.svg" alt="Link Arrow" />
+      <div className={styles.HomePageHeaderPc}>
+          <HomePageProfileClicker />
+          <HomePageTopMenu />
+          <div className={styles.EditLink} onClick={() => navigate("/konva")}>
+            <div className={styles.EditLinkInner}>
+              <p>Перейти в конструктор</p>
+              <img src="/img/linkArrow.svg" alt="Link Arrow" />
+            </div>
           </div>
         </div>
-      </header>
-      <main>
-        <HomePageTableMenu  tableData={filterData(context.tableBody)} />
-        <div className={styles.HomePageTable}>
-          <UniversalTable 
-            tableBody={filterData(context.tableBody)} 
-            tableHeader={context.tableHeader} 
-          />
+        <div className={styles.HomePageHeaderMobile}>
+          <HomePageProfileClicker />
         </div>
+      </header>
+
+      <main>
+        <section className={styles.HomePageTableSectionPc}>
+          <HomePageTableMenu  tableData={filterData(context.tableBody)} />
+          <div className={styles.HomePageTable}>
+            <UniversalTable 
+              tableBody={filterData(context.tableBody)} 
+              tableHeader={context.tableHeader} 
+            />
+          </div>
+        </section>
+        <section className={styles.HomePageTableSectionMobile}>
+          <HeaderTopPhone tableData={filterData(context.tableBody)}/>
+          <PhoneDataVizulizer   
+              tableBody={filterData(context.tableBody)} 
+              tableHeader={context.tableHeader}
+          />
+        </section>
+        
       </main>
+      
       <FooterHomePageComp />
       {context.popUp === "PopUpEquipmentPeople" && <PopUpEquipmentPeople />}
       {context.popUp === "PopUpDeleteStaff" && <PopUpDeleteStaff />}
@@ -91,6 +111,7 @@ function HomePage() {
       {context.popUp === "PopUpCreateEquipment" && <PopUpCreateEquipment />}
       {context.popUp === "PopUpCreateOffice" && <PopUpCreateOffice />}
       {context.popUp === "PopUpCreateWorker" && <PopUpCreateWorker />}
+      {context.popUp === "PopUpEditOffice" && <PopUpEditOffice />}
     </div>
   );
 }

@@ -3,7 +3,7 @@ import styles from "./FooterHomePage.module.scss";
 function FooterHomePageComp() {
     return ( 
         <footer className={styles.Footer}>
-            <div>
+            <div className={styles.FooterLogo}>
                 <div>
                     <img src="/img/footerLogo.svg"/>
                 </div>
@@ -11,7 +11,7 @@ function FooterHomePageComp() {
               
             
             </div>
-            <div>
+            <div className={styles.FooterContact}>
                 <div>
                     <p>+7 (888) 547-58-64</p>
                 </div>
