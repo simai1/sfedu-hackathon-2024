@@ -24,6 +24,7 @@ const CanvasSlice = createSlice({
     selectedElement: "",
     mode: 0,
     pointsLines: [],
+    serch: "",
   },
 
   reducers: {
@@ -51,7 +52,10 @@ const CanvasSlice = createSlice({
       const { mode } = action.payload;
       state.mode = mode;
     },
-
+    setSearch(state, action) {
+      const { text } = action.payload;
+      state.serch = text;
+    },
     setPointsLines(state, action) {
       const { points } = action.payload;
       state.pointsLines = points;
@@ -190,6 +194,7 @@ export const {
   setPositionElem,
   setRotation,
   apiAddElemConvas,
+  setSearch,
 } = CanvasSlice.actions;
 
 export default CanvasSlice.reducer;

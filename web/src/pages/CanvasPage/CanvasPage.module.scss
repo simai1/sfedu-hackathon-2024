@@ -40,4 +40,49 @@
       }
     }
   }
+  .input {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 300;
+    background-color: #fff;
+    padding: 5px 5px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    border: none;
+  }
+  .ser {
+    position: absolute;
+    top: 54px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 300;
+    background-color: #fff;
+    padding: 5px 5px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    border: none;
+    ul {
+      padding: 0;
+      margin: 0;
+    }
+    li {
+      outline: none;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      &:hover {
+        background-color: var(--GrayColorButtonHover);
+      }
+      &:active {
+        background-color: var(--GrayColorButtonActive);
+      }
+    }
+  }
 }
