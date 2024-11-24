@@ -199,7 +199,7 @@ const handleFileInputClick = () => {
                     </>
                 )}
                     <button onClick={() => generateAndDownloadExcel(props?.tableData, context?.activeTable)}>
-                        <img src="/img/export.svg" alt="Plus" style={{transform: "rotate(180deg)" }}/>
+                        <img src="/img/exportImg.svg" alt="Plus" style={{transform: "rotate(180deg)" }}/>
                         <span>Экспорт</span>
                     </button>
                    

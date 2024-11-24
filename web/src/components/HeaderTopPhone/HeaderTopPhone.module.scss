@@ -13,8 +13,8 @@
             position: absolute;
             left: 10px;
             transition: transform 0.3s ease;
-            top: 13px;
-            width: 16px;
+            top: 12px;
+            width: 17px;
         }
     
         .SearchInput {
@@ -24,11 +24,11 @@
             height: 30px;
             border: none;
             width: 200px;
-            font-size: 14px;
+            font-size: 16px;
             position: relative;
             top: 5px;
             &::placeholder{
-                font-size: 14px;
+                font-size: 16px;
             }
             &:focus {
                 padding-left: 10px; // Adjust padding when focused
@@ -52,8 +52,10 @@
         align-items: center;
         padding: 2px 5px;
         border-radius: 5px;
+        font-size: 16px;
         span{
             margin-left: 5px;
+            color: #000000;
         }
         position: relative;
         top: 8px;

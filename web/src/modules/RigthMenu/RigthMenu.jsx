@@ -7,11 +7,18 @@ import {
   setDraggable,
   setSelectedElement,
 } from "../../store/CanvasSlice/canvas.Slice";
-import { setSelectedFloor } from "../../store/basicSlice/basic.Slice";
+import {
+  setEquipment,
+  setSelectedFloor,
+  setWorker,
+} from "../../store/basicSlice/basic.Slice";
 import {
   apiAddFloor,
   apiDeleteFloor,
   apiGetConvas,
+  GetEquipment,
+  GetWorker,
+  UpdateEquipment,
 } from "../../API/ApiRequest";
 import CreatFloor from "../../components/CreatFloor/CreatFloor";
 
@@ -31,6 +38,35 @@ function RigthMenu() {
     name: "",
     number: "",
   });
+
+  const [listOpen, setListOpen] = useState(false);
+
+  const funOpemList = () => {
+    setListOpen(!listOpen);
+  };
+
+  const selectUser = (wo, id) => {
+    console.log("wo", wo, id);
+    const data = {
+      equipmentId: id,
+    };
+    UpdateEquipment(data, wo.id).then((res) => {
+      if (res.status === 200) {
+        setListOpen(false);
+        GetEquipment().then((resp) => {
+          if (resp?.status === 200) {
+            dispatch(setEquipment({ data: resp.data.data }));
+          }
+        });
+
+        GetWorker().then((resp) => {
+          if (resp?.status === 200) {
+            dispatch(setWorker({ data: resp.data.data }));
+          }
+        });
+      }
+    });
+  };
 
   useEffect(() => {
     setElement(
@@ -129,6 +165,18 @@ function RigthMenu() {
     setModalDeleteFloor("");
   };
 
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Обработчик изменения ввода
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  // Фильтрация работников на основе значения поиска
+  const filteredWorkers = equipmentSlice.worker?.filter((wo) =>
+    wo.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  console.log("element", element);
   return (
     <>
       {accept && (
@@ -249,13 +297,45 @@ function RigthMenu() {
                 <span>{element?.name}</span>
               </div>
             </div>
-            <div className={styles.con2}>
-              <p>Сотрудник</p>
+            {element?.type && element?.type !== "employees" && (
+              <div className={styles.con2}>
+                <p>
+                  Сотрудник{" "}
+                  <img
+                    onClick={funOpemList}
+                    src="./img/karandash.svg"
+                    alt="img"
+                  />
+                </p>
 
-              <div className={styles.box}>
-                <span>Иванов И И</span>
+                <div className={styles.box}>
+                  <span>
+                    {equipmentSlice.equipment.find(
+                      (el) => el.id === element?.idEquipment
+                    )?.employee?.name || "Не закреплено"}
+                  </span>
+                </div>
+                {listOpen && (
+                  <ul className={styles.list}>
+                    <input
+                      type="text"
+                      placeholder="Поиск..."
+                      value={searchTerm}
+                      onChange={handleSearchChange}
+                      className={styles.searchInput} // Добавьте свои стили
+                    />
+                    {filteredWorkers.map((wo) => (
+                      <li
+                        key={wo.id}
+                        onClick={() => selectUser(wo, element.idEquipment)}
+                      >
+                        {wo.name}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
-            </div>
+            )}
 
             <div className={styles.con2}>
               <p>Стоимость</p>
@@ -289,6 +369,20 @@ function RigthMenu() {
                 </span>
               </div>
             </div>
+            {element?.type === "employees" && (
+              <div className={styles.obor}>
+                <p>Оборудование</p>
+                <ul>
+                  {equipmentSlice.worker
+                    .find((el) => el.id === element.idEquipment)
+                    ?.equipments?.map((el) => (
+                      <li>
+                        {el.name}/{el.inventoryNumber}
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            )}
             <div className={styles.btn}>
               <button onClick={() => deleteElement(element.id)}>Удалить</button>
             </div>
