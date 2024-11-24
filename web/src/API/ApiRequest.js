@@ -351,3 +351,31 @@ export const GetOfficeAll = async () => {
     }
   }
 };
+
+//! очистить канвас
+export const refreshCanvas = async (id) => {
+  try {
+    const response = await http.delete(`${server}/floors/canvas/${id}`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+//! удалить этаж
+export const apiDeleteFloor = async (id) => {
+  try {
+    const response = await http.delete(`${server}/floors/${id}`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};

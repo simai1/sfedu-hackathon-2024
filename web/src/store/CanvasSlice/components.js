@@ -1,9 +1,9 @@
 export const components = [
   {
-    x: 300,
-    y: 200,
-    width: 20,
-    height: 20,
+    x: 500,
+    y: 500,
+    width: 70,
+    height: 70,
     rotation: 0,
     fill: " #989898",
     elemId: "1",
@@ -12,7 +12,7 @@ export const components = [
     zIndex: 100,
     draggable: true,
     figure: "3",
-    svgPath: "/img/canvasImg/nout.svg",
+    svgPath: "/img/n.svg",
     type: "equipments",
   },
 
