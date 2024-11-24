@@ -20,6 +20,7 @@ import { dataListEquipment } from "./data";
 import HeaderTopPhone from "../../components/HeaderTopPhone/HeaderTopPhone";
 import PhoneDataVizulizer from "../../components/PhoneDataVizulizer/PhoneDataVizulizer";
 import PopUpEditOffice from "../../components/PopUp/OffisePopUp/PopUpEditOffice/PopUpEditOffice";
+import PopUpEditWorker from "../../components/PopUp/StaffPopUp/PopUpEditWorker/PopUpEditWorker";
 
 function HomePage() {
   const context = useContext(DataContext);
@@ -104,14 +105,15 @@ function HomePage() {
       </main>
       
       <FooterHomePageComp />
-      {context.popUp === "PopUpEquipmentPeople" && <PopUpEquipmentPeople />}
-      {context.popUp === "PopUpDeleteStaff" && <PopUpDeleteStaff />}
-      {context.popUp === "PopUpDeleteOffice" && <PopUpDeleteOffice />}
-      {context.popUp === "PopUpDeleteEqupment" && <PopUpDeleteEqupment/>}
-      {context.popUp === "PopUpCreateEquipment" && <PopUpCreateEquipment />}
-      {context.popUp === "PopUpCreateOffice" && <PopUpCreateOffice />}
-      {context.popUp === "PopUpCreateWorker" && <PopUpCreateWorker />}
-      {context.popUp === "PopUpEditOffice" && <PopUpEditOffice />}
+        {context.popUp === "PopUpEquipmentPeople" && <PopUpEquipmentPeople />}
+        {context.popUp === "PopUpDeleteStaff" && <PopUpDeleteStaff />}
+        {context.popUp === "PopUpDeleteOffice" && <PopUpDeleteOffice />}
+        {context.popUp === "PopUpDeleteEqupment" && <PopUpDeleteEqupment/>}
+        {context.popUp === "PopUpCreateEquipment" && <PopUpCreateEquipment />}
+        {context.popUp === "PopUpCreateOffice" && <PopUpCreateOffice />}
+        {context.popUp === "PopUpCreateWorker" && <PopUpCreateWorker />}
+        {context.popUp === "PopUpEditOffice" && <PopUpEditOffice />}
+        {context.popUp === "PopUpEditWorker" && <PopUpEditWorker />}
     </div>
   );
 }
