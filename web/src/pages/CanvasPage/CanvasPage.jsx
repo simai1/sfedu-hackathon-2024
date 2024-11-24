@@ -1,3 +1,4 @@
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   apiGetConvas,
@@ -11,15 +12,18 @@ import OfficeHead from "../../components/OfficeHead/OfficeHead";
 import Konva from "../../modules/Konva/Konva";
 import RigthMenu from "../../modules/RigthMenu/RigthMenu";
 import styles from "./CanvasPage.module.scss";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   apiAddElemConvas,
   setElem,
+  setSearch,
+  setSelectedElement,
 } from "../../store/CanvasSlice/canvas.Slice";
 import { setOffice } from "../../store/basicSlice/basic.Slice";
 import DataContext from "../../context";
 import PopUpCreateEquipment from "../../components/PopUp/EquipmentPopUp/PopUpCreateEquipment/PopUpCreateEquipment";
 import PopUpCreateOffice from "../../components/PopUp/OffisePopUp/PopUpCreateOffice/PopUpCreateOffice";
+import { useNavigate } from "react-router-dom";
 
 function CanvasPage() {
   const canvasSlice = useSelector((state) => state.CanvasSlice);
@@ -74,8 +78,18 @@ function CanvasPage() {
       employees: emmass,
       background: bamass,
     };
-    apiSaveConvas(data, equipmentSlice.selectedFloor).then((res) => {
-      console.log(res);
+
+    refreshCanvas(equipmentSlice.selectedFloor).then((res) => {
+      if (res?.status === 200) {
+        GetOfficeAll().then((resp) => {
+          if (resp?.status === 200) {
+            dispatch(setOffice({ data: resp.data.data }));
+            apiSaveConvas(data, equipmentSlice.selectedFloor).then((res) => {
+              console.log(res);
+            });
+          }
+        });
+      }
     });
   };
 
@@ -92,6 +106,19 @@ function CanvasPage() {
     });
   };
 
+  const [searchElems, setSearchElems] = React.useState([]);
+
+  useEffect(() => {
+    setSearchElems([
+      ...canvasSlice.elements.filter((elem) =>
+        elem.name.toLowerCase().includes(canvasSlice.serch?.toLowerCase())
+      ),
+    ]);
+    console.log("searchElems", searchElems);
+  }, [canvasSlice.serch]);
+
+  const nabigate = useNavigate();
+
   return (
     <div className={styles.CanvasPage}>
       <div className={styles.HomePageProfileClicker}>
@@ -101,6 +128,43 @@ function CanvasPage() {
       <Konva />
       <OfficeHead />
       <RigthMenu />
+      <input
+        type="tetx"
+        placeholder="Поиск"
+        className={styles.input}
+        onChange={(e) => {
+          dispatch(setSearch({ text: e.target.value }));
+        }}
+        value={canvasSlice.serch}
+      />
+      {searchElems.length > 0 && canvasSlice.serch && (
+        <div className={styles.ser}>
+          <ul>
+            {searchElems.map((el) => (
+              <li
+                onClick={() => {
+                  dispatch(setSelectedElement({ id: el.id }));
+                  dispatch(setSearch({ text: "" }));
+                  setSearchElems([]);
+                }}
+              >
+                {el.name}{" "}
+                {
+                  equipmentSlice.equipment.find(
+                    (ele) => ele.id === el?.idEquipment
+                  )?.inventoryNumber
+                }{" "}
+                {
+                  equipmentSlice.worker.find(
+                    (ele) => ele.id === el?.idEquipment
+                  )?.name
+                }
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       {context.popUp === "PopUpCreateOffice" && <PopUpCreateOffice />}
       <div className={styles.Save}>
         <button onClick={refrechConvas}>
@@ -109,6 +173,10 @@ function CanvasPage() {
         </button>
 
         <button onClick={funSaveConvas}>Сохранить</button>
+      </div>
+      <div className={styles.Back} onClick={() => nabigate("/homePage")}>
+        <img src="./img/iii.svg" alt="img" />
+        <p>На главную</p>
       </div>
     </div>
   );
