@@ -332,3 +332,22 @@ export const apiGetConvas = async (id) => {
     return error;
   }
 };
+
+//! Получения Списка офисов
+export const GetOfficeAll = async () => {
+  try {
+    const response = await http.get(`${server}/buildings`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    if (error?.response?.status === 403) {
+      window.location.href = `${process.env.REACT_APP_WEB_URL}/Authorization`;
+    } else {
+      console.log("Такой пользователь уже существует!");
+      return false;
+    }
+  }
+};
