@@ -211,7 +211,7 @@ export const CreateEquipment = async (UserData) => {
 //! Запрос на оборудование оборудования
 export const UpdateEquipment = async (Data, id) => {
   try {
-    const response = await http.patch(`${server}/equipments/${id}`, Data, {
+    const response = await http.patch(`${server}/employees/${id}`, Data, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },
