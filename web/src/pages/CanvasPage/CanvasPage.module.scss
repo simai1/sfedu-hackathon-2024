@@ -1,3 +1,21 @@
 .CanvasPage {
   height: 100vh;
+
+  .HomePageProfileClicker {
+    position: absolute;
+    left: 30px;
+    top: 20px;
+    z-index: 400;
+  }
+  .Save {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    left: 356px;
+    top: 20px;
+
+    button {
+      margin-left: 20px;
+    }
+  }
 }

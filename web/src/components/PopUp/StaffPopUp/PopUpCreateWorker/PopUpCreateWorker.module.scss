@@ -1,0 +1,107 @@
+.PopUpCreateWorker{
+    .PopUpCreateWorkerInner{
+        margin: 0 auto;
+        width: 370px;
+       }
+        input{
+            width: 370px!important;
+        }
+        .input {
+            width: 370px;
+            border: none;
+            padding: 10px;
+            border: 1px solid #989898;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+            height: 50px;
+            color: var(--GrenColor);
+            cursor: pointer; // Change cursor to pointer to indicate it's clickable
+            &:focus {
+                border-color: #007bff;
+                outline: none;
+            }
+        }
+        .InputList{
+            position: relative;
+        }
+    button{
+        width: 177px;
+        height: 50px;
+        background: none;
+        border: none;
+        border: 2px solid var(--GrenColor);
+        border-radius: 5px;
+        transition: 0.1s  linear all;
+        &:first-child{
+            border: 2px solid var(--GrenColor);
+            margin-right: 8px;
+            color: #000;
+            &:hover{
+                background-color: var(--GrenColor);
+                color: #fff;
+                cursor: pointer;
+            }
+            &:active{
+                background-color: var(--GrenColorActive);
+            }
+        }
+        &:last-child{
+            background-color: var(--GrenColor);
+            color: #fff;
+            margin-left: 8px;
+            &:hover{
+                border: 2px solid var(--GrenColorHover);
+                background-color: var(--GrenColorHover);
+                cursor: pointer;
+            }
+            &:active{
+                border: 2px solid var(--GrenColorActive);
+                background-color: var(--GrenColorActive);
+            }
+        }
+    
+    }
+    .PopUpCreateEquipmentContainerButton{
+        display: flex;
+        justify-content: center;
+        position: relative;
+    }
+    .dropdown {
+        margin-top: 0px;
+        position: absolute;
+        top: 50px;
+        left: 0px;
+        right: 0;
+        width: 100%;
+        background-color: white;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        max-height: 300px;
+        overflow-y: auto;
+        z-index: 1000;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+   .PopUpCreateEquipmentContainer{
+    position: relative;
+    margin-bottom: 25px;
+   }
+    .dropdownItem {
+        padding: 10px;
+        cursor: pointer;
+        &:hover {
+            background-color: var(--GrayColorButtonHover);
+        }
+        &:active {
+            background-color: var(--GrayColorButtonActive);
+        }
+    }
+    .imgArrow{
+        pointer-events: none;
+        position: absolute;
+        right: 15px;
+        top: 18px;
+    }
+   
+}
+

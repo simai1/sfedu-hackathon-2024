@@ -8,7 +8,10 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.7",
+    "file-saver": "^2.0.5",
+    "jspdf": "^2.5.2",
     "konva": "^9.3.16",
+    "qrcode.react": "^4.1.0",
     "react": "^18.3.1",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
@@ -20,7 +23,8 @@
     "react-scripts": "5.0.1",
     "redux-persist": "^6.0.0",
     "sass": "^1.79.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "xlsx": "^0.18.5"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -78,7 +78,7 @@ const Rectangle = ({
           }}
         />
       )}
-      {text && (
+      {/* {text && (
         <Text
           text={text} // текст, который вы хотите отобразить
           x={shapeProps.x} // фиксируем координаты текста
@@ -88,7 +88,7 @@ const Rectangle = ({
           width={shapeProps.width} // ширина текста
           align="center" // выравнивание текста по центру
         />
-      )}
+      )} */}
     </React.Fragment>
   );
 };

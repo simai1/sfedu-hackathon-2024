@@ -7,10 +7,16 @@ function PopUpContainer(props) {
 
     return (
         <div className={styles.PopUpContainer}>
-            <div className={styles.PopUpContainerInner} style={{width: props?.width}}>
-                <div className={styles.PopUpCloseButton}>
+            <div className={styles.PopUpContainerInner} style={{width: props?.width, height: props?.height}}>
+                {props?.buttonCancel === true ? ( <div className={styles.PopUpCloseButton}>
                     <button onClick={()=>context.setPopUp("")}><ClosePopUp/></button>
-                </div>
+                </div>):(null)
+                }
+                {props?.StandartTitle && (
+                    <div className={styles.ContainerTitleStandart}>
+                        <p className={styles.title}>{props?.StandartTitle}</p>
+                    </div>
+                )}
                 <div className={styles.ContainerTitle}>
                     <p className={styles.title}>{props?.title}</p>
                 </div>

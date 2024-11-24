@@ -16,6 +16,7 @@
         }
     }
     .HomePageButtonNewEmployee{
+        display: flex;
         button{
             background-color: inherit;
             border: none;
@@ -54,27 +55,109 @@
             position: absolute;
             left: -20px;
             transition: transform 0.3s ease;
+            top: 15px;
         }
     
         .SearchInput {
             padding-left: 40px; // Space for the icon
             transition: padding-left 0.3s ease;
             background-color: inherit;
-            height: 28px;
+            height: 38px;
             border: none;
             border-bottom: 1px solid #D2D2D2;
             width: 200px;
+            font-size: 16px;
+            position: relative;
+            top: 5px;
+            &::placeholder{
+                font-size: 14px;
+            }
             &:focus {
                 padding-left: 10px; // Adjust padding when focused
                 border: none;
+                padding-right: 30px;
+                box-sizing: border-box;
             }
     
             &:focus + .SearchIcon {
-                transform: translateX(170px); // Move the icon to the right
+                transform: translateX(165px); // Move the icon to the right
             }
         }
     
 }
-    
-   
+    .FilterContainer{
+        display: flex;
+        align-items: center;
+        position: relative;
+        top: 5px;
+        .Filter{
+            display: flex;
+            align-items: center;
+            background: none;
+            border: none;
+            color: #989898;
+            transition: 0.1s linear all;
+            padding: 7px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            &:hover{
+                background-color: var(--GrayColorButtonHover);
+            }
+            &:active{
+                background-color: var(--GrayColorButtonActive);
+            }
+            img{
+                position: relative;
+                top: 0px;
+                right: 20px;
+            }
+           }
+    }
+  .ImporFilesPole{
+    position: relative;
+    .PopUpImporFiles{
+        position: absolute;
+        background-color: #ffffff;
+        right: 0px;
+        box-sizing: border-box;
+        z-index: 10;
+        padding: 20px;
+        border-radius: 5px;
+        input{
+            border: 1px dashed #989898;  
+            padding: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+      }
+      button{
+        background-color: #1A7D78;
+        border-radius: 5px;
+        padding: 5px 10px;
+        color: #ffffff;
+        border: none;
+        margin-top: 10px;
+        width: 160px;
+        margin-left: 0;
+        cursor: pointer;
+        transition: 0.1s linear all;
+        &:hover{
+          background-color: var(--GrenColorHover);
+        }
+        &:active{
+          background-color: var(--GrenColorActive);
+        }
+      }
+      .Clear{
+        display: flex;
+        align-items: center;
+        .ClearInner{
+            display: flex;
+            margin: 0 auto; 
+        }
+    }
+    }
+  }
+  .Import{
+    margin-right: 0px!important;
+}
 }
