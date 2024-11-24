@@ -176,7 +176,7 @@ function RigthMenu() {
   const filteredWorkers = equipmentSlice.worker?.filter((wo) =>
     wo.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
+  console.log("element", element);
   return (
     <>
       {accept && (
@@ -297,7 +297,7 @@ function RigthMenu() {
                 <span>{element?.name}</span>
               </div>
             </div>
-            {element.type !== "employees" && (
+            {element?.type && element?.type !== "employees" && (
               <div className={styles.con2}>
                 <p>
                   Сотрудник{" "}
@@ -369,6 +369,20 @@ function RigthMenu() {
                 </span>
               </div>
             </div>
+            {element?.type === "employees" && (
+              <div className={styles.obor}>
+                <p>Оборудование</p>
+                <ul>
+                  {equipmentSlice.worker
+                    .find((el) => el.id === element.idEquipment)
+                    ?.equipments?.map((el) => (
+                      <li>
+                        {el.name}/{el.inventoryNumber}
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            )}
             <div className={styles.btn}>
               <button onClick={() => deleteElement(element.id)}>Удалить</button>
             </div>
