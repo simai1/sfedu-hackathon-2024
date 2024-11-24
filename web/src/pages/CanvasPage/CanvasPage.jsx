@@ -105,7 +105,7 @@ function CanvasPage() {
       <div className={styles.Save}>
         <button onClick={refrechConvas}>
           <img src="/img/delete.svg" alt="1" />
-          Сбросит
+          Сбросить
         </button>
 
         <button onClick={funSaveConvas}>Сохранить</button>
