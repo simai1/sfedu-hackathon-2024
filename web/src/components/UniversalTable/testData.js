@@ -6,8 +6,8 @@ export const tableHeadAppoint = [
     { key: "description", value: "Описание", isActive: true  },
     { key: "createdAtHuman", value: "Дата добавления", isActive: true  },
     { key: "inspectionDateHuman", value: "Крайнее ТО", isActive: true  },
-    { key: "cost", value: "Стоимость", isActive: true  },
-    { key: "factCost", value: "Остаточная стоимость", isActive: true  },
+    { key: "cost", value: "Стоимость", isActive: false  },
+    { key: "factCost", value: "Остаточная стоимость", isActive: false  },
     { key: "conditionHuman", value: "Состояние", isActive: true  },
     { key: "Qr", value: "Qr код", isActive: true  }
 ]

@@ -3,6 +3,7 @@ import styles from "./HomePageTableMenu.module.scss";
 import DataContext from '../../context';
 import UneversalList from '../UneversalList/UneversalList';
 import { generateAndDownloadExcel } from './function';
+import { ImportFileToBuildings, ImportFileToEquipments } from '../../API/ApiRequest';
 
 function HomePageTableMenu(props) {
     const context  = useContext(DataContext);
@@ -28,10 +29,38 @@ const handleFileChange = (event) => {
 };
 
 const handleConfirmUpload = () => {
-    // Logic to handle the file upload
+    
     console.log("File uploaded:", uploadedFile);
-    // Close the popup after confirming
-    context.setExportFilePopUp(false);
+    const formData = new FormData();
+    formData.append('file', uploadedFile);
+    switch (context?.activeTable) {
+        case "office":
+            ImportFileToBuildings(formData).then((res) => {
+                if(res.status === 200){
+                    context.getTableData(context.activeTable);
+                    context.setExportFilePopUp(false);
+                }
+            })
+            break;
+        case "Equipment":
+            ImportFileToEquipments(formData).then((res) => {
+                if(res.status === 200){
+                    context.getTableData(context.activeTable);
+                    context.setExportFilePopUp(false);
+                }
+            })
+            break;
+        case "Staff":
+            ImportFileToEquipments(formData).then((res) => {
+                if(res.status === 200){
+                    context.getTableData(context.activeTable);
+                    context.setExportFilePopUp(false);
+                }
+            })
+            break;
+        default:
+            return "";
+    }
 };
 
 const handleClearFile = () => {
@@ -204,9 +233,7 @@ const handleFileInputClick = () => {
                     </button>
                    
                 <>
-               
-        {context?.activeTable === "Equipment" && context.role === "Администратор" && (
-            <div className={styles.ImporFilesPole}>
+                <div className={styles.ImporFilesPole}>
                     <button onClick={() => context.setExportFilePopUp(!context.exportFilePopUp)} className={styles.Import}>
                         <img src="/img/export.svg" alt="Plus" />
                         <span>Импорт</span>
@@ -227,8 +254,7 @@ const handleFileInputClick = () => {
                                         readOnly // Make it read-only
                                     />
                                     {uploadedFile && (
-                                        <div>
-                                           
+                                        <div>   
                                             <button onClick={handleClearFile} className={styles.Clear}>
                                                 <div className={styles.ClearInner}>
                                                     <p>Очистить</p>
@@ -243,10 +269,7 @@ const handleFileInputClick = () => {
                                 </div>
                             )}
                         </div>
-                    )}
                 </>
-               
-               
             </div>
         </div>
     );

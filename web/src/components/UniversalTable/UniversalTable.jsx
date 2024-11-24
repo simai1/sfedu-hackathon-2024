@@ -12,9 +12,20 @@ function UniversalTable(props) {
   const [popupInfo, setPopupInfo] = useState({ visible: false, content: '', position: { top: 0, left: 0 } });
 
   useEffect(() => {
-    setTableHeaderData(props?.tableHeader);
+    setTableHeaderData(filterRole(props?.tableHeader));
     setTableBodyData(props?.tableBody);
-  }, [props?.tableHeader, props?.tableBody]);
+}, [props?.tableHeader, props?.tableBody, context.role]);
+
+const filterRole = (data) => {
+  console.log("context.role", context.role)
+  console.log("data", data)
+    switch (context.role) {
+        case "Администратор":
+            return data; // Return all data for Admin role
+        case "Пользователь":
+          return data.filter((item) => item.isActive !== false);
+    }
+}
 
   const getValue = (value, key) => {
     switch (key) {
