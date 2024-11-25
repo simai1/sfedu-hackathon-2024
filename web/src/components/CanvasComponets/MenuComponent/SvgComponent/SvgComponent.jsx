@@ -11,6 +11,7 @@ const MyPolygonWithImage = ({ rect, onChange }) => {
   const transformerRef = useRef();
   const dispatch = useDispatch();
   const canvasSlice = useSelector((state) => state.CanvasSlice);
+  const [rotation, setRotationState] = useState(rect.rotation); // Track rotation state
 
   useEffect(() => {
     const img = new window.Image();
@@ -29,13 +30,24 @@ const MyPolygonWithImage = ({ rect, onChange }) => {
     if (canvasSlice.selectedElement === rect.id) {
       transformerRef.current.nodes([imageRef.current]);
       transformerRef.current.getLayer().batchDraw();
+      dispatch(setRotation({ id: rect.id, rotation })); // Dispatch initial rotation
     }
-  }, [canvasSlice.selectedElement]);
+  }, [canvasSlice.selectedElement, rotation]); // Add rotation to dependencies
+
+  useEffect(() => {
+    if (canvasSlice.selectedElement === rect?.id && transformerRef?.current) {
+      const currentRotation = transformerRef.current.attrs.rotation;
+      if (currentRotation !== rotation) { // Check if rotation has changed
+        setRotationState(currentRotation); // Update local rotation state
+        dispatch(setRotation({ id: rect?.id, rotation: currentRotation })); // Dispatch rotation
+      }
+    }
+  }, [transformerRef.current?.attrs?.rotation]); // Listen for rotation changes
 
   const handleDragEnd = (e) => {
     const newX = e.target.x();
     const newY = e.target.y();
-    onChange({ ...rect, x: newX, y: newY, rotation: canvasSlice.rotation });
+    onChange({ ...rect, x: newX, y: newY, rotation });
   };
 
   const handleClick = () => {
@@ -49,9 +61,9 @@ const MyPolygonWithImage = ({ rect, onChange }) => {
 
   const handleRotate = (e) => {
     const angle = e.evt.movementX; // Измените это для более точного вращения
-    dispatch(
-      setRotation({ id: rect.id, rotation: canvasSlice.rotation + angle })
-    );
+    const newRotation = rotation + angle; // Calculate new rotation
+    setRotationState(newRotation); // Update local rotation state
+    dispatch(setRotation({ id: rect.id, rotation: newRotation })); // Dispatch new rotation
   };
 
   return (
@@ -67,18 +79,14 @@ const MyPolygonWithImage = ({ rect, onChange }) => {
         offsetX={rect.width / 2}
         offsetY={rect.height / 2}
         draggable={rect.draggable}
-        rotation={rect.rotation} // Уставливаем угол поворота
+        rotation={rotation} // Use local rotation state
         onDragEnd={handleDragEnd}
-        // onMouseMove={selected ? handleRotate : undefined} // Если элемент выбран, вращаем
+        // onMouseMove={canvasSlice.selectedElement ? handleRotate : undefined} // If element is selected, rotate
       />
       {canvasSlice.selectedElement === rect.id && (
         <Transformer
           ref={transformerRef}
           rotateEnabled={true}
-          //   boundBoxFunc={(oldBox, newBox) => {
-          //     // Ограничьте размер (по желанию)
-          //     return newBox;
-          //   }}
         />
       )}
     </React.Fragment>

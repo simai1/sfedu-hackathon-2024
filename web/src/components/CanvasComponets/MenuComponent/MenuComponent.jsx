@@ -58,13 +58,12 @@ function MenuComponent() {
         ];
         groupedPoints.push(group);
       }
-
-      console.log("groupedPoints", groupedPoints);
       groupedPoints.forEach((group, index) => {
         dispatch(
           addElemOfis({
             x: 100,
             y: 10,
+            
             fill: "#313131",
             elemId: "6",
             name: "Кабинет",

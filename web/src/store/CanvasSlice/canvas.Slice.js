@@ -42,6 +42,7 @@ const CanvasSlice = createSlice({
         id: Date.now().toString(),
         idEquipment: idEquipment,
       };
+      console.log("newElement", newElement);
       // Добавляем новый элемент в массив
       state.elements = [...state.elements, newElement];
       // Сортируем элементы по zIndex
@@ -83,6 +84,8 @@ const CanvasSlice = createSlice({
 
     setRotation(state, action) {
       const { id, rotation } = action.payload;
+      console.log("id", id)
+      console.log("rotation", rotation)
       state.elements = state.elements.map((elem) => {
         if (elem.id === id) {
           return {
