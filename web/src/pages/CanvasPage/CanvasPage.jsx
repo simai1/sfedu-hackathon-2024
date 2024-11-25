@@ -78,6 +78,7 @@ function CanvasPage() {
       employees: emmass,
       background: bamass,
     };
+    console.log("data", data)
 
     refreshCanvas(equipmentSlice.selectedFloor).then((res) => {
       if (res?.status === 200) {
@@ -110,8 +111,8 @@ function CanvasPage() {
 
   useEffect(() => {
     setSearchElems([
-      ...canvasSlice.elements.filter((elem) =>
-        elem.name.toLowerCase().includes(canvasSlice.serch?.toLowerCase())
+      ...canvasSlice?.elements.filter((elem) =>
+        elem?.name?.toLowerCase().includes(canvasSlice.serch?.toLowerCase())
       ),
     ]);
     console.log("searchElems", searchElems);

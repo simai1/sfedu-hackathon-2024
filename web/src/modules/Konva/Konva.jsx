@@ -11,13 +11,18 @@ import {
 import Rectangle from "../../components/CanvasComponets/Rectangle/Rectangle";
 import Setka from "../../components/CanvasComponets/Setka/Setka";
 import MyPolygonWithImage from "../../components/CanvasComponets/MenuComponent/SvgComponent/SvgComponent";
-
+import styles from "./Konva.module.scss";
 const Konva = () => {
   const canvasSlice = useSelector((state) => state.CanvasSlice);
   const dispatch = useDispatch();
 
-  // const [rectangles, setRectangles] = React.useState(canvasSlice.elements);
   const [selectedId, selectShape] = React.useState(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [selectedPointIndex, setSelectedPointIndex] = useState(null);
+  const [draggingStage, setDraggingStage] = useState(false);
+  const [lastPosition, setLastPosition] = useState({ x: 0, y: 0 });
+  const [stagePosition, setStagePosition] = useState({ x: 0, y: 0 });
+  const [scale, setScale] = useState(1); // Масштаб сцены
 
   const checkDeselect = (e) => {
     const clickedOnEmpty = e.target === e.target.getStage();
@@ -26,15 +31,8 @@ const Konva = () => {
     }
   };
 
-  // line
-  // const [points, setPoints] = useState([200, 200, 200, 400]);
-
-  const [isDragging, setIsDragging] = useState(false);
-  const [selectedPointIndex, setSelectedPointIndex] = useState(null);
   const handleMouseDown = (e, points) => {
-    console.log("points", points);
     const { x, y } = e.target.getStage().getPointerPosition();
-    // Проверяем, на какой точке мы кликнули
     const index = points.findIndex(
       (point, i) =>
         i % 2 === 0 &&
@@ -57,16 +55,28 @@ const Konva = () => {
     if (isDragging && selectedPointIndex !== null) {
       const { x, y } = e.target.getStage().getPointerPosition();
       const newPoints = [...points];
-      newPoints[selectedPointIndex] = x; // Изменяем X
-      newPoints[selectedPointIndex + 1] = y; // Изменяем Y
-      // setPoints(newPoints);
+      newPoints[selectedPointIndex] = x;
+      newPoints[selectedPointIndex + 1] = y;
       dispatch(setPointsElem(canvasSlice.selectedElement, newPoints));
+    }
+
+    if (draggingStage) {
+      const { x, y } = e.target.getStage().getPointerPosition();
+      const dx = x - lastPosition.x;
+      const dy = y - lastPosition.y;
+
+      setStagePosition({
+        x: stagePosition.x + dx,
+        y: stagePosition.y + dy,
+      });
+      setLastPosition({ x, y });
     }
   };
 
   const handleMouseUp = () => {
     setIsDragging(false);
     setSelectedPointIndex(null);
+    setDraggingStage(false);
   };
 
   const addPointsInCanvas = (e) => {
@@ -94,23 +104,60 @@ const Konva = () => {
     }
   };
 
+  const handleStageMouseDown = (e) => {
+    setLastPosition(e.target.getStage().getPointerPosition());
+    setDraggingStage(true);
+  };
+
+  const handleStageMouseUp = () => {
+    setDraggingStage(false);
+  };
+
+  // Увеличение/уменьшение масштаба
+  const zoomIn = () => {
+    setScale(scale + 0.1); // Увеличиваем масштаб на 10%
+  };
+
+  const zoomOut = () => {
+    if (scale > 0.2) {
+      setScale(scale - 0.1); // Уменьшаем масштаб на 10%
+    }
+  };
+
   console.log("canvasSlice", canvasSlice);
+
   return (
     <>
+      <div className={styles.zoomButtons}>
+        <button onClick={zoomIn}><img src="/img/plusCard.svg"/></button>
+        <p>{(scale * 100).toFixed(0)}%</p>
+        <button onClick={zoomOut}><img src="/img/minus.svg"/></button>
+      </div>
+
       <Stage
-        // onClick={
-        //   canvasSlice.selectedElement
-        //     ? () => dispatch(setSelectedElement({ id: null }))
-        //     : null
-        // }
         width={window.innerWidth}
         height={window.innerHeight}
-        onMouseDown={canvasSlice.mode === 1 ? addPointsInCanvas : checkDeselect}
+        onMouseDown={(e) => {
+          if (canvasSlice.mode === 1) {
+            addPointsInCanvas(e);
+          } else {
+            checkDeselect(e);
+          }
+          handleStageMouseDown(e);
+        }}
         onTouchStart={checkDeselect}
         onMouseMove={canvasSlice.mode === 1 ? null : handleMouseMove}
-        onMouseUp={canvasSlice.mode === 1 ? null : handleMouseUp}
+        onMouseUp={() => {
+          if (canvasSlice.mode !== 1) {
+            handleMouseUp();
+          }
+          handleStageMouseUp();
+        }}
+        x={stagePosition.x}
+        y={stagePosition.y}
+        scaleX={scale} // Устанавливаем масштаб по оси X
+        scaleY={scale} // Устанавливаем масштаб по оси Y
       >
-        {/* //!сетка */}
         <Layer>
           <Setka />
         </Layer>
@@ -119,11 +166,10 @@ const Konva = () => {
           <Layer>
             <Line
               points={canvasSlice.pointsLines}
-              stroke=" #989898" // Цвет линии
-              strokeWidth={2} // Толщина линии
-              // tension={0.5} // сглаживание линии
-              lineCap="round" // скругление концов линии
-              lineJoin="round" // скругление соединений
+              stroke=" #989898"
+              strokeWidth={2}
+              lineCap="round"
+              lineJoin="round"
             />
           </Layer>
         )}
@@ -146,8 +192,6 @@ const Konva = () => {
                     onChange={(newAttrs) => {
                       const rects = canvasSlice.elements.slice();
                       rects[i] = newAttrs;
-                      console.log("rects", rects);
-                      // setRectangles(rects);
                       dispatch(setElem({ mass: rects }));
                     }}
                   />
@@ -156,20 +200,18 @@ const Konva = () => {
                   <>
                     <Line
                       points={rect.points}
-                      stroke=" #989898" // Цвет линии
-                      strokeWidth={2} // Толщина линии
-                      lineCap="round" // Закругление концов линии
-                      lineJoin="round" // Закругление углов линии
+                      stroke=" #989898"
+                      strokeWidth={2}
+                      lineCap="round"
+                      lineJoin="round"
                       onMouseDown={(e) => {
                         handleMouseDown(e, rect.points);
                         dispatch(setSelectedElement({ id: rect.id }));
                       }}
-
-                      // onClick={handleLineClick}
                     />
                     {[
-                      { x: rect.points[0], y: rect.points[1] }, // Первая точка
-                      { x: rect.points[2], y: rect.points[3] }, // Вторая точка
+                      { x: rect.points[0], y: rect.points[1] },
+                      { x: rect.points[2], y: rect.points[3] },
                     ].map((point, index) => (
                       <Circle
                         key={index}
@@ -187,8 +229,8 @@ const Konva = () => {
                             .getStage()
                             .getPointerPosition();
                           const newPoints = [...rect.points];
-                          newPoints[index * 2] = x; // Изменяем X
-                          newPoints[index * 2 + 1] = y; // Изменяем Y
+                          newPoints[index * 2] = x;
+                          newPoints[index * 2 + 1] = y;
                           dispatch(
                             setPointsElem({
                               id: rect.id,
@@ -216,23 +258,21 @@ const Konva = () => {
                   <Line
                     points={rect.points}
                     draggable={rect.draggable}
-                    stroke=" #989898" // Цвет линии
-                    strokeWidth={2} // Толщина линии
-                    lineCap="round" // скругление концов линии
-                    lineJoin="round" // скругление соединений
+                    stroke=" #989898"
+                    strokeWidth={2}
+                    lineCap="round"
+                    lineJoin="round"
                     onMouseDown={(e) => {
                       dispatch(setSelectedElement({ id: rect.id }));
                     }}
                     onDragMove={(e) => {
                       const { x, y } = e.target.getStage().getPointerPosition();
-                      const dx = x - rect.points[0]; // изменение по x с начальной позиции
-                      const dy = y - rect.points[1]; // изменение по y с начальной позиции
+                      const dx = x - rect.points[0];
+                      const dy = y - rect.points[1];
                       const newPoints = rect.points.map((point, index) => {
                         return index % 2 === 0 ? point + dx : point + dy;
                       });
-                      dispatch(
-                        setPointsElem({ id: rect.id, points: newPoints })
-                      );
+                      dispatch(setPointsElem({ id: rect.id, points: newPoints }));
                     }}
                   />
                 )}
