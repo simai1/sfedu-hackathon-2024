@@ -57,7 +57,7 @@ function PopUpEquipmentPeople(props) {
                                 </div>
                                 <div>
                                     <ul>
-                                        <li>{equipment.name}</li> {/* Display equipment name */}
+                                        <li>{equipment.name}/ {equipment.inventoryNumber}</li> {/* Display equipment name */}
                                     </ul>
                                 </div>
                             </div>
