@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import PopUpContainer from "../../../PopUpContainer/PopUpContainer";
 import styles from "./PopUpEquipmentPeople.module.scss";
 import { GetEquipment, GetProfileOne, UpdateEquipment } from "../../../../API/ApiRequest";
@@ -12,7 +12,7 @@ function PopUpEquipmentPeople(props) {
     useEffect(() => {
         getDatauser();
     }, [context?.getProfileId]); // Added dependency to useEffect
-
+   
     const getDatauser = () => {
         GetProfileOne(context?.getProfileId).then((res) => {
             if (res.status === 200) {
@@ -21,15 +21,26 @@ function PopUpEquipmentPeople(props) {
         });
     }
 
-    const AddEquipment = () => {
-        GetEquipment().then((res) => {
-            if (res.status === 200) {
-                console.log(res.data.data)
-                setListEquipment(res.data.data);
-            }
-        })
-        SetOpenList(true)
-    }
+   
+
+
+const AddEquipment = () => {
+    GetEquipment().then((res) => {
+        if (res.status === 200) {
+            console.log(res.data.data);
+            // Ensure userData.equipments is an array and access the id correctly
+            const userEquipmentIds = userData?.equipments?.map(equipment => equipment.id) || [];
+            console.log("userData?.equipments", userData?.equipments);
+            
+            // Filter out the user's equipment from the fetched data
+            const filterData = res.data.data.filter((el) => !userEquipmentIds.includes(el.id));
+            console.log("filterData", filterData);
+            
+            setListEquipment(filterData);
+        }
+    });
+    SetOpenList(true);
+};
 
     const funClikElementEquepment = (id) => {
         console.log("id", id);
@@ -45,6 +56,20 @@ function PopUpEquipmentPeople(props) {
         })
     }
 
+    const dropdownRef = useRef(null);
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                SetOpenList(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [dropdownRef]);
+
     return (
         <PopUpContainer title={userData?.name} width="640px" buttonCancel={true}>
             <div className={styles.PopUpEquipmentPeopleContainer}>
@@ -53,11 +78,11 @@ function PopUpEquipmentPeople(props) {
                         userData.equipments.map((equipment, index) => ( // Dynamically render equipment
                             <div className={styles.PopUpEquipmentPeople} key={index}>
                                 <div>
-                                    <img src={equipment.imageUrl || "/img/notebook.svg"} alt={equipment.name} /> {/* Use a default image if none provided */}
+                                    <img src={context.getLink(equipment.name)} alt={equipment.name} /> {/* Use a default image if none provided */}
                                 </div>
                                 <div>
                                     <ul>
-                                        <li>{equipment.name}/ {equipment.inventoryNumber}</li> {/* Display equipment name */}
+                                        <li>{equipment.name} / {equipment.inventoryNumber.slice(0, 3)}</li> {/* Display equipment name */}
                                     </ul>
                                 </div>
                             </div>
@@ -69,7 +94,7 @@ function PopUpEquipmentPeople(props) {
                     )}
                     {
                         openList && (
-                            <div className={styles.PopUpAddEquipment}>
+                            <div className={styles.PopUpAddEquipment} ref={dropdownRef}>
                                 <ul>
                                     {listEquipment.map((equipment, index) => (
                                         <li onClick={() => funClikElementEquepment(equipment.id)} key={index}>{equipment.name}</li>
