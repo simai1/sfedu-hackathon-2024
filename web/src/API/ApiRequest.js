@@ -368,14 +368,11 @@ export const GetWorkerOne = async (id) => {
 //! Обновлеение Сотрудника по Id
 export const EditWorkerForId = async (data, id) => {
   try {
-    const response = await http.patch(
-      `${server}/employees/${id}`, data,
-      {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-        },
-      }
-    );
+    const response = await http.patch(`${server}/employees/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -410,7 +407,7 @@ export const GetWorker = async (searchText) => {
 //! сохранить конвас
 export const apiSaveConvas = async (data, id) => {
   try {
-    const response = await http.post(`${server}/floors/canvas${id}`, data, {
+    const response = await http.post(`${server}/floors/canvas/${id}`, data, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },

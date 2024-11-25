@@ -162,7 +162,7 @@ function UniversalTable(props) {
                 className={`${styles.tableRow} ${context.selectedRows.includes(row.id) ? styles.selectedRow : ''}`}
                 onClick={(e) => { e.stopPropagation(); handleRowSelect(row.id, e); }}
               >
-                {tableHeaderData.map((header) => (
+                {tableHeaderData?.map((header) => (
                   <td
                     key={header.key}
                     name={header.key}

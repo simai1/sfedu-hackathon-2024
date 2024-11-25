@@ -107,6 +107,13 @@ function RigthMenu() {
     setAccept(false);
     setOpenModalFloor(false);
   };
+  useEffect(() => {
+    apiGetConvas(equipmentSlice.selectedFloor).then((res) => {
+      if (res?.status === 200) {
+        dispatch(apiAddElemConvas({ data: res.data?.data }));
+      }
+    });
+  }, [equipmentSlice.selectedFloor]);
 
   const addFloor = () => {
     setOpenModalCreareFloor(!openModalCreateFloor);
@@ -176,7 +183,6 @@ function RigthMenu() {
   const filteredWorkers = equipmentSlice.worker?.filter((wo) =>
     wo.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  console.log("element", element);
   return (
     <>
       {accept && (
@@ -263,7 +269,7 @@ function RigthMenu() {
           )}
         </div>
 
-        {canvasSlice.selectedElement ? (
+        {canvasSlice.selectedElement && element?.name ? (
           <>
             <div className={styles.con1}>
               <div className={styles.box}>
@@ -285,7 +291,7 @@ function RigthMenu() {
             </div>
             <div className={styles.con2}>
               <p>
-                Название{" "}
+                {element?.type === "employees" ? "Имя" : "Название"}
                 <img
                   onClick={() => onBloked(element.id)}
                   src={element?.draggable ? "./img/zo.svg" : "./img/zc.svg"}
@@ -294,7 +300,13 @@ function RigthMenu() {
               </p>
 
               <div className={styles.box}>
-                <span>{element?.name}</span>
+                <span>
+                  {element?.type === "employees"
+                    ? equipmentSlice.worker.find(
+                        (el) => el.id === element?.idEquipment
+                      )?.name
+                    : element?.name}
+                </span>
               </div>
             </div>
             {element?.type && element?.type !== "employees" && (
