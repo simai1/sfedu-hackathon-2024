@@ -28,7 +28,7 @@ export default class Floor extends Model {
                 schema: 'public',
                 modelName: 'Floor',
                 tableName: 'floors',
-                paranoid: true,
+                paranoid: false,
             }
         );
     }

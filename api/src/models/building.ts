@@ -35,7 +35,7 @@ export default class Building extends Model {
                 schema: 'public',
                 modelName: 'Building',
                 tableName: 'buildings',
-                paranoid: true,
+                paranoid: false,
             }
         );
     }

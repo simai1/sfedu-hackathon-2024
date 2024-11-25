@@ -40,7 +40,7 @@ export default class Employee extends Model {
                 schema: 'public',
                 modelName: 'Employee',
                 tableName: 'employees',
-                paranoid: true,
+                paranoid: false,
             }
         );
     }

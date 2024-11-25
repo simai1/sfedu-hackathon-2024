@@ -74,7 +74,7 @@ export default class Equipment extends Model {
                 schema: 'public',
                 modelName: 'Equipment',
                 tableName: 'equipments',
-                paranoid: true,
+                paranoid: false,
             }
         );
 
@@ -82,8 +82,7 @@ export default class Equipment extends Model {
             const maxNumber = await Equipment.max('inventoryNumber');
             if (!maxNumber || maxNumber === 0) model.set('inventoryNumber', 1);
             else {
-                // @ts-expect-error maxNumber is always number after checks
-                model.set('inventoryNumber', maxNumber + 1);
+                model.set('inventoryNumber', Number(maxNumber) + 1);
             }
         });
 
@@ -91,8 +90,7 @@ export default class Equipment extends Model {
             let maxNumber = await Equipment.max('inventoryNumber');
             if (!maxNumber) maxNumber = 1;
             for (const instance of instances) {
-                // @ts-expect-error any
-                maxNumber++;
+                maxNumber = Number(maxNumber) + 1;
                 instance.set('inventoryNumber', maxNumber);
             }
         });
