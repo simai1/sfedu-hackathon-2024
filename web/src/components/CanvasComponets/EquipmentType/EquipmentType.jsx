@@ -6,6 +6,7 @@ import { components } from "../../../store/CanvasSlice/components";
 import PodLiComponent from "./PodLiComponent";
 function EquipmentType(props) {
   const equipmentSlice = useSelector((state) => state.EquipmentSlice);
+  const canvasSlice = useSelector((state) => state.CanvasSlice);
 
   const [openType, setOpenType] = useState(false);
   const dispatch = useDispatch();
@@ -84,6 +85,12 @@ function EquipmentType(props) {
                 {component.name}
               </li>
             ))} */}
+          {props.action && (
+            <li className={styles.liType} onClick={() => props.editSten()}>
+              {canvasSlice.mode === 1 ? "Сохранить" : "Рисовать стены"}
+            </li>
+          )}
+
           {props.name === "Строение" &&
             components
               ?.filter(
