@@ -111,8 +111,8 @@ function CanvasPage() {
 
   useEffect(() => {
     setSearchElems([
-      ...canvasSlice.elements.filter((elem) =>
-        elem.name.toLowerCase().includes(canvasSlice.serch?.toLowerCase())
+      ...canvasSlice?.elements.filter((elem) =>
+        elem?.name?.toLowerCase().includes(canvasSlice.serch?.toLowerCase())
       ),
     ]);
     console.log("searchElems", searchElems);
