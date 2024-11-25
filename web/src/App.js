@@ -36,7 +36,7 @@ const getTableData = (value) => {
       getEmployeeData(searchText);
       break;
     default:
-      break;
+      getEquuipmentData("");      
   }
 }
 
