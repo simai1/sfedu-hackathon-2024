@@ -17,6 +17,7 @@ function PopUpEquipmentPeople(props) {
         GetProfileOne(context?.getProfileId).then((res) => {
             if (res.status === 200) {
                 setUserData(res.data.data);
+                console.log("userData?.equipments", res.data.data);
             }
         });
     }
@@ -35,7 +36,6 @@ const AddEquipment = () => {
             // Filter out the user's equipment from the fetched data
             const filterData = res.data.data.filter((el) => !userEquipmentIds.includes(el.id));
             console.log("filterData", filterData);
-            
             setListEquipment(filterData);
         }
     });
@@ -78,11 +78,11 @@ const AddEquipment = () => {
                         userData.equipments.map((equipment, index) => ( // Dynamically render equipment
                             <div className={styles.PopUpEquipmentPeople} key={index}>
                                 <div>
-                                    <img src={context.getLink(equipment.name)} alt={equipment.name} /> {/* Use a default image if none provided */}
+                                    <img src={context.getLink(equipment.typeHuman)}/> {/* Use a default image if none provided */}
                                 </div>
                                 <div>
                                     <ul>
-                                        <li>{equipment.name} / {equipment.inventoryNumber.slice(0, 3)}</li> {/* Display equipment name */}
+                                        <li>{equipment.typeHuman} / {equipment.inventoryNumber.slice(0, 3)}</li> {/* Display equipment name */}
                                     </ul>
                                 </div>
                             </div>
