@@ -1,7 +1,5 @@
 import axios from "axios";
-const http = axios.create({
-  withCredentials: true,
-});
+import http from "./config";
 
 const server = process.env.REACT_APP_SERVICE_URL;
 const REFRESH_INTERVAL = 500000; // 8 минут 500000
@@ -13,7 +11,7 @@ export const refreshTokens = async () => {
     refreshToken: sessionStorage.getItem("refreshToken"),
   };
   try {
-    const response = await http.post(`${server}/auth/refresh`, data, {});
+    const response = await http.post(`/auth/refresh`, data);
     // Remove old tokens
     sessionStorage.removeItem("accessToken");
     sessionStorage.removeItem("refreshToken");
@@ -64,7 +62,7 @@ window.addEventListener("unload", () => {
 //! Запрос на авторизацию
 export const LoginFunc = async (UserData) => {
   try {
-    const response = await http.post(`${server}/auth/login`, UserData);
+    const response = await http.post(`/auth/login`, UserData);
     const { accessToken, refreshToken, ...user } = response.data.data;
 
     // Store tokens in sessionStorage
@@ -89,13 +87,10 @@ export const LoginFunc = async (UserData) => {
 //! регистрация аккаунта
 export const Register = async (UserData) => {
   try {
-    const response = await http.post(`${server}/auth/register`, UserData, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-      },
-    });
+    const response = await http.post(`/auth/register`, UserData);
     return response;
   } catch (error) {
+    console.log("error", error);
     if (error?.response?.status === 403) {
       window.location.href = `${process.env.REACT_APP_WEB_URL}/Authorization`;
     } else {
@@ -107,16 +102,7 @@ export const Register = async (UserData) => {
 
 export const LogOut = async () => {
   try {
-    const response = await http.post(
-      `${server}/auth/logout`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-        },
-        withCredentials: true,
-      },
-    );
+    const response = await http.post(`/auth/logout`);
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -129,12 +115,7 @@ export const LogOut = async () => {
 
 export const GetProfile = async () => {
   try {
-    const response = await http.get(`${server}/users`, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-      },
-      withCredentials: true,
-    });
+    const response = await http.get(`/users`);
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -148,12 +129,7 @@ export const GetProfile = async () => {
 //! Получение профиля по Id
 export const GetProfileOne = async (id) => {
   try {
-    const response = await http.get(`${server}/employees/${id}`, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-      },
-      withCredentials: true,
-    });
+    const response = await http.get(`/employees/${id}`);
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -168,15 +144,7 @@ export const GetProfileOne = async (id) => {
 export const SwitchRole = async () => {
   console.log("accessToken", sessionStorage.getItem("accessToken"));
   try {
-    const response = await http.patch(
-      `${server}/users/switchRole`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-        },
-      },
-    );
+    const response = await http.patch(`/users/switchRole`);
     refreshTokens();
     return response;
   } catch (error) {
@@ -192,11 +160,7 @@ export const SwitchRole = async () => {
 //! Создание оборудования
 export const CreateEquipment = async (UserData) => {
   try {
-    const response = await http.post(`${server}/equipments`, UserData, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-      },
-    });
+    const response = await http.post(`/equipments`, UserData);
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -211,11 +175,7 @@ export const CreateEquipment = async (UserData) => {
 //! Запрос на оборудование оборудования
 export const UpdateEquipment = async (Data, id) => {
   try {
-    const response = await http.patch(`${server}/employees/${id}`, Data, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-      },
-    });
+    const response = await http.patch(`/employees/${id}`, Data);
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -231,11 +191,7 @@ export const UpdateEquipment = async (Data, id) => {
 export const GetEquipment = async (searchText) => {
   let s = searchText ? `?search=${searchText}` : "";
   try {
-    const response = await http.get(`${server}/equipments${s}`, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-      },
-    });
+    const response = await http.get(`/equipments${s}`);
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -251,11 +207,7 @@ export const GetEquipment = async (searchText) => {
 //!Созданеи офиса
 export const CreateOffice = async (UserData) => {
   try {
-    const response = await http.post(`${server}/buildings`, UserData, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-      },
-    });
+    const response = await http.post(`/buildings`, UserData);
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -272,11 +224,7 @@ export const GetOffice = async (searchText) => {
   let s = searchText ? `?search=${searchText}` : "";
 
   try {
-    const response = await http.get(`${server}/buildings?search=${s}`, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-      },
-    });
+    const response = await http.get(`/buildings?search=${s}`);
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -291,11 +239,7 @@ export const GetOffice = async (searchText) => {
 //! Получения офиса по Id
 export const GetOfficeOne = async (id) => {
   try {
-    const response = await http.get(`${server}/buildings/${id}`, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-      },
-    });
+    const response = await http.get(`/buildings/${id}`);
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -310,11 +254,7 @@ export const GetOfficeOne = async (id) => {
 //! Обновлеение офиса по Id
 export const EditOfficeForId = async (data, id) => {
   try {
-    const response = await http.patch(`${server}/buildings/${id}`, data, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-      },
-    });
+    const response = await http.patch(`/buildings/${id}`, data);
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -330,11 +270,7 @@ export const EditOfficeForId = async (data, id) => {
 //!Создане Сотрудника
 export const CreateWorker = async (UserData) => {
   try {
-    const response = await http.post(`${server}/employees`, UserData, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-      },
-    });
+    const response = await http.post(`/employees`, UserData);
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -349,11 +285,7 @@ export const CreateWorker = async (UserData) => {
 //!Получение Сотрудника по Id
 export const GetWorkerOne = async (id) => {
   try {
-    const response = await http.get(`${server}/employees/${id}`, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-      },
-    });
+    const response = await http.get(`/employees/${id}`);
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -368,11 +300,7 @@ export const GetWorkerOne = async (id) => {
 //! Обновлеение Сотрудника по Id
 export const EditWorkerForId = async (data, id) => {
   try {
-    const response = await http.patch(`${server}/employees/${id}`, data, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-      },
-    });
+    const response = await http.patch(`/employees/${id}`, data);
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -388,11 +316,7 @@ export const EditWorkerForId = async (data, id) => {
 export const GetWorker = async (searchText) => {
   let s = searchText ? `?search=${searchText}` : "";
   try {
-    const response = await http.get(`${server}/employees${s}`, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-      },
-    });
+    const response = await http.get(`/employees${s}`);
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -407,11 +331,7 @@ export const GetWorker = async (searchText) => {
 //! сохранить конвас
 export const apiSaveConvas = async (data, id) => {
   try {
-    const response = await http.post(`${server}/floors/canvas/${id}`, data, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-      },
-    });
+    const response = await http.post(`/floors/canvas/${id}`, data);
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -427,11 +347,7 @@ export const apiSaveConvas = async (data, id) => {
 //! Удаление Сотрудников
 export const DeleteWorker = async (Data) => {
   try {
-    const response = await http.post(`${server}/employees/bulk/delete`, Data, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-      },
-    });
+    const response = await http.post(`/employees/bulk/delete`, Data);
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -446,11 +362,7 @@ export const DeleteWorker = async (Data) => {
 //! Удаление оборудования
 export const DeleteEquipment = async (Data) => {
   try {
-    const response = await http.post(`${server}/equipments/bulk/delete`, Data, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-      },
-    });
+    const response = await http.post(`/equipments/bulk/delete`, Data);
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -465,11 +377,7 @@ export const DeleteEquipment = async (Data) => {
 //! Удаление офисов
 export const DeleteOfisses = async (Data) => {
   try {
-    const response = await http.post(`${server}/buildings/bulk/delete`, Data, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-      },
-    });
+    const response = await http.post(`/buildings/bulk/delete`, Data);
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -484,11 +392,7 @@ export const DeleteOfisses = async (Data) => {
 //! добавить этаж
 export const apiAddFloor = async (data) => {
   try {
-    const response = await http.post(`${server}/floors`, data, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-      },
-    });
+    const response = await http.post(`/floors`, data);
     return response;
   } catch (error) {
     console.log("error", error);
@@ -499,11 +403,7 @@ export const apiAddFloor = async (data) => {
 //! Получения елементов конваса
 export const apiGetConvas = async (id) => {
   try {
-    const response = await http.get(`${server}/floors/canvas/${id}`, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-      },
-    });
+    const response = await http.get(`/floors/canvas/${id}`);
     return response;
   } catch (error) {
     return error;
@@ -513,11 +413,7 @@ export const apiGetConvas = async (id) => {
 //! Получения Списка офисов
 export const GetOfficeAll = async () => {
   try {
-    const response = await http.get(`${server}/buildings`, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-      },
-    });
+    const response = await http.get(`/buildings`);
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -532,11 +428,7 @@ export const GetOfficeAll = async () => {
 //! очистить канвас
 export const refreshCanvas = async (id) => {
   try {
-    const response = await http.delete(`${server}/floors/canvas/${id}`, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-      },
-    });
+    const response = await http.delete(`/floors/canvas/${id}`);
     return response;
   } catch (error) {
     return error;
@@ -546,11 +438,7 @@ export const refreshCanvas = async (id) => {
 //! удалить этаж
 export const apiDeleteFloor = async (id) => {
   try {
-    const response = await http.delete(`${server}/floors/${id}`, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-      },
-    });
+    const response = await http.delete(`/floors/${id}`);
     return response;
   } catch (error) {
     return error;
