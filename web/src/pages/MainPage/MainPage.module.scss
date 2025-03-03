@@ -1,0 +1,9 @@
+.MainPage {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  .main_container {
+    width: calc(100% - 300px);
+    min-height: 100vh;
+  }
+}

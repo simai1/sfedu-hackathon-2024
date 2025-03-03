@@ -20,6 +20,8 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { disAddUserApi } from "./store/userSlice/user.Slice";
+import MainPage from "./pages/MainPage/MainPage";
+import FooterHomePageComp from "./components/FooterHomePage/FooterHomePage";
 
 function App() {
   const dispatch = useDispatch();
@@ -183,7 +185,9 @@ function App() {
             <Route path="/homePage" element={<HomePage />}></Route>
             <Route path="/helloPage" element={<HelloPage />}></Route>
             <Route path="/konva" element={<CanvasPage />}></Route>
+            <Route path="/mainpage" element={<MainPage />}></Route>
           </Routes>
+          <FooterHomePageComp />
         </main>
       </BrowserRouter>
     </DataContext.Provider>
