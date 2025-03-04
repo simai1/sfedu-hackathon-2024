@@ -46,7 +46,7 @@
   background-color: #fff;
   color: #353535;
   padding: 15px 15px;
-  border: 1px solid #ADADAD;
+  border: 1px solid #adadad;
   margin-top: 3px;
   border-radius: $border-radius;
   &::placeholder {
@@ -91,7 +91,6 @@
   &:hover {
     border: 0.5px solid #000000;
     cursor: pointer;
-   
   }
 }
 @mixin buttonSave($background-color) {
@@ -103,7 +102,26 @@
   color: #000000;
   &:hover {
     opacity: 0.8;
-    color: #000000!important;
+    color: #000000 !important;
     transition: all 0.15s;
+  }
+}
+
+@mixin ScrollBar() {
+  /* Вертикальный скролл */
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #c8d0ce;
+    border-radius: 8px;
+    border: 2px solid transparent;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #c8d0ce;
   }
 }

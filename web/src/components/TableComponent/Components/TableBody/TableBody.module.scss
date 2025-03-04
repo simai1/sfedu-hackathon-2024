@@ -1,0 +1,44 @@
+.TableBody {
+  td:nth-child(1) {
+    position: sticky;
+    left: 0;
+    background-color: #fff;
+  }
+  td:nth-child(2) {
+    position: sticky;
+    left: 100px;
+    background-color: #fff;
+  }
+
+  td {
+    padding: 20px;
+    border-bottom: 1px solid #d2d2d2;
+    z-index: 10;
+  }
+  td[name="number"] {
+    min-width: 60px;
+    text-align: center;
+  }
+  td[name="countOfEmployees"] {
+    min-width: 60px;
+    text-align: center;
+  }
+  td[name="area"] {
+    min-width: 100px;
+    text-align: center;
+  }
+  td[name="cost"] {
+    min-width: 120px;
+    text-align: center;
+  }
+  td[name="schema"] {
+    min-width: 200px;
+    text-align: center;
+  }
+
+  td[name="rentDate"],
+  td[name="rentEndDate"] {
+    min-width: 180px;
+    text-align: center;
+  }
+}

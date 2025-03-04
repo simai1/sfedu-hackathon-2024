@@ -1,0 +1,50 @@
+.TableHead {
+  tr {
+    position: relative;
+  }
+  th {
+    padding: 20px;
+    background-color: #f0f0f0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  th:nth-child(1) {
+    position: sticky;
+    left: 0;
+    top: 0;
+    background-color: #f0f0f0;
+    z-index: 101;
+  }
+  th:nth-child(2) {
+    position: sticky;
+    left: 100px;
+    top: 0;
+    background-color: #f0f0f0;
+    z-index: 102;
+  }
+
+  th[name="number"] {
+    min-width: 60px;
+  }
+  th[name="countOfEmployees"] {
+    min-width: 60;
+  }
+  th[name="area"] {
+    min-width: 100px;
+  }
+  th[name="cost"] {
+    min-width: 120px;
+  }
+  th[name="schema"] {
+    min-width: 200px;
+  }
+  th[name="name"],
+  th[name="numberRoom"],
+  th[name="address"],
+  th[name="rentDate"],
+  th[name="rentEndDate"] {
+    min-width: 180px;
+  }
+}

@@ -3,11 +3,11 @@
   padding: 10px;
   display: flex;
   align-items: center;
-  border-radius: 10px;
+  border-radius: 20px;
   transition: all 0.2s linear;
   margin-bottom: 18px;
   &:hover {
-    background-color: #2d85f92a;
+    background-color: #006cf91f;
   }
   &:active {
     background-color: #4592f80f;
@@ -25,16 +25,16 @@
 
 .LeftMenu {
   width: 300px;
-  min-height: 100vh;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   padding: 0 15px;
-  background-color: #fff;
+  background-color: #f5f7fb;
   .logotype {
     margin: 20px;
   }
-  .container {
+  .container,
+  .container_bottom {
     display: flex;
     flex-direction: column;
   }
@@ -57,7 +57,14 @@
       }
     }
   }
-  .constructor_box {
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100%);
+  }
+  .constructor_box,
+  .container_bottom {
     margin-top: 18px;
     padding-right: 20px;
     ul {

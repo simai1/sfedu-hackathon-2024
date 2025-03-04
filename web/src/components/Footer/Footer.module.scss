@@ -1,26 +1,17 @@
-footer{
+footer {
+  display: flex;
+  justify-content: end;
+  background-color: inherit;
+  width: 100%;
+  height: 200px;
+
+  .footerContainer {
     display: flex;
     justify-content: end;
-    background-color: inherit;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    // @media (max-width: 768px) {
-    //     margin-bottom: 35px;
-    //   }
-    @media (max-height: 850px) {
-      display: none;
+    padding: 0px 50px 50px 0px;
+    p {
+      color: #989898;
+      font-size: 14px;
     }
-    .footerContainer{
-        display: flex;
-        justify-content: end;
-        padding: 0px 50px 50px 0px;
-        @media (max-width: 768px) {
-            padding: 0px 10px 10px 0px;
-        }
-        p{
-            color: #989898;
-            font-size: 14px;
-        }
-    }
+  }
 }

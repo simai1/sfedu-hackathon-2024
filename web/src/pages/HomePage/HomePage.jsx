@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import DataContext from "../../context";
 import HomePageProfileClicker from "../../components/HomePageProfileClicker/HomePageProfileClicker";
@@ -12,8 +12,6 @@ import PopUpDeleteStaff from "../../components/PopUp/StaffPopUp/PopUpDeleteStaff
 import PopUpDeleteOffice from "../../components/PopUp/OffisePopUp/PopUpDeleteOffice/PopUpDeleteOffice";
 import PopUpDeleteEqupment from "../../components/PopUp/EquipmentPopUp/PopUpDeleteEquipment/PopUpDeleteEqupment";
 import PopUpCreateEquipment from "../../components/PopUp/EquipmentPopUp/PopUpCreateEquipment/PopUpCreateEquipment";
-import { GetEquipment } from "../../API/ApiRequest";
-import { filterData } from "../../function";
 import PopUpCreateOffice from "../../components/PopUp/OffisePopUp/PopUpCreateOffice/PopUpCreateOffice";
 import PopUpCreateWorker from "../../components/PopUp/StaffPopUp/PopUpCreateWorker/PopUpCreateWorker";
 import { dataListEquipment } from "./data";
@@ -108,7 +106,6 @@ function HomePage() {
             tableHeader={context.tableHeader}
           />
         </section>
-        
       </main>
 
       <FooterHomePageComp />

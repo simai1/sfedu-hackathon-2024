@@ -1,0 +1,15 @@
+.TableComponent {
+  background-color: #ffffff;
+  border-radius: 20px;
+  width: calc(100% - 80px);
+  height: 80vh;
+  overflow: auto;
+  margin: 40px;
+  margin-top: 20px;
+  box-sizing: border-box;
+  @include ScrollBar;
+  .table_container {
+    width: 100%;
+    border-collapse: collapse;
+  }
+}

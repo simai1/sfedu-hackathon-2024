@@ -5,6 +5,8 @@ import deviceIcon from "../../assets/img/leftMenu/device.svg";
 import personsIcon from "../../assets/img/leftMenu/persons.svg";
 import errorsIcon from "../../assets/img/leftMenu/errors.svg";
 import constructorIcon from "../../assets/img/leftMenu/constructor.svg";
+import paramIcon from "../../assets/img/leftMenu/param.svg";
+import userIcon from "../../assets/img/leftMenu/user.svg";
 
 function LeftMenu() {
   const listMenu = [
@@ -35,23 +37,37 @@ function LeftMenu() {
       <div className={styles.logotype}>
         <img src={logoIcon} alt="Логотип" />
       </div>
-      <div className={styles.container}>
-        <div className={styles.tables_box}>
-          <span>Таблицы</span>
-          <ul className={styles.list_item}>
-            {listMenu.map((item, index) => (
-              <li key={index}>
-                <img src={item.icon} alt="img" />
-                <span>{item.title}</span>
+      <div className={styles.content}>
+        <div className={styles.container}>
+          <div className={styles.tables_box}>
+            <span>Таблицы</span>
+            <ul className={styles.list_item}>
+              {listMenu.map((item, index) => (
+                <li key={index}>
+                  <img src={item.icon} alt="img" />
+                  <span>{item.title}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className={styles.constructor_box}>
+            <ul className={styles.list_item}>
+              <li>
+                <img src={constructorIcon} alt="img" />
+                <span>Конструктор</span>
               </li>
-            ))}
-          </ul>
+            </ul>
+          </div>
         </div>
-        <div className={styles.constructor_box}>
+        <div className={styles.container_bottom}>
           <ul className={styles.list_item}>
             <li>
-              <img src={constructorIcon} alt="img" />
-              <span>Конструктор</span>
+              <img src={paramIcon} alt="img" />
+              <span>Настройки</span>
+            </li>
+            <li>
+              <img src={userIcon} alt="img" />
+              <span>Профиль</span>
             </li>
           </ul>
         </div>
