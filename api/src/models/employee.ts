@@ -12,6 +12,12 @@ export default class Employee extends Model {
     Equipment?: Equipment[];
     Element?: Element;
     elementId?: string;
+    address?: string;
+    area?: number;
+    rentDate?: Date;
+    rentEndDate?: Date;
+    cost?: number;
+    schema?: string;
 
     static initialize(sequelize: Sequelize) {
         Employee.init(

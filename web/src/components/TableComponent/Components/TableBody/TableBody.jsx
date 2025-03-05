@@ -5,6 +5,9 @@ function TableBody({ data, header }) {
     <tbody className={styles.TableBody}>
       {data.map((row, rowIndex) => (
         <tr key={rowIndex}>
+          <td name="checkbox">
+            <input type="checkbox" />
+          </td>
           {header.map((item, index) => (
             <td key={index} name={item.key}>
               {row[item.key]}

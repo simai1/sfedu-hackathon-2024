@@ -125,3 +125,33 @@
     background-color: #c8d0ce;
   }
 }
+
+@mixin HoverActiveOpacity() {
+  transition: all 0.15s linear;
+  &:hover {
+    opacity: 0.6;
+  }
+  &:active {
+    opacity: 1;
+  }
+}
+
+@mixin CheckBox() {
+  width: 18px;
+  height: 18px;
+  appearance: none; /* Убираем стандартный вид */
+  -webkit-appearance: none; /* Для Safari */
+
+  background-color: #ffffff; /* Белый фон для неактивного состояния */
+  border: 1px solid #015dd8; /* Граница */
+  border-radius: 4px; /* Опционально, если хотите скругленные углы */
+  outline: none;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  &:checked {
+    background-color: #015dd8; /* Зеленый/90 */
+    border-color: #015dd8; /* Опционально, можно усилить цвет границы */
+  }
+}

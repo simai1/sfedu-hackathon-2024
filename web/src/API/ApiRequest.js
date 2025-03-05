@@ -172,7 +172,7 @@ export const CreateEquipment = async (UserData) => {
   }
 };
 
-//! Запрос на оборудование оборудования
+//! Запрос на оборудование
 export const UpdateEquipment = async (Data, id) => {
   try {
     const response = await http.patch(`/employees/${id}`, Data);
@@ -194,12 +194,7 @@ export const GetEquipment = async (searchText) => {
     const response = await http.get(`/equipments${s}`);
     return response;
   } catch (error) {
-    if (error?.response?.status === 403) {
-      window.location.href = `${process.env.REACT_APP_WEB_URL}/Authorization`;
-    } else {
-      console.log("Такой пользователь уже существует!");
-      return false;
-    }
+    console.error("GetEquipment", error);
   }
 };
 
@@ -222,9 +217,8 @@ export const CreateOffice = async (UserData) => {
 //! Получения Списка офисов
 export const GetOffice = async (searchText) => {
   let s = searchText ? `?search=${searchText}` : "";
-
   try {
-    const response = await http.get(`/buildings?search=${s}`);
+    const response = await http.get(`/buildings${s}`);
     return response;
   } catch (error) {
     if (error?.response?.status === 403) {
@@ -319,12 +313,7 @@ export const GetWorker = async (searchText) => {
     const response = await http.get(`/employees${s}`);
     return response;
   } catch (error) {
-    if (error?.response?.status === 403) {
-      window.location.href = `${process.env.REACT_APP_WEB_URL}/Authorization`;
-    } else {
-      console.log("Такой пользователь уже существует!");
-      return false;
-    }
+    console.error("GetWorker", error);
   }
 };
 

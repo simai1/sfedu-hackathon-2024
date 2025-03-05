@@ -2,18 +2,18 @@ import { useEffect, useState } from "react";
 import TableComponent from "../../../components/TableComponent/TableComponent";
 import HeadMenu from "../Components/HeadMenu/HeadMenu";
 import { header, testData } from "./data";
-import styles from "./Offices.module.scss";
-import { GetOffice } from "../../../API/ApiRequest";
+import styles from "./Equipment.module.scss";
+import { GetEquipment } from "../../../API/ApiRequest";
 import { useQuery } from "@tanstack/react-query";
 import { generateAndDownloadExcel } from "../../../components/HomePageTableMenu/function";
 
-function Offices() {
+function Equipment() {
   const [tableData, setTableData] = useState([]);
   const [search, setSearch] = useState("");
 
   const qery = useQuery({
-    queryKey: ["offices", search],
-    queryFn: () => GetOffice(search),
+    queryKey: ["equipment", search],
+    queryFn: () => GetEquipment(search),
     refetchOnWindowFocus: false,
   });
 
@@ -21,18 +21,7 @@ function Offices() {
     const req = qery?.data?.data?.data;
     console.log("req", req);
     if (req) {
-      const data = req?.map((item) => ({
-        number: 1,
-        name: item.name || "__",
-        numberRoom: item.id || "__",
-        address: item.address || "__",
-        countOfEmployees: item.countOfEmployees || "__",
-        area: "__",
-        rentDate: "__",
-        rentEndDate: "__",
-        cost: "__",
-        schema: "__",
-      }));
+      const data = req?.map((item) => item || "__");
       setTableData(data);
     }
   }, [qery?.data?.data]);
@@ -43,9 +32,9 @@ function Offices() {
   };
 
   return (
-    <div className={styles.Offices}>
+    <div className={styles.Equipment}>
       <HeadMenu
-        title={"Офисы"}
+        title={"Оборудование"}
         search={search}
         setSearch={setSearch}
         handleExport={handleExport}
@@ -55,4 +44,4 @@ function Offices() {
   );
 }
 
-export default Offices;
+export default Equipment;

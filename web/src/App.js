@@ -23,6 +23,8 @@ import { disAddUserApi } from "./store/userSlice/user.Slice";
 import MainPage from "./pages/MainPage/MainPage";
 import FooterHomePageComp from "./components/FooterHomePage/FooterHomePage";
 import Offices from "./modules/TableModule/Offices/Offices";
+import Equipment from "./modules/TableModule/Equipment/Equipment";
+import Workers from "./modules/TableModule/Workers/Workers";
 
 function App() {
   const dispatch = useDispatch();
@@ -188,6 +190,8 @@ function App() {
             <Route path="/konva" element={<CanvasPage />}></Route>
             <Route path="/mainpage" element={<MainPage />}>
               <Route path="" element={<Offices />}></Route>
+              <Route path="equipment" element={<Equipment />}></Route>
+              <Route path="workers" element={<Workers />}></Route>
             </Route>
           </Routes>
           <FooterHomePageComp />

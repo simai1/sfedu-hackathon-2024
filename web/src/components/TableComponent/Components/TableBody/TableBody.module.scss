@@ -1,13 +1,48 @@
 .TableBody {
-  td:nth-child(1) {
-    position: sticky;
-    left: 0;
-    background-color: #fff;
+  td {
+    text-align: center;
+    box-sizing: border-box;
   }
-  td:nth-child(2) {
-    position: sticky;
-    left: 100px;
-    background-color: #fff;
+  // td:nth-child(1) {
+  //   position: sticky;
+  //   left: 0;
+  //   background-color: #fff;
+  // }
+  // td:nth-child(2) {
+  //   min-width: 140px;
+  //   position: sticky;
+  //   left: 80px;
+  //   background-color: #fff;
+  // }
+  // td:nth-child(3) {
+  //   position: sticky;
+  //   left: 220px;
+  //   background-color: #fff;
+  //   &::after {
+  //     content: "";
+  //     width: 10px;
+  //     height: 100%;
+  //     position: absolute;
+  //     right: 2px;
+  //     top: 0;
+  //     z-index: 100;
+  //     box-shadow: 4px 0px 8px 0px #00000011;
+  //   }
+  // }
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  td[name="checkbox"] {
+    width: 80px;
+    max-width: 80px;
+    min-width: 80px;
+    text-align: center;
+
+    input {
+      @include CheckBox;
+      transform: translateY(2px);
+    }
   }
 
   td {
@@ -16,7 +51,7 @@
     z-index: 10;
   }
   td[name="number"] {
-    min-width: 60px;
+    min-width: 80px;
     text-align: center;
   }
   td[name="countOfEmployees"] {

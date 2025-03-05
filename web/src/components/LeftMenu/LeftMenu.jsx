@@ -7,28 +7,31 @@ import errorsIcon from "../../assets/img/leftMenu/errors.svg";
 import constructorIcon from "../../assets/img/leftMenu/constructor.svg";
 import paramIcon from "../../assets/img/leftMenu/param.svg";
 import userIcon from "../../assets/img/leftMenu/user.svg";
+import { useNavigate } from "react-router-dom";
 
 function LeftMenu() {
+  const navigate = useNavigate();
+
   const listMenu = [
     {
       icon: officeIcon,
       title: "Офисы",
-      navigate: "#",
+      navigate: "/mainpage",
     },
     {
       icon: deviceIcon,
       title: "Оборудование",
-      navigate: "#",
+      navigate: "/mainpage/equipment",
     },
     {
       icon: personsIcon,
       title: "Сотрудники",
-      navigate: "#",
+      navigate: "/mainpage/workers",
     },
     {
       icon: errorsIcon,
       title: "Неполадки",
-      navigate: "#",
+      navigate: "/mainpage",
     },
   ];
 
@@ -43,7 +46,7 @@ function LeftMenu() {
             <span>Таблицы</span>
             <ul className={styles.list_item}>
               {listMenu.map((item, index) => (
-                <li key={index}>
+                <li key={index} onClick={() => navigate(item.navigate)}>
                   <img src={item.icon} alt="img" />
                   <span>{item.title}</span>
                 </li>

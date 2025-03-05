@@ -2,39 +2,21 @@ import { saveAs } from "file-saver";
 import * as XLSX from "xlsx";
 
 //! Функция генерации файла для скачивания
-export const generateAndDownloadExcel = (data, nameTable) => {
-    console.log("data", data)
-    console.log("nameTable", nameTable)
-    let validName = nameTable === 'Equipment' ? 'Оборудование' : nameTable === 'Staff' ? 'Сотрудники' : 'Офисы';
-  let transformedData = {};
-  const server = process.env.REACT_APP_API_URL;
- 
-  if (nameTable === 'Equipment') {
-    transformedData = data.map(({ ...item }) => ({
-      Название_Оборудования: item?.name,
-      Описание: item?.description,
-      Состояние_Оборудования: item?.conditionHuman,
-      Тип_Оборудования: item?.typeHuman,
-      Инвентарный_номер: item?.inventoryNumber,
-      Дата_Создания: item?.createdAtHuman,
-      Дата_Последнего_ТО: item?.inspectionDateHuman,
-      Начальная_Стоимость: item?.cost,
-      Остаточная_Стоимость: item?.factCost,
-    }));
-  }else if(nameTable === 'Staff'){
-    transformedData = data.map(({ ...item }) => ({
-      ФИО_Сотрудника: item?.name,
-      Должность: item?.positionHuman,
-      Офис: item?.building,
+export const generateAndDownloadExcel = (data, header, name) => {
+  let transformedData = [];
+  let mass = data.map((item) =>
+    header.map((head) => ({
+      [head.name.replace(" ", "_")]: item?.[head.key] + "",
     }))
-  }else{
-        transformedData = data.map(({ ...item }) => ({
-            Название_офиса: item?.name,
-            Город: item?.city,
-            Адрес: item?.address,
-            Количество_сотрудников: item?.countOfEmployees,
-    }))
-};
+  );
+  mass.map((item) => {
+    let it = {};
+    item.map((i) => {
+      it = { ...it, ...i };
+    });
+    transformedData.push(it);
+  });
+
   const worksheet = XLSX.utils.json_to_sheet(transformedData);
 
   // Установка ширины столбцов
@@ -71,5 +53,5 @@ export const generateAndDownloadExcel = (data, nameTable) => {
   const excelData = new Blob([excelBuffer], {
     type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
   });
-  saveAs(excelData, `Экспорт_Таблицы_${validName}_${formattedDate}.xlsx`);
+  saveAs(excelData, `Экспорт_Таблицы_${name}_${formattedDate}.xlsx`);
 };
